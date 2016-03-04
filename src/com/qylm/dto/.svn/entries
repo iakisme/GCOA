@@ -1,0 +1,175 @@
+10
+
+dir
+15
+http://www.zjlskj.com:8089/svn/GCOA/src/com/qylm/dto
+http://www.zjlskj.com:8089/svn/GCOA
+
+
+
+2015-11-20T02:43:16.904103Z
+14
+wk
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+792c988d-25e9-2a44-a787-256f8b0cfce2
+
+vehicle
+dir
+
+export
+dir
+
+MyDeskDto.java
+file
+
+
+
+
+2015-12-01T09:09:55.660212Z
+c3f1905207e93a8e6e20983865d48670
+2015-07-30T03:01:19.486780Z
+5
+smj
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+5279
+
+financial
+dir
+
+system
+dir
+
+procedure
+dir
+
+engineering
+dir
+
+engineeringMaterials
+dir
+
+material
+dir
+
+customer
+dir
+
+fitting
+dir
+
+personnel
+dir
+
+company
+dir
+
+mobile
+dir
+
+FileExportDto.java
+file
+
+
+
+
+2015-12-01T09:09:55.661212Z
+6407ce59948bfba898fbe2c389a3009a
+2015-07-24T02:51:06.918382Z
+1
+smj
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2265
+
+report
+dir
+
+FileUploadDto.java
+file
+
+
+
+
+2015-12-01T09:09:55.663212Z
+24ead22b81adb7cc9ef844057c39732a
+2015-07-24T02:51:06.918382Z
+1
+smj
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2442
+
+dailyPlan
+dir
+

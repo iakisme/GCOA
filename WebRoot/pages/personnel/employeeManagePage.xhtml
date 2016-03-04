@@ -1,0 +1,84 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:rw="http://www.qylm.com"
+	xmlns:util="http://java.sun.com/jsf/composite/component/util"
+	template="/WEB-INF/facelets/templates/template.xhtml">
+	<ui:param name="title" value="员工管理" />
+	<ui:define name="tableCenter">
+		<t:saveState value="#{employeeManageBean.employeeManageDto}" />
+		<t:saveState value="#{employeeManageBean.employeeList}" />
+		<div class="buttonNorth">
+			<p:commandButton value="添加" action="#{employeeManageBean.newEmployee}" ajax="false" styleClass="createBtn" accesskey="c"
+				rendered="#{userBean.isCheckPermission('personnel_employee', '添加')}"/>
+			<p:commandButton value="批量删除" actionListener="#{employeeManageBean.deleteMul}" 
+				rendered="#{userBean.isCheckPermission('personnel_employee', '删除')}"
+				update="viewTable :form:messages" onstart="return deleteConfirm();" styleClass="multipleDelBtn" accesskey="d"/>
+		</div>
+		<div class="searchRequirementNorth">
+			<p:focus for="workNumber" />
+			<h:panelGrid id="manageGrid" columns="7">
+				<h:outputLabel for="workNumber" value="员工工号" />
+				<p:inputText styleClass="inputText" id="workNumber" size="20" maxlength="20"
+					value="#{employeeManageBean.employeeManageDto.workNumber}" />
+				<h:outputLabel for="name" value="姓名" />
+				<p:inputText styleClass="inputText" id="name" size="40" maxlength="40"
+					value="#{employeeManageBean.employeeManageDto.name}" />
+				<h:outputLabel for="workState" value="在职状态" />
+				<p:selectOneMenu id="workState" value="#{employeeManageBean.employeeManageDto.workState}">
+					<f:selectItems value="#{genericCodeBean.c0301}" />
+				</p:selectOneMenu>
+				<p:commandButton id="searchBtn" value="搜索" action="#{employeeManageBean.selectEmployee}" process=":form:manageGrid" 
+					ajax="false" styleClass="searchBtn" accesskey="s" />
+			</h:panelGrid>
+		</div>
+		<rw:paging pageBean="#{employeeManageBean}" />
+		<div class="tableCenter">
+			<p:dataTable emptyMessage="暂无数据" var="model" value="#{employeeManageBean.employeeList}" rowIndexVar="rowIndex"
+				widgetVar="viewTable" rowKey="#{model.id}" paginatorAlwaysVisible="true"
+				sortBy="createDate" sortOrder="descending" id="viewTable"
+				selection="#{employeeManageBean.selectedModels}">
+				<f:facet name="header" >
+					员工信息列表
+				</f:facet>
+				<p:column selectionMode="multiple" exportable="false" style="width:32px" />
+				<p:column headerText="工号" sortBy="#{model.workNumber}" width="80px;">
+					<h:outputText value="#{model.workNumber}" />
+				</p:column>
+				<p:column headerText="姓名" sortBy="#{model.name}" width="80px;">
+					<h:outputText value="#{model.name}" />
+				</p:column>
+				<p:column headerText="在职状态" sortBy="#{model.workState}" width="80px;">
+					<h:outputText value="#{rw:label(genericCodeBean.c0301,model.workState)}" />
+				</p:column>
+				<p:column headerText="学历" sortBy="#{model.formalSchooling}" width="100px;">
+					<h:outputText value="#{rw:label(genericCodeBean.c0105,model.formalSchooling)}" />
+				</p:column>
+				<p:column headerText="出生日期" sortBy="#{model.birthDate}" >
+					<h:outputText value="#{model.birthDate}" >
+						<f:convertDateTime pattern="yyyy-MM-dd" timeZone="Asia/Shanghai"/>
+					</h:outputText>
+				</p:column>
+				<p:column headerText="性别" sortBy="#{model.sex}" width="80px;">
+					<h:outputText value="#{rw:label(genericCodeBean.c0102,model.sex)}" />
+				</p:column>
+				<p:column headerText="创建人" sortBy="#{model.creater.username}" width="80px;">
+					<h:outputText value="#{model.creater.userName}" />
+				</p:column>
+				<p:column headerText="基本操作" exportable="false" style="width: 80px;">
+					<p:commandButton value="修改" action="#{employeeManageBean.updateEmployee(model)}"
+						ajax="false" styleClass="modifyBtn"
+						rendered="#{userBean.isCheckPermission('personnel_employee', '修改')}"/>
+					<p:commandButton value="删除" action="#{employeeManageBean.deleteEmployee(model)}"
+						partialSubmit="true" process="@this"  update="viewTable :form:messages"
+						onstart="return deleteConfirm();" styleClass="singleDelBtn"
+						rendered="#{userBean.isCheckPermission('personnel_employee', '删除')}"/>
+				</p:column>
+			</p:dataTable>
+		</div>
+	</ui:define>
+</ui:composition>

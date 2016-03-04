@@ -1,0 +1,102 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:rw="http://www.qylm.com"
+	xmlns:util="http://java.sun.com/jsf/composite/component/util"
+	template="/WEB-INF/facelets/templates/template.xhtml">
+	<ui:param name="title" value="生产报表统计" />
+	<ui:define name="tableCenter">
+		<t:saveState value="#{productionStatisticsManageBean.productionStatisticsManageDto}" />
+		<t:saveState value="#{productionStatisticsManageBean.engineeringProjectDetailList}" />
+		<div class="searchRequirementNorth">
+			<p:focus for="customerName" />
+			<h:panelGrid id="manageGrid" columns="12">
+				<h:outputLabel for="number" value="车辆编号" />
+				<p:autoComplete id="number" dropdown="true" maxlength="10" size="10"
+					value="#{productionStatisticsManageBean.productionStatisticsManageDto.number}" 
+					completeMethod="#{selectBean.selectVehicleNumber}" />
+				<h:outputLabel for="customerName" value="客户" style="margin-left: 30px;"/>
+				<p:inputText styleClass="inputText" id="customerName" size="20" maxlength="40"
+					value="#{productionStatisticsManageBean.productionStatisticsManageDto.customerName}" />
+				<h:outputLabel for="workAddress" value="工地地址" />
+				<p:inputText styleClass="inputText" id="workAddress" size="20" maxlength="40"
+					value="#{productionStatisticsManageBean.productionStatisticsManageDto.workAddress}" />
+				<h:outputLabel for="beginDate" value="开始日期" />
+				<p:calendar navigator="true" id="beginDate" size="10" maxlength="10" locale="tr"
+					value="#{productionStatisticsManageBean.productionStatisticsManageDto.beginDate}"
+					pattern="yyyy-MM-dd"/>
+				<p:commandButton id="searchBtn" value="搜索" action="#{productionStatisticsManageBean.selectProductionStatistics}" process=":form:manageGrid" 
+					ajax="false" styleClass="searchBtn" accesskey="s" />
+				<p:commandButton value="上一月" action="#{productionStatisticsManageBean.upMonth}"
+					ajax="false"/>
+				<p:commandButton value="下一月" action="#{productionStatisticsManageBean.nextMonth}"
+					ajax="false"/>
+				<p:commandButton value="导出XLS" action="#{productionStatisticsManageBean.exportXLS}" ajax="false"/>
+			</h:panelGrid>
+		</div>
+		<rw:paging pageBean="#{productionStatisticsManageBean}" />
+		<div class="tableCenter">
+			<p:dataTable emptyMessage="暂无数据" var="model" value="#{productionStatisticsManageBean.engineeringProjectDetailList}" rowIndexVar="rowIndex"
+				widgetVar="viewTable" rowKey="#{model.id}" paginatorAlwaysVisible="true"
+				sortBy="createDate" sortOrder="ascending" id="viewTable">
+				<f:facet name="header" >
+					金华汇聚工程机械有限公司泵车#{productionStatisticsManageBean.productionStatisticsManageDto.yearMonth}生产报表
+				</f:facet>
+				<p:column headerText="开始日期" sortBy="#{model.startPumpDate}" width="80px;">
+					<h:outputText value="#{model.startPumpDate}">
+						<f:convertDateTime pattern="yyyy-MM-dd" timeZone="Asia/Shanghai" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="客户" width="100px;">
+					<h:outputText value="#{model.engineeringProject.customer.name}" />
+				</p:column>
+				<p:column headerText="车辆编号" width="100px;">
+					<h:outputText value="#{model.vehicleNumber}" />
+				</p:column>
+				<p:column headerText="工作地址">
+					<h:outputText value="#{model.engineeringProject.workAddress}" />
+				</p:column>
+				<p:column headerText="泵送部位" width="80px;">
+					<h:outputText value="#{model.pumpParts}" />
+				</p:column>
+				<p:column headerText="实际方量" width="80px;">
+					<h:outputText value="#{model.schedule}" />
+				</p:column>
+				<p:column headerText="开始时间" width="100px;">
+					<h:outputText value="#{model.startPumpDate}">
+						<f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" timeZone="Asia/Shanghai" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="结束时间" width="100px;">
+					<h:outputText value="#{model.endPumpDate}">
+						<f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" timeZone="Asia/Shanghai" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="泵送价" width="80px;">
+					<h:outputText value="#{model.engineeringProject.pumpPrice}" />
+				</p:column>
+				<p:column headerText="加油量&amp;油费" width="80px;">
+					<h:outputText value="#{model.gasVolume}（升）" />
+					<br />
+					<h:outputText value="#{model.gasPrice}（元）" />
+				</p:column>
+				<p:column headerText="开机人" width="120px;">
+					<table>
+						<tr>
+							<ui:repeat var="projectEmployeeDetail" value="#{model.projectEmployeeDetailList}">
+								<td><h:outputText value="#{projectEmployeeDetail.name}" /></td>
+							</ui:repeat>
+						</tr>
+					</table>
+				</p:column>
+				<p:column headerText="备注">
+					<h:outputText value="#{model.remark}" />
+				</p:column>
+			</p:dataTable>
+		</div>
+	</ui:define>
+</ui:composition>

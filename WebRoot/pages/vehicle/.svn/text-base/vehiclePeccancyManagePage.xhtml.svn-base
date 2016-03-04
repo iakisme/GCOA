@@ -1,0 +1,93 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:rw="http://www.qylm.com"
+	xmlns:util="http://java.sun.com/jsf/composite/component/util"
+	template="/WEB-INF/facelets/templates/template.xhtml">
+	<ui:param name="title" value="车辆违章事故管理" />
+	<ui:define name="tableCenter">
+		<t:saveState value="#{vehiclePeccancyManageBean.vehiclePeccancyManageDto}" />
+		<t:saveState value="#{vehiclePeccancyManageBean.vehiclePeccancyList}" />
+		<div class="buttonNorth">
+			<p:commandButton value="添加" action="#{vehiclePeccancyManageBean.newVehiclePeccancy}" ajax="false" styleClass="createBtn" accesskey="c"
+				rendered="#{userBean.isCheckPermission('vehicle_vehiclePeccancy', '添加')}"/>
+			<p:commandButton value="批量删除" actionListener="#{vehiclePeccancyManageBean.deleteMul}" 
+				update="viewTable :form:messages" onstart="return deleteConfirm();" styleClass="multipleDelBtn" accesskey="d"
+				rendered="#{userBean.isCheckPermission('vehicle_vehiclePeccancy', '删除')}"/>
+		</div>
+		<div class="searchRequirementNorth">
+			<p:focus for="number" />
+			<h:panelGrid id="manageGrid" columns="9">
+				<h:outputLabel for="number" value="车辆编号" />
+				<p:autoComplete id="number" dropdown="true" maxlength="10" size="10"
+					value="#{vehiclePeccancyManageBean.vehiclePeccancyManageDto.number}" 
+					completeMethod="#{selectBean.selectVehicleNumber}" />
+				<h:outputLabel for="cause" value="维修故障" style="margin-left: 30px;"/>
+				<p:inputText styleClass="inputText" id="cause" size="20" maxlength="20"
+					value="#{vehiclePeccancyManageBean.vehiclePeccancyManageDto.cause}" />
+				<h:outputLabel for="beginPeccancyDate" value="违章事故日期（开始）" />
+				<p:calendar navigator="true" id="beginPeccancyDate" size="10" maxlength="10" locale="tr"
+					value="#{vehiclePeccancyManageBean.vehiclePeccancyManageDto.beginPeccancyDate}"
+					pattern="yyyy-MM-dd"/>
+				~
+				<p:calendar navigator="true" id="endPeccancyDate" size="10" maxlength="10" locale="tr"
+					value="#{vehiclePeccancyManageBean.vehiclePeccancyManageDto.endPeccancyDate}"
+					pattern="yyyy-MM-dd"/>
+				<p:commandButton id="searchBtn" value="搜索" action="#{vehiclePeccancyManageBean.selectVehiclePeccancy}" process=":form:manageGrid" 
+					ajax="false" styleClass="searchBtn" accesskey="s" />
+			</h:panelGrid>
+		</div>
+		<rw:paging pageBean="#{vehiclePeccancyManageBean}" />
+		<div class="tableCenter">
+			<p:dataTable emptyMessage="暂无数据" var="model" value="#{vehiclePeccancyManageBean.vehiclePeccancyList}" rowIndexVar="rowIndex"
+				widgetVar="viewTable" rowKey="#{model.id}" paginatorAlwaysVisible="true"
+				sortBy="createDate" sortOrder="descending" id="viewTable"
+				selection="#{vehiclePeccancyManageBean.selectedModels}">
+				<f:facet name="header" >
+					车辆违章事故信息列表
+				</f:facet>
+				<p:column selectionMode="multiple" exportable="false" style="width:32px" />
+				<p:column headerText="车辆编码" sortBy="#{model.vehicleInfo.number}" width="100px;">
+					<h:outputText value="#{model.vehicleInfo.number}" />
+				</p:column>
+				<p:column headerText="违章事故负责人" sortBy="#{model.employee.name}" width="130px;">
+					<h:outputText value="#{model.employee.name}" />
+				</p:column>
+				<p:column headerText="违章事故日期" sortBy="#{model.peccancyDate}" width="100px;">
+					<h:outputText value="#{model.peccancyDate}">
+						<f:convertDateTime pattern="yyyy-MM-dd" timeZone="Asia/Shanghai" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="违章事故原因" sortBy="#{model.cause}">
+					<h:outputText value="#{model.cause}"/>
+				</p:column>
+				<p:column headerText="违章事故地址" sortBy="#{model.address}">
+					<h:outputText value="#{model.address}"/>
+				</p:column>
+				<p:column headerText="花费" sortBy="#{model.cost}" width="80px;">
+					<h:outputText value="#{model.cost}" />
+				</p:column>
+				<p:column headerText="维修状态" sortBy="#{model.state}" width="80px;">
+					<h:outputText value="#{model.state ? '处理完毕' : '处理中'}" style="color:#{model.state ? '#00FF00' : '#FFD700'};"/>
+				</p:column>
+				<p:column headerText="基本操作" exportable="false" style="width: 140px;">
+					<p:commandButton value="处理完毕" action="#{vehiclePeccancyManageBean.queryServicing(model)}"
+						ajax="false" styleClass="modifyBtn"
+						disabled="#{model.state}"
+						rendered="#{userBean.isCheckPermission('vehicle_vehiclePeccancy', '确认')}"/>
+					<p:commandButton value="#{model.state ? '详细' :'修改'}" action="#{vehiclePeccancyManageBean.updateVehiclePeccancy(model)}"
+						ajax="false" styleClass="modifyBtn"
+						rendered="#{userBean.isCheckPermission('vehicle_vehiclePeccancy', '修改')}"/>
+					<p:commandButton value="删除" action="#{vehiclePeccancyManageBean.deleteVehiclePeccancy(model)}"
+						partialSubmit="true" process="@this"  update="viewTable :form:messages"
+						onstart="return deleteConfirm();" styleClass="singleDelBtn"
+						rendered="#{userBean.isCheckPermission('vehicle_vehiclePeccancy', '删除')}"/>
+				</p:column>
+			</p:dataTable>
+		</div>
+	</ui:define>
+</ui:composition>

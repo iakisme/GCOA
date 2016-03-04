@@ -1,0 +1,70 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:rw="http://www.qylm.com"
+	xmlns:util="http://java.sun.com/jsf/composite/component/util"
+	template="/WEB-INF/facelets/templates/template.xhtml">
+	<ui:param name="title" value="工程项目方量情况" />
+	<ui:define name="tableCenter">
+		<div class="buttonNorth">
+			<p:commandButton value="返回" action="#{mobileEngineeringStatisticsManageBean.back}" immediate="true" ajax="false" styleClass="backBtn" />
+		</div>
+		<t:saveState value="#{mobileEngineeringStatisticsManageBean.mobileEngineeringStatisticsManageDto}" />
+		<t:saveState value="#{mobileEngineeringStatisticsManageBean.engineeringProjectDetailList}" />
+		<div class="searchRequirementNorth">
+			<h:panelGrid id="manageGrid" columns="1">
+				<h:panelGroup>
+					<h:outputLabel for="number" value="车辆编号" />
+					<p:inputText styleClass="inputText" id="number" size="10" maxlength="10"
+						value="#{mobileEngineeringStatisticsManageBean.mobileEngineeringStatisticsManageDto.number}" />
+				</h:panelGroup>
+				<h:panelGroup>
+					<h:outputLabel for="beginDate" value="项目日期" />
+					<p:calendar navigator="true" id="beginDate" size="10" maxlength="10" locale="tr"
+						value="#{mobileEngineeringStatisticsManageBean.mobileEngineeringStatisticsManageDto.beginDate}"
+						pattern="yyyy-MM-dd"/>
+					<p:commandButton id="searchBtn" value="搜索" action="#{mobileEngineeringStatisticsManageBean.selectMobileEngineeringStatistics}" process=":form:manageGrid" 
+						ajax="false" styleClass="searchBtn" accesskey="s" />
+				</h:panelGroup>
+			</h:panelGrid>
+		</div>
+		<rw:mobilePaging pageBean="#{mobileEngineeringStatisticsManageBean}" />
+		<div class="tableCenter">
+			<p:dataTable emptyMessage="暂无数据" var="model" value="#{mobileEngineeringStatisticsManageBean.engineeringProjectDetailList}" rowIndexVar="rowIndex"
+				widgetVar="viewTable" rowKey="#{model.id}" paginatorAlwaysVisible="true"
+				sortBy="createDate" sortOrder="ascending" id="viewTable">
+				<f:facet name="header" >
+					金华汇聚工程机械有限公司泵车工程实际方量情况
+				</f:facet>
+				<p:column headerText="日期&amp;车辆编号" sortBy="#{model.startPumpDate}" width="100px;">
+					<h:outputText value="#{model.startPumpDate}">
+						<f:convertDateTime pattern="yyyy-MM-dd" timeZone="Asia/Shanghai" />
+					</h:outputText>
+					<br />
+					<h:outputText value="#{model.vehicleNumber}" />
+				</p:column>
+				<p:column headerText="工作地址&amp;泵送部位">
+					<h:outputText value="#{model.engineeringProject.workAddress}" />
+					<br />
+					<h:outputText value="#{model.pumpParts}" />
+				</p:column>
+				<p:column headerText="方量情况" width="60px;">
+					<h:outputText value="预算方量" />
+					<br />
+					<h:outputText value="#{model.workVolume}" />
+					<br />
+					<ui:fragment rendered="#{model.schedule != null}">
+						<h:outputText value="实际方量" style="color: #00FF00;"/>
+						<br />
+						<h:outputText value="#{model.schedule}" style="color: #00FF00;"/>
+					</ui:fragment>
+				</p:column>
+			</p:dataTable>
+		</div>
+		<rw:mobilePaging pageBean="#{mobileEngineeringStatisticsManageBean}" />
+	</ui:define>
+</ui:composition>

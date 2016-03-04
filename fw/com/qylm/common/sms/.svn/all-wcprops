@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/GCOA/!svn/ver/9/fw/com/qylm/common/sms
+END
+SmsUtil.java
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/GCOA/!svn/ver/9/fw/com/qylm/common/sms/SmsUtil.java
+END
+CallNotification.java
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/GCOA/!svn/ver/7/fw/com/qylm/common/sms/CallNotification.java
+END
+OutboundNotification.java
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/GCOA/!svn/ver/7/fw/com/qylm/common/sms/OutboundNotification.java
+END

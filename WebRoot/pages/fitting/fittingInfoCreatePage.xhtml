@@ -1,0 +1,105 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:rw="http://www.qylm.com"
+	template="/WEB-INF/facelets/templates/template.xhtml">
+	<ui:param name="title" value="配件登录" />
+	<ui:define name="tableCenter">
+		<t:saveState value="#{fittingInfoCreateBean.fittingInfoCreateDto}" />
+		<div class="buttonNorth">
+			<p:commandButton value="返回" action="#{fittingInfoCreateBean.back}" immediate="true" ajax="false" styleClass="backBtn" />
+			<p:commandButton value="添加" action="#{fittingInfoCreateBean.newFittingInfo}" immediate="true" update="@form" styleClass="createBtn" />
+			<p:commandButton value="保存" action="#{fittingInfoCreateBean.saveFittingInfo}" ajax="false" update="@form" styleClass="saveBtn" 
+				rendered="#{userBean.isCheckPermission('fitting_fittingInfo', '添加') or userBean.isCheckPermission('fitting_fittingInfo', '修改')}"/>
+			<p:commandButton value="上传" action="#{fittingInfoCreateBean.uploadFile}"
+				immediate="true" styleClass="fileBtn" ajax="false" 
+				disabled="#{fittingInfoCreateBean.fittingInfoCreateDto.transferFittingInfo == null}" accesskey="u"/>
+		</div>
+		<div class="tableCenter">
+			<p:focus for="carName" />
+			<p:panelGrid id="manageGrid" styleClass="dataTable"> 
+				<p:row>
+					<p:column styleClass="column1">
+						<p:outputLabel for="carName" value="车辆名称" />
+					</p:column>
+					<p:column styleClass="column4">
+						<p:autoComplete id="carName" dropdown="true" maxlength="20" size="20" label="车辆名称"  required="true" 
+							value="#{fittingInfoCreateBean.fittingInfoCreateDto.carName}" 
+							completeMethod="#{selectBean.fittingCarNames}" /> 
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column1">
+						<p:outputLabel for="fittingBrand" value="配件品牌" />
+					</p:column>
+					<p:column styleClass="column4">
+						<p:autoComplete id="fittingBrand" dropdown="true" maxlength="20" size="20" label="配件品牌"  required="true" 
+							value="#{fittingInfoCreateBean.fittingInfoCreateDto.fittingBrand}" 
+							completeMethod="#{selectBean.fittingBrands}" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column1">
+						<p:outputLabel for="fittingName" value="配件名称" />
+					</p:column>
+					<p:column styleClass="column4">
+						<p:autoComplete id="fittingName" dropdown="true" maxlength="20" size="20" label="配件名称"  required="true" 
+							value="#{fittingInfoCreateBean.fittingInfoCreateDto.fittingName}" 
+							completeMethod="#{selectBean.fittingNames}" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column1">
+						<p:outputLabel for="model" value="型号" />
+					</p:column>
+					<p:column styleClass="column4">
+						<p:autoComplete id="model" dropdown="true" maxlength="20" size="20" label="型号"  required="true" 
+							value="#{fittingInfoCreateBean.fittingInfoCreateDto.model}" 
+							completeMethod="#{selectBean.models}" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column1">
+						<p:outputLabel for="price" value="最近单价" />
+					</p:column>
+					<p:column styleClass="column4">
+						<pe:inputNumber id="price" maxlength="10" size="12" 
+							value="#{fittingInfoCreateBean.fittingInfoCreateDto.price}" 
+							minValue="0.00" emptyValue="0" decimalPlaces="2">
+						</pe:inputNumber>
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column1">
+						<p:outputLabel for="maintenanceDay" value="保养天数" />
+					</p:column>
+					<p:column styleClass="column4">
+						<p:inputText styleClass="inputText" id="maintenanceDay" size="10" maxlength="10"
+							value="#{fittingInfoCreateBean.fittingInfoCreateDto.maintenanceDay}"  >
+							<f:validator validatorId="numberValidator" />
+						</p:inputText>
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column1">
+						<p:outputLabel for="maintenanceCubic" value="保养立方" />
+					</p:column>
+					<p:column styleClass="column4">
+						<pe:inputNumber id="maintenanceCubic" maxlength="10" size="12" 
+							value="#{fittingInfoCreateBean.fittingInfoCreateDto.maintenanceCubic}" 
+							minValue="0.00" emptyValue="0" decimalPlaces="2">
+						</pe:inputNumber>
+					</p:column>
+				</p:row>
+			</p:panelGrid>
+			<ui:include src="/WEB-INF/facelets/tags/showFile.xhtml">
+				<ui:param name="fileControlList" value="#{fittingInfoCreateBean.fittingInfoCreateDto.fileControlList}" />
+				<ui:param name="bean" value="#{fittingInfoCreateBean}" />
+			</ui:include>
+		</div>
+	</ui:define>
+</ui:composition>

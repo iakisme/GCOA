@@ -1,0 +1,263 @@
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/GCOA/!svn/ver/14/src/com/qylm/entity
+END
+EntityClass.java
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/GCOA/!svn/ver/1/src/com/qylm/entity/EntityClass.java
+END
+CustomerFinancial.java
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/GCOA/!svn/ver/1/src/com/qylm/entity/CustomerFinancial.java
+END
+BaseEntity.java
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/GCOA/!svn/ver/9/src/com/qylm/entity/BaseEntity.java
+END
+FittingRejected.java
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/GCOA/!svn/ver/1/src/com/qylm/entity/FittingRejected.java
+END
+CommonSms.java
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/GCOA/!svn/ver/9/src/com/qylm/entity/CommonSms.java
+END
+FileEntity.java
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/GCOA/!svn/ver/1/src/com/qylm/entity/FileEntity.java
+END
+VehicleServicingDetail.java
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/GCOA/!svn/ver/1/src/com/qylm/entity/VehicleServicingDetail.java
+END
+MaterialsGrant.java
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/GCOA/!svn/ver/12/src/com/qylm/entity/MaterialsGrant.java
+END
+PlanArrangement.java
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/GCOA/!svn/ver/1/src/com/qylm/entity/PlanArrangement.java
+END
+User.java
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/GCOA/!svn/ver/9/src/com/qylm/entity/User.java
+END
+VehicleInfoDetail.java
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/GCOA/!svn/ver/1/src/com/qylm/entity/VehicleInfoDetail.java
+END
+FittingRepertory.java
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/GCOA/!svn/ver/1/src/com/qylm/entity/FittingRepertory.java
+END
+FittingInfo.java
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/GCOA/!svn/ver/1/src/com/qylm/entity/FittingInfo.java
+END
+FileControl.java
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/GCOA/!svn/ver/1/src/com/qylm/entity/FileControl.java
+END
+EngineeringProject.java
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/GCOA/!svn/ver/12/src/com/qylm/entity/EngineeringProject.java
+END
+VehiclePeccancy.java
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/GCOA/!svn/ver/1/src/com/qylm/entity/VehiclePeccancy.java
+END
+ProjectEmployeeDetail.java
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/GCOA/!svn/ver/12/src/com/qylm/entity/ProjectEmployeeDetail.java
+END
+FittingLibrary.java
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/GCOA/!svn/ver/1/src/com/qylm/entity/FittingLibrary.java
+END
+FittingStorage.java
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/GCOA/!svn/ver/1/src/com/qylm/entity/FittingStorage.java
+END
+FittingRejectedDetail.java
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/GCOA/!svn/ver/1/src/com/qylm/entity/FittingRejectedDetail.java
+END
+EngineeringFinancial.java
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/GCOA/!svn/ver/1/src/com/qylm/entity/EngineeringFinancial.java
+END
+FittingPurchase.java
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/GCOA/!svn/ver/1/src/com/qylm/entity/FittingPurchase.java
+END
+UserRole.java
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/GCOA/!svn/ver/1/src/com/qylm/entity/UserRole.java
+END
+Role.java
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/GCOA/!svn/ver/1/src/com/qylm/entity/Role.java
+END
+Customer.java
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/GCOA/!svn/ver/14/src/com/qylm/entity/Customer.java
+END
+EngineeringProjectDetail.java
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/GCOA/!svn/ver/1/src/com/qylm/entity/EngineeringProjectDetail.java
+END
+ProcedureSet.java
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/GCOA/!svn/ver/1/src/com/qylm/entity/ProcedureSet.java
+END
+FittingPurchaseExamine.java
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/GCOA/!svn/ver/1/src/com/qylm/entity/FittingPurchaseExamine.java
+END
+BaseFittingInfo.java
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/GCOA/!svn/ver/1/src/com/qylm/entity/BaseFittingInfo.java
+END
+FittingLibraryDetail.java
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/GCOA/!svn/ver/1/src/com/qylm/entity/FittingLibraryDetail.java
+END
+FittingStorageDetail.java
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/GCOA/!svn/ver/1/src/com/qylm/entity/FittingStorageDetail.java
+END
+FinancialCollectDetail.java
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/GCOA/!svn/ver/1/src/com/qylm/entity/FinancialCollectDetail.java
+END
+TreeItem.java
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/GCOA/!svn/ver/1/src/com/qylm/entity/TreeItem.java
+END
+Employee.java
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/GCOA/!svn/ver/1/src/com/qylm/entity/Employee.java
+END
+FileExport.java
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/GCOA/!svn/ver/1/src/com/qylm/entity/FileExport.java
+END
+FinancialPayDetail.java
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/GCOA/!svn/ver/1/src/com/qylm/entity/FinancialPayDetail.java
+END
+FittingPurchaseDetail.java
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/GCOA/!svn/ver/1/src/com/qylm/entity/FittingPurchaseDetail.java
+END
+AddressEntity.java
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/GCOA/!svn/ver/1/src/com/qylm/entity/AddressEntity.java
+END
+RoleDetail.java
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/GCOA/!svn/ver/1/src/com/qylm/entity/RoleDetail.java
+END
+Function.java
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/GCOA/!svn/ver/1/src/com/qylm/entity/Function.java
+END
+ProcedureSetDetail.java
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/GCOA/!svn/ver/1/src/com/qylm/entity/ProcedureSetDetail.java
+END
+VehicleServicing.java
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/GCOA/!svn/ver/1/src/com/qylm/entity/VehicleServicing.java
+END
+VehicleInfo.java
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/GCOA/!svn/ver/1/src/com/qylm/entity/VehicleInfo.java
+END

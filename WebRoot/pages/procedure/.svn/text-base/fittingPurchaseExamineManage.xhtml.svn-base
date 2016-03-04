@@ -1,0 +1,178 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:rw="http://www.qylm.com"
+	template="/WEB-INF/facelets/templates/template.xhtml">
+	<ui:param name="title" value="采购单审核管理" />
+	<ui:define name="tableCenter">
+		<t:saveState value="#{fittingPurchaseExamineManageBean.fittingPurchaseExamineList}" />
+		<t:saveState value="#{fittingPurchaseExamineManageBean.fittingPurchaseExamineManageDto}" />
+		<div class="tableCenter">
+			<p:dataTable emptyMessage="暂无数据" var="model" value="#{fittingPurchaseExamineManageBean.fittingPurchaseExamineList}" rowIndexVar="rowIndex"
+				widgetVar="viewTable" rowKey="#{model.id}" paginatorAlwaysVisible="true"
+				sortBy="createDate" sortOrder="descending" id="viewTable"
+				selection="#{fittingPurchaseExamineManageBean.selectedModels}">
+				<f:facet name="header" >
+					待审核的采购单
+				</f:facet>
+				<p:column selectionMode="multiple" exportable="false" style="width:32px" />
+				<p:column headerText="采购单编号" sortBy="#{model.fittingPurchase.serialNumber}" width="100px;">
+					<h:outputText value="#{model.fittingPurchase.serialNumber}" />
+				</p:column>
+				<p:column headerText="申请日期" sortBy="#{model.fittingPurchase.applyDate}" width="100px;">
+					<h:outputText value="#{model.fittingPurchase.applyDate}" />
+				</p:column>
+				<p:column headerText="采购内容" sortBy="#{model.fittingPurchase.title}">
+					<h:outputText value="#{model.fittingPurchase.title}" />
+				</p:column>
+				<p:column headerText="采购单状态" sortBy="#{model.state}" width="120px;">
+					<h:outputText value="#{rw:label(genericCodeBean.c0106,model.fittingPurchase.state)}" style="color:#{model.fittingPurchase.typeColor};"/>
+				</p:column>
+				<p:column headerText="审核状态" style="width: 100px;">
+					<h:outputText value="#{rw:label(genericCodeBean.c0702,model.state)}" style="color: #{model.typeColor}" />
+				</p:column>
+				<p:column headerText="基本操作" exportable="false" style="width: 120px;" styleClass="textConter">
+					<p:commandButton value="审核详细" action="#{fittingPurchaseExamineManageBean.examineDetail(model)}" partialSubmit="true" process="@this"
+						oncomplete="PF('dlgExamine').show();"
+						update="viewTable :form:dlgExamine" styleClass="singleDelBtn"/>
+					<p:commandButton value="审核" action="#{fittingPurchaseExamineManageBean.examine(model)}" partialSubmit="true" process="@this"
+						oncomplete="PF('dlgExamine').show();" disabled="#{fittingPurchaseExamineManageBean.isExamineProving(model)}"
+						update="viewTable :form:dlgExamine" onstart="return confirmationMess('确认要进行审核吗？')" styleClass="singleDelBtn"/>
+				</p:column>
+			</p:dataTable>
+		</div>
+		<p:dialog id="dlgExamine" header="审核信息" widgetVar="dlgExamine" resizable="false" modal="true" position="center" width="800">
+			<ui:fragment rendered="#{!fittingPurchaseExamineManageBean.fittingPurchaseExamineManageDto.showExamine}">
+				<div class="buttonNorth">
+					<p:commandButton value="审核通过" action="#{fittingPurchaseExamineManageBean.examineThrough}"
+						oncomplete="PF('dlgExamine').hide();"
+						update="viewTable :form:messages" styleClass="singleDelBtn"/>
+					<p:commandButton value="审核不通过" action="#{fittingPurchaseExamineManageBean.examineNotThrough}" 
+						style="margin-top:4px;"
+						oncomplete="PF('dlgExamine').hide();"
+						update="viewTable :form:messages" styleClass="singleDelBtn"/>
+				</div>
+			</ui:fragment>
+			<p:panelGrid id="manageGrid" styleClass="dataTable">
+				<p:row>
+					<p:column styleClass="column1">
+						<h:outputText value="采购编号" />
+					</p:column>
+					<p:column styleClass="column4" colspan="3">
+						<h:outputText value="#{fittingPurchaseExamineManageBean.fittingPurchaseExamineManageDto.serialNumbers}" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column1">
+						<h:outputText value="申请预算金额" />
+					</p:column>
+					<p:column styleClass="column4" colspan="3">
+						<h:outputText value="#{fittingPurchaseExamineManageBean.fittingPurchaseExamineManageDto.applyPrice}" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column1">
+						<h:outputText value="采购内容" />
+					</p:column>
+					<p:column styleClass="column4" colspan="3">
+						<h:outputText value="#{fittingPurchaseExamineManageBean.fittingPurchaseExamineManageDto.title}"  />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column1">
+						<h:outputText value="采购源" />
+					</p:column>
+					<p:column styleClass="column4" colspan="3">
+						<h:outputText value="#{fittingPurchaseExamineManageBean.fittingPurchaseExamineManageDto.purchaseSource}" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column1">
+						<h:outputText value="申请人" />
+					</p:column>
+					<p:column styleClass="column2">
+						<h:outputText value="#{fittingPurchaseExamineManageBean.fittingPurchaseExamineManageDto.creater.userName}" />
+					</p:column>
+					<p:column styleClass="column1">
+						<h:outputText value="申请日期" />
+					</p:column>
+					<p:column styleClass="column4">
+						<h:outputText value="#{fittingPurchaseExamineManageBean.fittingPurchaseExamineManageDto.applyDate}">
+							<f:convertDateTime pattern="yyyy-MM-dd" timeZone="Asia/Shanghai" />
+						</h:outputText>
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column1">
+						<h:outputText value="采购人员" />
+					</p:column>
+					<p:column styleClass="column2">
+						<h:outputText value="#{fittingPurchaseExamineManageBean.fittingPurchaseExamineManageDto.purchaseUser.userName}" />
+					</p:column>
+					<p:column styleClass="column1">
+						<h:outputText value="入库人员" />
+					</p:column>
+					<p:column styleClass="column4">
+						<h:outputText value="#{fittingPurchaseExamineManageBean.fittingPurchaseExamineManageDto.storageUser.userName}" />
+					</p:column>
+				</p:row>
+				<!--
+				<p:row>
+					<p:column styleClass="column1">
+						<h:outputText value="备注" />
+					</p:column>
+					<p:column styleClass="column4" colspan="3">
+						<h:outputText value="#{fittingPurchaseExamineManageBean.fittingPurchaseExamineManageDto.remark}" />
+					</p:column>
+				</p:row>
+				-->
+				<p:row>
+					<p:column styleClass="column1">
+						<p:outputLabel for="budgetPrice" value="审批金额" />
+					</p:column>
+					<p:column styleClass="column4" colspan="3">
+						<pe:inputNumber id="budgetPrice" maxlength="10" size="12" 
+							value="#{fittingPurchaseExamineManageBean.fittingPurchaseExamineManageDto.budgetPrice}" 
+							minValue="0.00" emptyValue="0" decimalPlaces="2" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column1">
+						<p:outputLabel for="examineRemark" value="审核备注" />
+					</p:column>
+					<p:column styleClass="column4" colspan="3">
+						<p:inputTextarea id="examineRemark" maxlength="500" cols="80" rows="3" 
+							value="#{fittingPurchaseExamineManageBean.fittingPurchaseExamineManageDto.examineRemark}" />
+					</p:column>
+				</p:row>
+			</p:panelGrid>
+			<p:dataTable var="model" value="#{fittingPurchaseExamineManageBean.fittingPurchaseExamineManageDto.fittingPurchaseDetailList}" id="fittingPurchaseDetail">
+				<f:facet name="header" >
+					采购配件列表信息
+				</f:facet>
+				<p:column headerText="车辆名称">
+					<h:outputText value="#{model.carName}" />
+				</p:column>
+				<p:column headerText="配件品牌" width="120px;">
+					<h:outputText value="#{model.fittingBrand}" />
+				</p:column>
+				<p:column headerText="配件名称">
+					<h:outputText value="#{model.fittingName}" />
+				</p:column>
+				<p:column headerText="型号" width="120px;">
+					<h:outputText value="#{model.model}" />
+				</p:column>
+				<p:column headerText="最新单价" width="80px;">
+					<h:outputText value="#{model.price}" />
+				</p:column>
+				<p:column headerText="采购数量" width="80px;">
+					<h:outputText value="#{model.quantity}"/>
+				</p:column>
+			</p:dataTable>
+		</p:dialog>
+	</ui:define>
+</ui:composition>

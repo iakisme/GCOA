@@ -1,0 +1,86 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:rw="http://www.qylm.com"
+	xmlns:util="http://java.sun.com/jsf/composite/component/util"
+	template="/WEB-INF/facelets/templates/template.xhtml">
+	<ui:param name="title" value="配件库存管理" />
+	<ui:define name="tableCenter">
+		<t:saveState value="#{fittingRepertoryManageBean.fittingRepertoryManageDto}" />
+		<t:saveState value="#{fittingRepertoryManageBean.fittingRepertoryList}" />
+		<div class="buttonNorth">
+			<p:commandButton value="添加" action="#{fittingRepertoryManageBean.newFittingRepertory}" ajax="false" styleClass="createBtn" accesskey="c"
+				rendered="#{userBean.isCheckPermission('fitting_fittingRepertory', '添加')}"/>
+			<p:commandButton value="批量删除" actionListener="#{fittingRepertoryManageBean.deleteMul}" 
+				rendered="#{userBean.isCheckPermission('fitting_fittingRepertory', '删除')}"
+				update="viewTable :form:messages" onstart="return deleteConfirm();" styleClass="multipleDelBtn" accesskey="d"/>
+		</div>
+		<div class="searchRequirementNorth">
+			<p:focus for="carName" />
+			<h:panelGrid id="manageGrid" columns="7">
+				<h:outputLabel for="carName" value="车辆名称" />
+				<p:inputText styleClass="inputText" id="carName" size="20" maxlength="20"
+					value="#{fittingRepertoryManageBean.fittingRepertoryManageDto.carName}" />
+				<h:outputLabel for="fittingBrand" value="配件品牌" />
+				<p:inputText styleClass="inputText" id="fittingBrand" size="20" maxlength="20"
+					value="#{fittingRepertoryManageBean.fittingRepertoryManageDto.fittingBrand}" />
+				<h:outputLabel for="fittingName" value="配件名称" />
+				<p:inputText styleClass="inputText" id="fittingName" size="20" maxlength="20"
+					value="#{fittingRepertoryManageBean.fittingRepertoryManageDto.fittingName}" />
+				<p:commandButton id="searchBtn" value="搜索" action="#{fittingRepertoryManageBean.selectFittingRepertory}" process=":form:manageGrid" 
+					ajax="false" styleClass="searchBtn" accesskey="s" />
+			</h:panelGrid>
+		</div>
+		<rw:paging pageBean="#{fittingRepertoryManageBean}" />
+		<div class="tableCenter">
+			<p:dataTable emptyMessage="暂无数据" var="model" value="#{fittingRepertoryManageBean.fittingRepertoryList}" rowIndexVar="rowIndex"
+				widgetVar="viewTable" rowKey="#{model.id}" paginatorAlwaysVisible="true"
+				sortBy="createDate" sortOrder="descending" id="viewTable"
+				selection="#{fittingRepertoryManageBean.selectedModels}">
+				<f:facet name="header" >
+					配件信息列表
+				</f:facet>
+				<p:column selectionMode="multiple" exportable="false" style="width:32px" />
+				<p:column headerText="显示图片" width="100px;">
+					<h:graphicImage value="#{model.fittingInfo.fileControl.visitAddress}" alt="#{model.fittingInfo.fileControl.originalName}" width="80" height="80" 
+						rendered="#{model.fittingInfo.fileControl.type eq '1' and !model.fittingInfo.fileControl.encryption}" />
+				</p:column>
+				<p:column headerText="车辆名称" sortBy="#{model.fittingInfo.carName}"  width="120px;">
+					<h:outputText value="#{model.fittingInfo.carName}" />
+				</p:column>
+				<p:column headerText="配件品牌" sortBy="#{model.fittingInfo.fittingBrand}" width="120px;">
+					<h:outputText value="#{model.fittingInfo.fittingBrand}" />
+				</p:column>
+				<p:column headerText="配件名称" sortBy="#{model.fittingInfo.fittingName}" width="120px;">
+					<h:outputText value="#{model.fittingInfo.fittingName}" />
+				</p:column>
+				<p:column headerText="型号" sortBy="#{model.fittingInfo.model}" width="120px;">
+					<h:outputText value="#{model.fittingInfo.model}" />
+				</p:column>
+				<p:column headerText="保养有效期">
+					<div style="text-align: left;">
+						<h:outputText value="保养天数：#{model.fittingInfo.maintenanceDay}" />
+						<br />
+						<h:outputText value="保养立方：#{model.fittingInfo.maintenanceCubic}" />
+					</div>
+				</p:column>
+				<p:column headerText="最新库存" sortBy="#{model.repertorySum}" width="80px;">
+					<h:outputText value="#{model.repertorySum}" />
+				</p:column>
+				<p:column headerText="基本操作" exportable="false" style="width: 80px;">
+					<p:commandButton value="修改" action="#{fittingRepertoryManageBean.updateFittingRepertory(model)}"
+						ajax="false" styleClass="modifyBtn"
+						rendered="#{userBean.isCheckPermission('fitting_fittingRepertory', '修改')}"/>
+					<p:commandButton value="删除" action="#{fittingRepertoryManageBean.deleteFittingRepertory(model)}"
+						partialSubmit="true" process="@this"  update="viewTable :form:messages"
+						onstart="return deleteConfirm();" styleClass="singleDelBtn"
+						rendered="#{userBean.isCheckPermission('fitting_fittingRepertory', '删除')}"/>
+				</p:column>
+			</p:dataTable>
+		</div>
+	</ui:define>
+</ui:composition>

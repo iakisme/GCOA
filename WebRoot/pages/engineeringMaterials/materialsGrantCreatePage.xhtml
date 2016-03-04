@@ -1,0 +1,97 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:rw="http://www.qylm.com"
+	template="/WEB-INF/facelets/templates/template.xhtml">
+	<ui:param name="title" value="原料发放详情" />
+	<ui:define name="tableCenter">
+		<t:saveState value="#{materialsGrantCreateBean.materialsGrantCreateDto}" />
+		<t:saveState value="#{engineeringProjectManageBean.engineeringProjectList}" />
+		<div class="buttonNorth">
+			<p:commandButton value="返回" action="#{materialsGrantCreateBean.back}" immediate="true" ajax="false" update="@form" styleClass="backBtn" />
+			<p:commandButton value="保存" action="#{materialsGrantCreateBean.saveMaterialsGrant}" ajax="false" styleClass="backBtn" />
+		</div>
+		<div class="tableCenter">
+			<p:panelGrid id="manageGrid" styleClass="dataTable"> 
+				<p:row>
+					<p:column styleClass="column1">
+						<h:outputText value="领取员工" />
+					</p:column>
+					<p:column styleClass="column4" colspan="3">
+					<p:autoComplete id="employee" value="#{materialsGrantCreateBean.materialsGrantCreateDto.employee}" 
+							completeMethod="#{selectBean.selectEmployee}" label="领取人必须输入" required="true" size="12" maxlength="12"
+							var="employee" itemLabel="#{employee.name}" dropdown="true"
+							itemValue="#{employee}" converter="employeeConverter" forceSelection="true">
+							<p:column>
+								<h:outputText value="#{employee.name}" />
+							</p:column>
+							<p:column>
+								<h:outputText value="#{employee.identification}" />
+							</p:column>
+					</p:autoComplete>
+					</p:column>
+				</p:row> 
+				<p:row>
+					<p:column styleClass="column1">
+						<h:outputText value="领取量" />
+					</p:column>
+					<p:column styleClass="column4" colspan="3">
+						<h:inputText styleClass="inputText" id="receiveSum" size="30" maxlength="50" 
+						value="#{materialsGrantCreateBean.materialsGrantCreateDto.receiveSum}" required="true" />
+					</p:column>
+				</p:row>
+				<p:row>
+						<p:column styleClass="column1">
+							<p:outputLabel for="state" value="领取状态" />
+						</p:column>
+						<p:column styleClass="column1"  colspan="4">
+							<h:selectOneMenu id="state"
+								value="#{materialsGrantCreateBean.materialsGrantCreateDto.state}">
+								<f:selectItems value="#{genericCodeBean.c0901}" />
+							</h:selectOneMenu>
+						</p:column>
+				</p:row>
+				<p:row>
+						<p:column styleClass="column1">
+							<p:outputLabel for="type1" value="原料状态" />
+						</p:column>
+						<p:column styleClass="column1"  colspan="4">
+							<h:selectOneMenu id="type1"
+								value="#{materialsGrantCreateBean.materialsGrantCreateDto.type}">
+								<f:selectItems value="#{genericCodeBean.c1001}" />
+							</h:selectOneMenu>
+						</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column1">
+					<h:outputText value="发放详细" />
+					</p:column>
+					<p:column styleClass="column4" colspan="3">
+					<p:autoComplete id="engineeringProjectDetail" value="#{materialsGrantCreateBean.materialsGrantCreateDto.engineeringProjectDetail}" 
+							completeMethod="#{selectBean.selectEngineeringProjectDetail}" label="项目详细必须输入" required="true" size="12" maxlength="12"
+							var="engineeringProjectDetail" itemLabel="#{engineeringProjectDetail.engineeringProject.id}" dropdown="true"
+							itemValue="#{engineeringProjectDetail}" converter="engineeringProjectDetailConverter" forceSelection="true">
+							<p:column>
+								<h:outputText value="#{engineeringProjectDetail.engineeringProject.id}" />
+							</p:column>
+							<p:column>
+								<h:outputText value="#{engineeringProjectDetail.engineeringProject.workAddress}" />
+							</p:column>
+							<p:column>
+								<h:outputText value="#{engineeringProjectDetail.engineeringProject.actualVolume}" />
+							</p:column>
+							<p:column>
+								<h:outputText value="#{engineeringProjectDetail.engineeringProject.createDate}" />
+							</p:column>
+							
+					</p:autoComplete>
+					</p:column>
+				</p:row> 
+			</p:panelGrid>
+		</div>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,128 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:p="http://primefaces.org/ui">
+<f:view contentType="text/html">
+	<h:head>
+		<title>浙江立盛车辆工程管理系统</title>
+		<f:facet name="first">
+			<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+			<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+			<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+			<meta name="apple-mobile-web-app-capable" content="yes" />
+		</f:facet>
+		<link rel="shortcut icon" href="resources/icon/favicon.ico" type="image/x-icon" />
+		<script language="javascript" charset="UTF-8" src="resources/js/back/sl.js" type="text/javascript"></script>
+		<style type="text/css">
+			html,body,form { !important;
+				overflow: hidden;
+				margin-left: 0px;
+				margin-top: 0px;
+				margin-right: 0px;
+				margin-bottom: 0px;
+				height: 100%;
+			}
+			.loginName {
+				BORDER-TOP-WIDTH: 0px;
+				PADDING-LEFT: 25px;
+				BORDER-LEFT-WIDTH: 0px;
+				BACKGROUND: url("#{resource['images/back:loginName.gif']}") no-repeat;
+				BORDER-BOTTOM-WIDTH: 0px;
+				WIDTH: 165px;
+				LINE-HEIGHT: 20px;
+				HEIGHT: 21px;
+				BORDER-RIGHT-WIDTH: 0px
+			}
+			
+			.loginPassword {
+				BORDER-TOP-WIDTH: 0px;
+				PADDING-LEFT: 25px;
+				BORDER-LEFT-WIDTH: 0px;
+				BACKGROUND: url("#{resource['images/back:password.gif']}") no-repeat;
+				BORDER-BOTTOM-WIDTH: 0px;
+				WIDTH: 165px;
+				LINE-HEIGHT: 20px;
+				HEIGHT: 21px;
+				BORDER-RIGHT-WIDTH: 0px
+			}
+			
+			.ui-inputfield {
+				padding-top: 0px;
+				padding-bottom: 0px;
+				padding-right: 0px;
+			}
+		</style>
+	</h:head>
+	<h:body>
+		<h:form id="loginForm" prependId="false">
+			<table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
+				<tr>
+					<td height="100%" align="center"
+						background="#{resource['images/back:login_01.gif']}">
+						<table width="300px;" height="150px;" border="0" cellpadding="0" cellspacing="0">
+							<tr>
+								<td align="center" style="color: #FF0000;">浙江立盛车辆工程管理系统</td>
+							</tr>
+							<tr>
+								<td width="300px;" align="center">
+									<table cellpadding="0" cellspacing="0" border="0"
+										height="86" width="227">
+										<tr>
+											<td colspan="2">&#160;</td>
+										</tr>
+										<tr>
+											<td width="48" align="center">
+												<h:outputLabel value="用户" for="loginName" style="color:#ffffff" /></td>
+											<td width="179">
+												<h:inputText value="#{loginBean.loginName}" id="loginName"
+													styleClass="loginName" required="true"
+													requiredMessage="请输入用户" maxlength="20" size="20" />
+												</td>
+										</tr>
+										<tr>
+											<td align="center"><h:outputLabel value="密码"
+													for="loginPassword" style="color:#ffffff" /></td>
+											<td><h:inputSecret value="#{loginBean.loginPassword}"
+													id="loginPassword" required="true" requiredMessage="请输入密码"
+													maxlength="20" size="20" styleClass="loginPassword" /></td>
+										</tr>
+									</table>
+									<table cellpadding="0" cellspacing="0" border="0"
+										height="42" width="227">
+										<tr>
+											<td width="114" align="right">
+												<h:commandButton
+													type="submit" id="submitbtn"
+													action="#{loginBean.mobileLogin}"
+													image="#{resource['images/back:login-01.gif']}"
+													style="width:71px;height:30px;"
+													onmouseover="this.src = 'resources/images/back/login-01-1.gif'"
+													onmouseout="this.src = 'resources/images/back/login-01.gif'" />
+											</td>
+											<td width="113"><input type="image"
+												src="#{resource['images/back:login-02.gif']}"
+												style="width: 71px; height: 30px;"
+												onmouseover="this.src = 'resources/images/back/login-02-1.gif'"
+												onmouseout="this.src = 'resources/images/back/login-02.gif'"
+												onclick="clearValues(['form1:loginName','form1:loginPassword']); document.getElementById('form1:loginName').focus();return false;"/>
+											</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+							<tr>
+								<td height="40" valign="top">
+									<p:messages id="messages" showDetail="false" autoUpdate="true" closable="true" />
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+		</h:form>
+	</h:body>
+</f:view>
+</html>

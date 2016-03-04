@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<file-systems VERSION="2.0.0" application-name="FHJJHT"
+ model-entity="FileSystems" workspace-home="./WebRoot/WEB-INF">
+ <file-system NAME="WEB-INF" location="%workspace.home%" model-entity="FileSystemFolder"/>
+ <file-system NAME="WEB-ROOT" info="Content-Type=Web"
+  location="%workspace.home%/.." model-entity="FileSystemFolder"/>
+ <file-system NAME="src" location="%workspace.home%/../../src" model-entity="FileSystemFolder"/>
+ <file-system NAME="lib" location="%workspace.home%/lib" model-entity="FileSystemFolder"/>
+ <file-system NAME="classes" location="%workspace.home%/classes" model-entity="FileSystemFolder"/>
+ <file-system NAME="FHJJHT" location="%eclipse.project%" model-entity="FileSystemFolder"/>
+ <file-system NAME="lib-jsf-api.jar"
+  location="D:\MyEclipse\Common\plugins\com.genuitec.eclipse.j2eedt.core_10.5.0.me201207171805\data\libraryset\EE_6\jsf-api.jar" model-entity="FileSystemJar"/>
+ <file-system NAME="lib-jsf-impl.jar"
+  location="D:\MyEclipse\Common\plugins\com.genuitec.eclipse.j2eedt.core_10.5.0.me201207171805\data\libraryset\EE_6\jsf-impl.jar" model-entity="FileSystemJar"/>
+ <file-system NAME="src-1" location="%workspace.home%/../../text" model-entity="FileSystemFolder"/>
+ <file-system NAME="src-2" location="%workspace.home%/../../fw" model-entity="FileSystemFolder"/>
+ <web SERVLET_VERSION="2.4" model-entity="JstWeb" model-path="/web.xml">
+  <module URI="/WEB-INF/faces-config.xml" model-entity="WebJSFModule"
+   model-path="/faces-config.xml" src="src" web-root="WEB-ROOT"/>
+ </web>
+</file-systems>

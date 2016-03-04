@@ -1,0 +1,45 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:rw="http://www.qylm.com"
+	xmlns:util="http://java.sun.com/jsf/composite/component/util"
+	template="/WEB-INF/facelets/templates/template.xhtml">
+	<ui:param name="title" value="车辆工作情况" />
+	<ui:define name="tableCenter">
+		<t:saveState value="#{mobileVehicleInfoManageBean.mobileVehicleInfoManageDto}" />
+		<t:saveState value="#{mobileVehicleInfoManageBean.vehicleInfoList}" />
+		<div class="buttonNorth">
+			<p:commandButton value="返回" action="#{mobileVehicleInfoManageBean.back}" ajax="false" styleClass="createBtn" accesskey="c" />
+		</div>
+		<div class="searchRequirementNorth">
+			<h:panelGrid id="manageGrid" columns="3">
+				<h:outputLabel for="number" value="车辆编号" />
+				<p:inputText styleClass="inputText" id="number" size="10" maxlength="10"
+					value="#{mobileVehicleInfoManageBean.mobileVehicleInfoManageDto.number}" />
+				<p:commandButton id="searchBtn" value="搜索" action="#{mobileVehicleInfoManageBean.selectVehicleInfo}" process=":form:manageGrid" 
+					ajax="false" styleClass="searchBtn" accesskey="s" />
+			</h:panelGrid>
+		</div>
+		<rw:mobilePaging pageBean="#{mobileVehicleInfoManageBean}" />
+		<div class="tableCenter">
+			<p:dataTable emptyMessage="暂无数据" var="model" value="#{mobileVehicleInfoManageBean.vehicleInfoList}" rowIndexVar="rowIndex"
+				widgetVar="viewTable" rowKey="#{model.id}" paginatorAlwaysVisible="true"
+				sortBy="createDate" sortOrder="descending" id="viewTable">
+				<f:facet name="header" >
+					车辆信息列表
+				</f:facet>
+				<p:column headerText="车辆编码" sortBy="#{model.number}" width="100px;">
+					<h:outputText value="#{model.number}" />
+				</p:column>
+				<p:column headerText="车辆工作情况" sortBy="#{model.workInfo}">
+					<h:outputText value="#{model.workInfo}" escape="false"/>
+				</p:column>
+			</p:dataTable>
+		</div>
+		<rw:mobilePaging pageBean="#{mobileVehicleInfoManageBean}" />
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/GCOA/!svn/ver/9/src/com/qylm/bean/vehicle
+END
+VehiclePeccancyCreateBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/GCOA/!svn/ver/9/src/com/qylm/bean/vehicle/VehiclePeccancyCreateBean.java
+END
+VehicleServicingCreateBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/GCOA/!svn/ver/9/src/com/qylm/bean/vehicle/VehicleServicingCreateBean.java
+END
+VehiclePeccancyManageBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/GCOA/!svn/ver/1/src/com/qylm/bean/vehicle/VehiclePeccancyManageBean.java
+END
+VehicleInfoCreateBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/GCOA/!svn/ver/9/src/com/qylm/bean/vehicle/VehicleInfoCreateBean.java
+END
+VehicleServicingManageBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/GCOA/!svn/ver/1/src/com/qylm/bean/vehicle/VehicleServicingManageBean.java
+END
+VehicleInfoManageBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/GCOA/!svn/ver/1/src/com/qylm/bean/vehicle/VehicleInfoManageBean.java
+END

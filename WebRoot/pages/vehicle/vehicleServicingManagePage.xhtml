@@ -1,0 +1,90 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:rw="http://www.qylm.com"
+	xmlns:util="http://java.sun.com/jsf/composite/component/util"
+	template="/WEB-INF/facelets/templates/template.xhtml">
+	<ui:param name="title" value="车辆维修管理" />
+	<ui:define name="tableCenter">
+		<t:saveState value="#{vehicleServicingManageBean.vehicleServicingManageDto}" />
+		<t:saveState value="#{vehicleServicingManageBean.vehicleServicingList}" />
+		<div class="buttonNorth">
+			<p:commandButton value="添加" action="#{vehicleServicingManageBean.newVehicleServicing}" ajax="false" styleClass="createBtn" accesskey="c"
+				rendered="#{userBean.isCheckPermission('vehicle_vehicleServicing', '添加')}"/>
+			<p:commandButton value="批量删除" actionListener="#{vehicleServicingManageBean.deleteMul}" 
+				update="viewTable :form:messages" onstart="return deleteConfirm();" styleClass="multipleDelBtn" accesskey="d"
+				rendered="#{userBean.isCheckPermission('vehicle_vehicleServicing', '删除')}"/>
+		</div>
+		<div class="searchRequirementNorth">
+			<p:focus for="number" />
+			<h:panelGrid id="manageGrid" columns="9">
+				<h:outputLabel for="number" value="车辆编号" />
+				<p:autoComplete id="number" dropdown="true" maxlength="10" size="10"
+					value="#{vehicleServicingManageBean.vehicleServicingManageDto.number}" 
+					completeMethod="#{selectBean.selectVehicleNumber}" />
+				<h:outputLabel for="breakdown" value="维修故障" style="margin-left: 30px;"/>
+				<p:inputText styleClass="inputText" id="breakdown" size="20" maxlength="20"
+					value="#{vehicleServicingManageBean.vehicleServicingManageDto.breakdown}" />
+				<h:outputLabel for="beginGervicingDate" value="维修日期（开始）" />
+				<p:calendar navigator="true" id="beginGervicingDate" size="10" maxlength="10" locale="tr"
+					value="#{vehicleServicingManageBean.vehicleServicingManageDto.beginGervicingDate}"
+					pattern="yyyy-MM-dd"/>
+				~
+				<p:calendar navigator="true" id="endGervicingDate" size="10" maxlength="10" locale="tr"
+					value="#{vehicleServicingManageBean.vehicleServicingManageDto.endGervicingDate}"
+					pattern="yyyy-MM-dd"/>
+				<p:commandButton id="searchBtn" value="搜索" action="#{vehicleServicingManageBean.selectVehicleServicing}" process=":form:manageGrid" 
+					ajax="false" styleClass="searchBtn" accesskey="s" />
+			</h:panelGrid>
+		</div>
+		<rw:paging pageBean="#{vehicleServicingManageBean}" />
+		<div class="tableCenter">
+			<p:dataTable emptyMessage="暂无数据" var="model" value="#{vehicleServicingManageBean.vehicleServicingList}" rowIndexVar="rowIndex"
+				widgetVar="viewTable" rowKey="#{model.id}" paginatorAlwaysVisible="true"
+				sortBy="createDate" sortOrder="descending" id="viewTable"
+				selection="#{vehicleServicingManageBean.selectedModels}">
+				<f:facet name="header" >
+					车辆维修信息列表
+				</f:facet>
+				<p:column selectionMode="multiple" exportable="false" style="width:32px" />
+				<p:column headerText="车辆编码" sortBy="#{model.vehicleInfo.number}" width="100px;">
+					<h:outputText value="#{model.vehicleInfo.number}" />
+				</p:column>
+				<p:column headerText="车辆维修负责人" sortBy="#{model.employee.name}" width="130px;">
+					<h:outputText value="#{model.employee.name}" />
+				</p:column>
+				<p:column headerText="车辆维修日期" sortBy="#{model.servicingDate}" width="100px;">
+					<h:outputText value="#{model.servicingDate}">
+						<f:convertDateTime pattern="yyyy-MM-dd" timeZone="Asia/Shanghai" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="维修故障" sortBy="#{model.breakdown}">
+					<h:outputText value="#{model.breakdown}"/>
+				</p:column>
+				<p:column headerText="维修费用" sortBy="#{model.cost}" width="80px;">
+					<h:outputText value="#{model.cost}" />
+				</p:column>
+				<p:column headerText="维修状态" sortBy="#{model.state}" width="80px;">
+					<h:outputText value="#{rw:label(genericCodeBean.c0402,model.state)}" style="color:#{model.typeColor};"/>
+				</p:column>
+				<p:column headerText="基本操作" exportable="false" style="width: 140px;">
+					<p:commandButton value="维修完毕" action="#{vehicleServicingManageBean.queryServicing(model)}"
+						ajax="false" styleClass="modifyBtn"
+						disabled="#{model.state == '3'}"
+						rendered="#{userBean.isCheckPermission('vehicle_vehicleServicing', '确认')}"/>
+					<p:commandButton value="#{model.state == '3' ? '详细' :'修改'}" action="#{vehicleServicingManageBean.updateVehicleServicing(model)}"
+						ajax="false" styleClass="modifyBtn"
+						rendered="#{userBean.isCheckPermission('vehicle_vehicleServicing', '修改')}"/>
+					<p:commandButton value="删除" action="#{vehicleServicingManageBean.deleteVehicleServicing(model)}"
+						partialSubmit="true" process="@this"  update="viewTable :form:messages"
+						onstart="return deleteConfirm();" styleClass="singleDelBtn"
+						rendered="#{userBean.isCheckPermission('vehicle_vehicleServicing', '删除')}"/>
+				</p:column>
+			</p:dataTable>
+		</div>
+	</ui:define>
+</ui:composition>

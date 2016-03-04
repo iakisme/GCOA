@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/GCOA/!svn/ver/9/src/com/qylm/dto/engineering
+END
+EngineeringProjectManageDto.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/GCOA/!svn/ver/1/src/com/qylm/dto/engineering/EngineeringProjectManageDto.java
+END
+ProjectStateCreateDto.java
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/GCOA/!svn/ver/9/src/com/qylm/dto/engineering/ProjectStateCreateDto.java
+END
+ProjectStateManageDto.java
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/GCOA/!svn/ver/5/src/com/qylm/dto/engineering/ProjectStateManageDto.java
+END
+EngineeringProjectCreateDto.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/GCOA/!svn/ver/9/src/com/qylm/dto/engineering/EngineeringProjectCreateDto.java
+END

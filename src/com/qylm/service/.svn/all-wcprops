@@ -1,0 +1,473 @@
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/GCOA/!svn/ver/12/src/com/qylm/service
+END
+TreeItemService.java
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/GCOA/!svn/ver/1/src/com/qylm/service/TreeItemService.java
+END
+EngineeringProjectService.java
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/GCOA/!svn/ver/8/src/com/qylm/service/EngineeringProjectService.java
+END
+FittingPurchaseServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/GCOA/!svn/ver/1/src/com/qylm/service/FittingPurchaseServiceImpl.java
+END
+RoleDetailService.java
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/GCOA/!svn/ver/1/src/com/qylm/service/RoleDetailService.java
+END
+CustomerFinancialServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/GCOA/!svn/ver/1/src/com/qylm/service/CustomerFinancialServiceImpl.java
+END
+FittingStorageService.java
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/GCOA/!svn/ver/1/src/com/qylm/service/FittingStorageService.java
+END
+ProjectEmployeeDetailService.java
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/GCOA/!svn/ver/1/src/com/qylm/service/ProjectEmployeeDetailService.java
+END
+FinancialCollectDetailServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/GCOA/!svn/ver/1/src/com/qylm/service/FinancialCollectDetailServiceImpl.java
+END
+FittingPurchaseService.java
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/GCOA/!svn/ver/1/src/com/qylm/service/FittingPurchaseService.java
+END
+VehicleInfoDetailServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/GCOA/!svn/ver/1/src/com/qylm/service/VehicleInfoDetailServiceImpl.java
+END
+UserServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/GCOA/!svn/ver/1/src/com/qylm/service/UserServiceImpl.java
+END
+PlanArrangementServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/GCOA/!svn/ver/1/src/com/qylm/service/PlanArrangementServiceImpl.java
+END
+EmployeeServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/GCOA/!svn/ver/1/src/com/qylm/service/EmployeeServiceImpl.java
+END
+FileControlServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/GCOA/!svn/ver/1/src/com/qylm/service/FileControlServiceImpl.java
+END
+FittingRepertoryServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/GCOA/!svn/ver/1/src/com/qylm/service/FittingRepertoryServiceImpl.java
+END
+CustomerFinancialService.java
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/GCOA/!svn/ver/1/src/com/qylm/service/CustomerFinancialService.java
+END
+ProcedureSetDetailServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/GCOA/!svn/ver/1/src/com/qylm/service/ProcedureSetDetailServiceImpl.java
+END
+VehicleServicingServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/GCOA/!svn/ver/1/src/com/qylm/service/VehicleServicingServiceImpl.java
+END
+FinancialCollectDetailService.java
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/GCOA/!svn/ver/1/src/com/qylm/service/FinancialCollectDetailService.java
+END
+PlanArrangementService.java
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/GCOA/!svn/ver/1/src/com/qylm/service/PlanArrangementService.java
+END
+UserService.java
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/GCOA/!svn/ver/1/src/com/qylm/service/UserService.java
+END
+VehicleInfoDetailService.java
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/GCOA/!svn/ver/1/src/com/qylm/service/VehicleInfoDetailService.java
+END
+EmployeeService.java
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/GCOA/!svn/ver/1/src/com/qylm/service/EmployeeService.java
+END
+FittingRepertoryService.java
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/GCOA/!svn/ver/1/src/com/qylm/service/FittingRepertoryService.java
+END
+FileControlService.java
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/GCOA/!svn/ver/1/src/com/qylm/service/FileControlService.java
+END
+UserRoleServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/GCOA/!svn/ver/1/src/com/qylm/service/UserRoleServiceImpl.java
+END
+ProcedureSetServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/GCOA/!svn/ver/1/src/com/qylm/service/ProcedureSetServiceImpl.java
+END
+EngineeringProjectDetailServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/GCOA/!svn/ver/1/src/com/qylm/service/EngineeringProjectDetailServiceImpl.java
+END
+ProcedureSetDetailService.java
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/GCOA/!svn/ver/1/src/com/qylm/service/ProcedureSetDetailService.java
+END
+VehicleServicingService.java
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/GCOA/!svn/ver/1/src/com/qylm/service/VehicleServicingService.java
+END
+FittingStorageDetailServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/GCOA/!svn/ver/1/src/com/qylm/service/FittingStorageDetailServiceImpl.java
+END
+UserRoleService.java
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/GCOA/!svn/ver/1/src/com/qylm/service/UserRoleService.java
+END
+FittingPurchaseDetailServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/GCOA/!svn/ver/1/src/com/qylm/service/FittingPurchaseDetailServiceImpl.java
+END
+EngineeringProjectDetailService.java
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/GCOA/!svn/ver/1/src/com/qylm/service/EngineeringProjectDetailService.java
+END
+ProcedureSetService.java
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/GCOA/!svn/ver/1/src/com/qylm/service/ProcedureSetService.java
+END
+VehiclePeccancyServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/GCOA/!svn/ver/1/src/com/qylm/service/VehiclePeccancyServiceImpl.java
+END
+FittingLibraryServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/GCOA/!svn/ver/1/src/com/qylm/service/FittingLibraryServiceImpl.java
+END
+FittingStorageDetailService.java
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/GCOA/!svn/ver/1/src/com/qylm/service/FittingStorageDetailService.java
+END
+FittingRejectedDetailServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/GCOA/!svn/ver/1/src/com/qylm/service/FittingRejectedDetailServiceImpl.java
+END
+EngineeringFinancialServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/GCOA/!svn/ver/1/src/com/qylm/service/EngineeringFinancialServiceImpl.java
+END
+FittingPurchaseDetailService.java
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/GCOA/!svn/ver/1/src/com/qylm/service/FittingPurchaseDetailService.java
+END
+CustomerServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/GCOA/!svn/ver/1/src/com/qylm/service/CustomerServiceImpl.java
+END
+RoleServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/GCOA/!svn/ver/1/src/com/qylm/service/RoleServiceImpl.java
+END
+EntityClassServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/GCOA/!svn/ver/1/src/com/qylm/service/EntityClassServiceImpl.java
+END
+VehiclePeccancyService.java
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/GCOA/!svn/ver/1/src/com/qylm/service/VehiclePeccancyService.java
+END
+FittingLibraryService.java
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/GCOA/!svn/ver/1/src/com/qylm/service/FittingLibraryService.java
+END
+FittingRejectedServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/GCOA/!svn/ver/1/src/com/qylm/service/FittingRejectedServiceImpl.java
+END
+FittingRejectedDetailService.java
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/GCOA/!svn/ver/1/src/com/qylm/service/FittingRejectedDetailService.java
+END
+GenericFileServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/GCOA/!svn/ver/1/src/com/qylm/service/GenericFileServiceImpl.java
+END
+EngineeringFinancialService.java
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/GCOA/!svn/ver/1/src/com/qylm/service/EngineeringFinancialService.java
+END
+CustomerService.java
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/GCOA/!svn/ver/1/src/com/qylm/service/CustomerService.java
+END
+RoleService.java
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/GCOA/!svn/ver/1/src/com/qylm/service/RoleService.java
+END
+FittingInfoServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/GCOA/!svn/ver/1/src/com/qylm/service/FittingInfoServiceImpl.java
+END
+EntityClassService.java
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/GCOA/!svn/ver/1/src/com/qylm/service/EntityClassService.java
+END
+FinancialPayDetailServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/GCOA/!svn/ver/1/src/com/qylm/service/FinancialPayDetailServiceImpl.java
+END
+FileExportServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/GCOA/!svn/ver/1/src/com/qylm/service/FileExportServiceImpl.java
+END
+FunctionServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/GCOA/!svn/ver/1/src/com/qylm/service/FunctionServiceImpl.java
+END
+FittingRejectedService.java
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/GCOA/!svn/ver/1/src/com/qylm/service/FittingRejectedService.java
+END
+GenericFileService.java
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/GCOA/!svn/ver/1/src/com/qylm/service/GenericFileService.java
+END
+VehicleInfoServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/GCOA/!svn/ver/1/src/com/qylm/service/VehicleInfoServiceImpl.java
+END
+FittingInfoService.java
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/GCOA/!svn/ver/1/src/com/qylm/service/FittingInfoService.java
+END
+FinancialPayDetailService.java
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/GCOA/!svn/ver/1/src/com/qylm/service/FinancialPayDetailService.java
+END
+FileExportService.java
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/GCOA/!svn/ver/1/src/com/qylm/service/FileExportService.java
+END
+FunctionService.java
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/GCOA/!svn/ver/1/src/com/qylm/service/FunctionService.java
+END
+FittingPurchaseExamineServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/GCOA/!svn/ver/1/src/com/qylm/service/FittingPurchaseExamineServiceImpl.java
+END
+VehicleInfoService.java
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/GCOA/!svn/ver/1/src/com/qylm/service/VehicleInfoService.java
+END
+CommonSmsServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/GCOA/!svn/ver/7/src/com/qylm/service/CommonSmsServiceImpl.java
+END
+FittingLibraryDetailServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/GCOA/!svn/ver/1/src/com/qylm/service/FittingLibraryDetailServiceImpl.java
+END
+MaterialsGrantServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/GCOA/!svn/ver/12/src/com/qylm/service/MaterialsGrantServiceImpl.java
+END
+TreeItemServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/GCOA/!svn/ver/1/src/com/qylm/service/TreeItemServiceImpl.java
+END
+EngineeringProjectServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/GCOA/!svn/ver/8/src/com/qylm/service/EngineeringProjectServiceImpl.java
+END
+RoleDetailServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/GCOA/!svn/ver/1/src/com/qylm/service/RoleDetailServiceImpl.java
+END
+FittingPurchaseExamineService.java
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/GCOA/!svn/ver/1/src/com/qylm/service/FittingPurchaseExamineService.java
+END
+ProjectEmployeeDetailServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/GCOA/!svn/ver/1/src/com/qylm/service/ProjectEmployeeDetailServiceImpl.java
+END
+FittingStorageServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/GCOA/!svn/ver/1/src/com/qylm/service/FittingStorageServiceImpl.java
+END
+CommonSmsService.java
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/GCOA/!svn/ver/7/src/com/qylm/service/CommonSmsService.java
+END
+FittingLibraryDetailService.java
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/GCOA/!svn/ver/1/src/com/qylm/service/FittingLibraryDetailService.java
+END
+MaterialsGrantService.java
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/GCOA/!svn/ver/12/src/com/qylm/service/MaterialsGrantService.java
+END

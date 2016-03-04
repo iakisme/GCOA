@@ -1,0 +1,75 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:rw="http://www.qylm.com"
+	template="/WEB-INF/facelets/templates/template.xhtml">
+	<ui:param name="title" value="采购单登陆" />
+	<ui:define name="tableCenter">
+		<t:saveState value="#{procedureSetCreateBean.procedureSetCreateDto}" />
+		<t:saveState value="#{procedureSetCreateBean.userList}" />
+		<t:saveState value="#{procedureSetCreateBean.users}" />
+		<div class="buttonNorth">
+			<p:commandButton value="返回" action="#{procedureSetCreateBean.back}"
+				styleClass="backBtn" style="margin-left: 4px" immediate="true" ajax="false" />
+			<p:commandButton value="添加"
+				styleClass="createBtn" style="margin-left: 4px" action="#{procedureSetCreateBean.newProcedureSet}" immediate="true" update="@form" />
+			<p:commandButton value="保存" disabled="#{procedureSetCreateBean.procedureSetCreateDto.state}"
+				styleClass="saveBtn" id="saveBtn" style="margin-left: 4px" actionListener="#{procedureSetCreateBean.saveProcedureSet}" update="@form" />
+			<p:commandButton value="#{procedureSetCreateBean.procedureSetCreateDto.state ? '重设' : '确认'}" style="margin-left: 4px" update="@form"
+				disabled="#{procedureSetCreateBean.procedureSetCreateDto.transferProcedureSet == null}" 
+				onstart="return confirmationMess('#{procedureSetCreateBean.procedureSetCreateDto.state ? '重设后可重新修改' : '确认后不可修改！'}')"
+				action="#{procedureSetCreateBean.query}"/>
+		</div>
+		<div class="tableCenter">
+			<h:panelGrid columns="2" styleClass="dataTable" cellpadding="2"
+				cellspacing="1" columnClasses="column1, column4" >
+				<h:column>
+					<p:outputLabel for="applyNumber" value="采购单类型" />
+				</h:column>
+				<h:column>
+					<p:selectOneMenu styleClass="selectOneMenu" id="applyNumber"
+						disabled="#{procedureSetCreateBean.procedureSetCreateDto.state}"
+						onchange="selectProcedureSet();"
+						value="#{procedureSetCreateBean.procedureSetCreateDto.applyNumber}">
+						<f:selectItems value="#{genericCodeBean.c0701}" />
+					</p:selectOneMenu>
+					<p:remoteCommand name="selectProcedureSet" action="#{procedureSetCreateBean.selectProcedureSet}" update="@form"/>
+				</h:column>
+				<h:column>
+					<p:outputLabel value="选择审核人员" />
+				</h:column>
+				<h:column>
+					<p:commandButton value="选择审核人员" style="margin-left: 4px"
+						disabled="#{procedureSetCreateBean.procedureSetCreateDto.state}"
+						partialSubmit="true" process="@this" update=":form:dlgUser" oncomplete="PF('dlgUser').show();"
+						immediate="true" action="#{procedureSetCreateBean.findUser}" />
+					<h:outputText value="审核人员的审核级别以选择的先后顺序为级别，最新选择的最新审核" style="margin-left: 4px" />
+				</h:column>
+				<h:column>
+					<h:outputText value="审核人员列表"  />
+				</h:column>
+				<h:column>
+					<h:outputText value="#{procedureSetCreateBean.procedUsers}"  />
+				</h:column>
+			</h:panelGrid>
+		</div>
+		<p:dialog id="dlgUser" header="用户信息列表" widgetVar="dlgUser" resizable="false" modal="true" position="center">
+			<p:dataTable emptyMessage="暂无数据" var="model" value="#{procedureSetCreateBean.userList}">
+				<p:column headerText="选择" exportable="false" style="width: 60px;" styleClass="textConter">
+					<p:commandButton value="确定" partialSubmit="true" process="@this" action="#{procedureSetCreateBean.queryUser(model)}"
+						styleClass="saveBtn" oncomplete="PF('dlgUser').hide();" update="@form" />
+				</p:column>
+				<p:column headerText="登录名" style="width: 100px;" styleClass="textConter">
+					<h:outputText value="#{model.loginName}" />
+				</p:column>
+				<p:column headerText="真实姓名" style="width: 100px;" styleClass="textConter">
+					<h:outputText value="#{model.userName}" />
+				</p:column>
+			</p:dataTable>
+		</p:dialog>
+	</ui:define>
+</ui:composition>

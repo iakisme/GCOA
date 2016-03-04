@@ -1,0 +1,60 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:rw="http://www.qylm.com"
+	xmlns:util="http://java.sun.com/jsf/composite/component/util"
+	template="/WEB-INF/facelets/templates/template.xhtml">
+	<ui:param name="title" value="日常计划管理" />
+	<ui:define name="customcss">
+		<style type="text/css">
+			.value {
+				width: 1000px;
+			}
+		</style>
+	</ui:define>
+	<ui:define name="tableCenter">
+		<t:saveState value="#{planArrangementManageBean.planArrangementManageDto}" />
+		<t:saveState value="#{planArrangementManageBean.planArrangementModel}" />
+		<div class="tableCenter">
+			<p:schedule id="schedule" value="#{planArrangementManageBean.planArrangementModel}" 
+				widgetVar="myschedule" timeZone="Asia/Shanghai" locale="tr" rightHeaderTemplate="none">
+				<p:ajax event="dateSelect" listener="#{planArrangementManageBean.onDateSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
+				<p:ajax event="eventSelect" listener="#{planArrangementManageBean.onEventSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
+				<p:ajax event="eventMove" listener="#{planArrangementManageBean.onEventMove}" update="messages" />
+			</p:schedule>
+			<p:dialog widgetVar="eventDialog" header="安排日程计划"
+				showEffect="clip" hideEffect="clip">
+				<h:panelGrid id="eventDetails" columns="2">
+					<h:outputLabel for="title" value="标题：" />
+					<p:inputText id="title" value="#{planArrangementManageBean.event.title}"
+						required="true" />
+					<h:outputLabel for="startDate" value="开始日期:" />
+					<p:inputMask id="startDate" value="#{planArrangementManageBean.event.startDate}"
+						mask="9999-99-99">
+						<f:convertDateTime pattern="yyyy-MM-dd" timeZone="Asia/Shanghai" />
+					</p:inputMask>
+					<h:outputLabel for="to" value="结束日期:" />
+					<p:inputMask id="to" value="#{planArrangementManageBean.event.endDate}"
+						mask="9999-99-99">
+						<f:convertDateTime pattern="yyyy-MM-dd" timeZone="Asia/Shanghai" />
+					</p:inputMask>
+					<h:outputLabel for="description" value="日程计划:" />
+					<p:inputTextarea id="description" maxlength="1000" cols="60" rows="10" value="#{planArrangementManageBean.event.description}" />
+					<h:outputLabel for="allDay" value="是否提醒:" />
+					<h:selectBooleanCheckbox id="allDay"
+						value="#{planArrangementManageBean.event.allDay}" />
+					<p:commandButton value="保存" update=":form:schedule"
+						action="#{planArrangementManageBean.savePlanArrangement}"
+						oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />
+					<p:commandButton value="清除" update=":form:eventDetails messages"
+						action="#{planArrangementManageBean.deletePlanArrangement}"
+						oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />
+				</h:panelGrid>
+			</p:dialog>
+		</div>
+	</ui:define>
+</ui:composition>

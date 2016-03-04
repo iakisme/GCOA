@@ -1,0 +1,103 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:rw="http://www.qylm.com"
+	template="/WEB-INF/facelets/templates/template.xhtml">
+	<ui:param name="title" value="车辆维修登录" />
+	<ui:define name="tableCenter">
+		<t:saveState value="#{vehicleServicingCreateBean.vehicleServicingCreateDto}" />
+		<div class="buttonNorth">
+			<p:commandButton value="返回" action="#{vehicleServicingCreateBean.back}" immediate="true" ajax="false" styleClass="backBtn" />
+			<p:commandButton value="添加" action="#{vehicleServicingCreateBean.newVehicleServicing}" immediate="true" update="@form" styleClass="createBtn" />
+			<p:commandButton value="保存" action="#{vehicleServicingCreateBean.saveVehicleServicing}" update="@form" styleClass="saveBtn" 
+				rendered="#{userBean.isCheckPermission('vehicle_vehicleServicing', '添加') or userBean.isCheckPermission('vehicle_vehicleServicing', '修改')}"
+				disabled="#{vehicleServicingCreateBean.vehicleServicingCreateDto.state == '3'}"/>
+			<p:commandButton value="确认维修" action="#{vehicleServicingCreateBean.queryVehicleServicing}" update="@form" styleClass="saveBtn" 
+				disabled="#{vehicleServicingCreateBean.vehicleServicingCreateDto.transferVehicleServicing == null or vehicleServicingCreateBean.vehicleServicingCreateDto.state == '3'}"
+				onstart="return confirmationMess('确认后生效，是否确认！');"
+				rendered="#{userBean.isCheckPermission('vehicle_vehicleServicing', '添加') or userBean.isCheckPermission('vehicle_vehicleServicing', '修改')}"/>
+		</div>
+		<div class="tableCenter">
+			<p:focus for="vehicleInfo" />
+			<p:panelGrid id="manageGrid" styleClass="dataTable"> 
+				<p:row>
+					<p:column styleClass="column1">
+						<p:outputLabel for="vehicleInfo" value="车辆信息" />
+					</p:column>
+					<p:column styleClass="column4" colspan="3">
+						<p:autoComplete id="vehicleInfo" value="#{vehicleServicingCreateBean.vehicleServicingCreateDto.vehicleInfo}" 
+							completeMethod="#{selectBean.selectVehicleInfo}" label="车辆信息必须输入" required="true" size="20" maxlength="20"
+							var="vehicleInfo" itemLabel="#{vehicleInfo.number}" dropdown="true"
+							itemValue="#{vehicleInfo}" converter="vehicleInfoConverter" forceSelection="true">
+						</p:autoComplete>
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column1">
+						<p:outputLabel for="employee" value="车辆维修负责人" />
+					</p:column>
+					<p:column styleClass="column4" colspan="3">
+						<p:autoComplete id="employee" value="#{vehicleServicingCreateBean.vehicleServicingCreateDto.employee}" 
+							completeMethod="#{selectBean.selectEmployee}" label="车辆维修负责人必须输入" required="true" size="12" maxlength="12"
+							var="employee" itemLabel="#{employee.name}" dropdown="true"
+							itemValue="#{employee}" converter="employeeConverter" forceSelection="true">
+							<p:column>
+								<h:outputText value="#{employee.name}" />
+							</p:column>
+							<p:column>
+								<h:outputText value="#{employee.identification}" />
+							</p:column>
+						</p:autoComplete>
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column1">
+						<p:outputLabel for="servicingDate" value="车辆维修日期" />
+					</p:column>
+					<p:column styleClass="column4" colspan="3">
+						<p:calendar navigator="true" id="servicingDate" size="10" maxlength="10"
+							value="#{vehicleServicingCreateBean.vehicleServicingCreateDto.servicingDate}"
+							pattern="yyyy-MM-dd" locale="tr"/>
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column1">
+						<p:outputLabel for="breakdown" value="故障原因" />
+					</p:column>
+					<p:column styleClass="column4" colspan="3">
+						<p:inputText id="breakdown" value="#{vehicleServicingCreateBean.vehicleServicingCreateDto.breakdown}" size="40" maxlength="40"/>
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column1">
+						<p:outputLabel for="cost" value="费用" />
+					</p:column>
+					<p:column styleClass="column4" colspan="3">
+						<pe:inputNumber id="cost" maxlength="10" size="12" value="#{vehicleServicingCreateBean.vehicleServicingCreateDto.cost}" 
+							minValue="0.00" emptyValue="0" decimalPlaces="2" />￥
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column1">
+						<p:outputLabel for="homeState" value="备注" />
+					</p:column>
+					<p:column styleClass="column4" colspan="3">
+						<p:editor id="homeState" maxlength="1000" value="#{vehicleServicingCreateBean.vehicleServicingCreateDto.remark}" width="800" height="200" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column1">
+						<h:outputText value="创建人" />
+					</p:column>
+					<p:column styleClass="column4" colspan="3">
+						<h:outputText value="#{vehicleServicingCreateBean.vehicleServicingCreateDto.creater.userName}" />
+					</p:column>
+				</p:row>
+			</p:panelGrid>
+		</div>
+	</ui:define>
+</ui:composition>

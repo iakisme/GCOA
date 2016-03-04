@@ -1,0 +1,119 @@
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/GCOA/!svn/ver/12/src/com/qylm/dxo
+END
+RoleCreateDxo.java
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/GCOA/!svn/ver/9/src/com/qylm/dxo/RoleCreateDxo.java
+END
+CustomerCreateDxo.java
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/GCOA/!svn/ver/9/src/com/qylm/dxo/CustomerCreateDxo.java
+END
+TreeItemManageDxo.java
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/GCOA/!svn/ver/1/src/com/qylm/dxo/TreeItemManageDxo.java
+END
+ProcedureSetCreateDxo.java
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/GCOA/!svn/ver/9/src/com/qylm/dxo/ProcedureSetCreateDxo.java
+END
+CustomerFinancialCreateDxo.java
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/GCOA/!svn/ver/9/src/com/qylm/dxo/CustomerFinancialCreateDxo.java
+END
+ProjectStateCreateDxo.java
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/GCOA/!svn/ver/9/src/com/qylm/dxo/ProjectStateCreateDxo.java
+END
+FunctionManageDxo.java
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/GCOA/!svn/ver/1/src/com/qylm/dxo/FunctionManageDxo.java
+END
+MaterialsGrantCreateDxo.java
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/GCOA/!svn/ver/12/src/com/qylm/dxo/MaterialsGrantCreateDxo.java
+END
+UserCreateDxo.java
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/GCOA/!svn/ver/1/src/com/qylm/dxo/UserCreateDxo.java
+END
+EmployeeCreateDxo.java
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/GCOA/!svn/ver/9/src/com/qylm/dxo/EmployeeCreateDxo.java
+END
+FittingRepertoryCreateDxo.java
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/GCOA/!svn/ver/9/src/com/qylm/dxo/FittingRepertoryCreateDxo.java
+END
+FittingInfoCreateDxo.java
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/GCOA/!svn/ver/9/src/com/qylm/dxo/FittingInfoCreateDxo.java
+END
+EngineeringProjectCreateDxo.java
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/GCOA/!svn/ver/9/src/com/qylm/dxo/EngineeringProjectCreateDxo.java
+END
+VehiclePeccancyCreateDxo.java
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/GCOA/!svn/ver/9/src/com/qylm/dxo/VehiclePeccancyCreateDxo.java
+END
+FittingStorageCreateDxo.java
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/GCOA/!svn/ver/9/src/com/qylm/dxo/FittingStorageCreateDxo.java
+END
+FittingLibraryCreateDxo.java
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/GCOA/!svn/ver/9/src/com/qylm/dxo/FittingLibraryCreateDxo.java
+END
+VehicleServicingCreateDxo.java
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/GCOA/!svn/ver/9/src/com/qylm/dxo/VehicleServicingCreateDxo.java
+END
+VehicleInfoCreateDxo.java
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/GCOA/!svn/ver/9/src/com/qylm/dxo/VehicleInfoCreateDxo.java
+END
+FittingPurchaseCreateDxo.java
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/GCOA/!svn/ver/9/src/com/qylm/dxo/FittingPurchaseCreateDxo.java
+END

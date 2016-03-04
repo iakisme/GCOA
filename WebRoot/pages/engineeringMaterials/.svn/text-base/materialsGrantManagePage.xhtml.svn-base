@@ -1,0 +1,92 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:rw="http://www.qylm.com"
+	xmlns:util="http://java.sun.com/jsf/composite/component/util"
+	template="/WEB-INF/facelets/templates/template.xhtml">
+	<ui:param name="title" value="原料发放管理" />
+	<ui:define name="tableCenter">
+		<t:saveState
+			value="#{materialsGrantManageBean.materialsGrantManageDto}" />
+		<t:saveState value="#{materialsGrantManageBean.materialsGrantList}" />
+		<div class="buttonNorth">
+			<p:commandButton value="添加"
+				action="#{materialsGrantManageBean.newMaterialsGrant}" ajax="false"
+				styleClass="createBtn" accesskey="c" />
+			<!--rendered="#{userBean.isCheckPermission('material_materialInfo', '添加')}"; -->
+			<p:commandButton value="批量删除"
+				actionListener="#{materialsGrantManageBean.deleteMul}"
+				update="viewTable :form:messages" onstart="return deleteConfirm();"
+				styleClass="multipleDelBtn" accesskey="d" />
+			<!-- rendered="#{userBean.isCheckPermission('material_materialInfo', '删除')}" -->
+		</div>
+		<!--<div class="searchRequirementNorth">
+			<p:focus for="serialNumber" />
+			<h:panelGrid id="manageGrid" columns="5">
+				<h:outputLabel for="serialNumber" value="客户编号" />
+				<p:inputText styleClass="inputText" id="serialNumber" size="20" maxlength="20"
+					value="#{materialManageBean.materialManageDto.serialNumber}" />
+				<h:outputLabel for="name" value="公司名称" />
+				<p:inputText styleClass="inputText" id="name" size="40" maxlength="40"
+					value="#{materialManageBean.materialManageDto.name}" />
+				<p:commandButton id="searchBtn" value="搜索" action="#{materialManageBean.selectCustomer}" process=":form:manageGrid" 
+					ajax="false" styleClass="searchBtn" accesskey="s" />
+			</h:panelGrid>
+		</div>-->
+		<rw:paging pageBean="#{materialsGrantManageBean}" />
+		<div class="tableCenter">
+			<p:dataTable emptyMessage="暂无数据" var="model"
+				value="#{materialsGrantManageBean.materialsGrantList}"
+				rowIndexVar="rowIndex" widgetVar="viewTable" rowKey="#{model.id}"
+				paginatorAlwaysVisible="true" sortBy="createDate"
+				sortOrder="descending" id="viewTable"
+				selection="#{materialsGrantManageBean.selectedModels}">
+				<f:facet name="header">
+					原料发放列表
+				</f:facet>
+				<p:column selectionMode="multiple" exportable="false"
+					style="width:32px" />
+				<p:column headerText="原料发放编号" sortBy="#{model.id}"
+					style="width:80px">
+					<h:outputText value="#{model.id}" />
+				</p:column>
+				<p:column headerText="预计运送方量">
+					<h:outputText value="#{model.engineeringProjectDetail.workVolume}" />
+				</p:column>
+				<p:column headerText="实际运送量">
+					<h:outputText value="#{model.receiveSum}（立方）" />
+				</p:column>
+
+				<p:column headerText="领取状态">
+					<div style="text-align: left;">
+						<h:outputText
+							value="确认状态：#{rw:label(genericCodeBean.c0901,model.type)}"
+							style="color: #FF0000;" />
+						<br />
+						<br />
+						<h:outputText value="领取人：#{model.employee.name}" />
+						<br />
+					</div>
+				</p:column>
+				<p:column headerText="工作地点">
+					<h:outputText
+						value="#{model.engineeringProjectDetail.engineeringProject.workAddress}" />
+				</p:column>
+
+				<p:column headerText="车辆编号">
+					<h:outputText
+						value="#{model.engineeringProjectDetail.vehicleNumber}" />
+				</p:column>
+				<p:column headerText="基本操作" exportable="false" style="width: 60px;">
+					<p:commandButton value="修改状态"
+						action="#{projectStateManageBean.updateEngineeringProject(model)}"
+						ajax="false" styleClass="modifyBtn" />
+				</p:column>
+			</p:dataTable>
+		</div>
+	</ui:define>
+</ui:composition>

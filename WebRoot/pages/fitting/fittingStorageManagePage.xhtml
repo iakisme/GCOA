@@ -1,0 +1,77 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:rw="http://www.qylm.com"
+	xmlns:util="http://java.sun.com/jsf/composite/component/util"
+	template="/WEB-INF/facelets/templates/template.xhtml">
+	<ui:param name="title" value="配件入库管理" />
+	<ui:define name="tableCenter">
+		<t:saveState value="#{fittingStorageManageBean.fittingStorageManageDto}" />
+		<t:saveState value="#{fittingStorageManageBean.fittingStorageList}" />
+		<div class="buttonNorth">
+			<p:commandButton value="添加" action="#{fittingStorageManageBean.newFittingStorage}" ajax="false" styleClass="createBtn" accesskey="c"
+				rendered="#{userBean.isCheckPermission('fitting_fittingStorage', '添加')}"/>
+			<p:commandButton value="批量删除" actionListener="#{fittingStorageManageBean.deleteMul}" 
+				rendered="#{userBean.isCheckPermission('fitting_fittingStorage', '删除')}"
+				update="viewTable :form:messages" onstart="return deleteConfirm();" styleClass="multipleDelBtn" accesskey="d"/>
+		</div>
+		<div class="searchRequirementNorth">
+			<p:focus for="number" />
+			<h:panelGrid id="manageGrid" columns="7">
+				<h:outputLabel for="number" value="采购编号" />
+				<p:inputText styleClass="inputText" id="number" size="10" maxlength="10"
+					value="#{fittingStorageManageBean.fittingStorageManageDto.number}" />
+				<h:outputLabel for="beginSorageDate" value="申请日期（开始）" />
+				<p:calendar navigator="true" id="beginSorageDate" size="10" maxlength="10" locale="tr"
+					value="#{fittingStorageManageBean.fittingStorageManageDto.beginSorageDate}"
+					pattern="yyyy-MM-dd"/>
+				~
+				<p:calendar navigator="true" id="endSorageDate" size="10" maxlength="10" locale="tr"
+					value="#{fittingStorageManageBean.fittingStorageManageDto.endSorageDate}"
+					pattern="yyyy-MM-dd"/>
+				<p:commandButton id="searchBtn" value="搜索" action="#{fittingStorageManageBean.selectFittingStorage}" process=":form:manageGrid" 
+					ajax="false" styleClass="searchBtn" accesskey="s" />
+			</h:panelGrid>
+		</div>
+		<rw:paging pageBean="#{fittingStorageManageBean}" />
+		<div class="tableCenter">
+			<p:dataTable emptyMessage="暂无数据" var="model" value="#{fittingStorageManageBean.fittingStorageList}" rowIndexVar="rowIndex"
+				widgetVar="viewTable" rowKey="#{model.id}" paginatorAlwaysVisible="true"
+				sortBy="createDate" sortOrder="descending" id="viewTable"
+				selection="#{fittingStorageManageBean.selectedModels}">
+				<f:facet name="header" >
+					配件入库信息列表
+				</f:facet>
+				<p:column selectionMode="multiple" exportable="false" style="width:32px" />
+				<p:column headerText="入库单编号" sortBy="#{model.number}"  width="100px;">
+					<h:outputText value="#{model.number}" />
+				</p:column>
+				<p:column headerText="入库日期" sortBy="#{model.storageDate}" width="100px;">
+					<h:outputText value="#{model.storageDate}">
+						<f:convertDateTime pattern="yyyy-MM-dd" timeZone="Asia/Shanghai" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="备注" sortBy="#{model.remark}">
+					<h:outputText value="#{model.remark}" />
+				</p:column>
+				<p:column headerText="入库状态" sortBy="#{model.state}" width="120px;">
+					<h:outputText value="#{model.state ? '已入库' : '入库中'}"/>
+				</p:column>
+				<p:column headerText="基本操作" exportable="false" style="width: 80px;">
+					<p:commandButton value="#{model.state ? '详细':'修改'}" action="#{fittingStorageManageBean.updateFittingStorage(model)}"
+						ajax="false" styleClass="modifyBtn"
+						rendered="#{userBean.isCheckPermission('fitting_fittingStorage', '修改')}"/>
+					<p:commandButton value="删除" action="#{fittingStorageManageBean.deleteFittingStorage(model)}"
+						partialSubmit="true" process="@this"  update="viewTable :form:messages"
+						onstart="return deleteConfirm();" styleClass="singleDelBtn"
+						disabled="#{fittingStorageManageBean.isDeleteInfo(model)}"
+						rendered="#{userBean.isCheckPermission('fitting_fittingStorage', '删除')}"/>
+				</p:column>
+			</p:dataTable>
+		</div>
+	</ui:define>
+</ui:composition>

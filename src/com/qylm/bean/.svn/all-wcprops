@@ -1,0 +1,71 @@
+K 25
+svn:wc:ra_dav:version-url
+V 39
+/svn/GCOA/!svn/ver/15/src/com/qylm/bean
+END
+MyDeskBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/GCOA/!svn/ver/12/src/com/qylm/bean/MyDeskBean.java
+END
+AddressFinderBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/GCOA/!svn/ver/1/src/com/qylm/bean/AddressFinderBean.java
+END
+UserBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/GCOA/!svn/ver/1/src/com/qylm/bean/UserBean.java
+END
+BasePagingBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/GCOA/!svn/ver/1/src/com/qylm/bean/BasePagingBean.java
+END
+FileExportBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/GCOA/!svn/ver/1/src/com/qylm/bean/FileExportBean.java
+END
+FileUploadBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/GCOA/!svn/ver/1/src/com/qylm/bean/FileUploadBean.java
+END
+MobileMyDeskBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/GCOA/!svn/ver/1/src/com/qylm/bean/MobileMyDeskBean.java
+END
+UpdatePassWordBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/GCOA/!svn/ver/1/src/com/qylm/bean/UpdatePassWordBean.java
+END
+GenericCodeBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/GCOA/!svn/ver/14/src/com/qylm/bean/GenericCodeBean.java
+END
+MobileBasePagingBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/GCOA/!svn/ver/1/src/com/qylm/bean/MobileBasePagingBean.java
+END
+LoginBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/GCOA/!svn/ver/14/src/com/qylm/bean/LoginBean.java
+END

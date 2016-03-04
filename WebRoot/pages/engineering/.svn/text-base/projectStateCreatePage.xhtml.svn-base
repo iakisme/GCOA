@@ -1,0 +1,150 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:rw="http://www.qylm.com"
+	template="/WEB-INF/facelets/templates/template.xhtml">
+	<ui:param name="title" value="工作登记登录" />
+	<ui:define name="tableCenter">
+		<t:saveState value="#{projectStateCreateBean.projectStateCreateDto}" />
+		<div class="buttonNorth">
+			<p:commandButton value="返回" action="#{projectStateCreateBean.back}" immediate="true" ajax="false" styleClass="backBtn" />
+		</div>
+		<div class="tableCenter">
+			<p:panelGrid id="manageGrid" styleClass="dataTable"> 
+				<p:row>
+					<p:column styleClass="column1">
+						<h:outputText value="客户" />
+					</p:column>
+					<p:column styleClass="column4" colspan="3">
+						<h:outputText value="#{projectStateCreateBean.projectStateCreateDto.customer.name}" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column1">
+						<h:outputText value="工作登记负责人" />
+					</p:column>
+					<p:column styleClass="column4" colspan="3">
+						<h:outputText value="#{projectStateCreateBean.projectStateCreateDto.employee.name}" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column1">
+						<h:outputText value="工作地址" />
+					</p:column>
+					<p:column styleClass="column4" colspan="3">
+						<h:outputText value="#{projectStateCreateBean.projectStateCreateDto.workAddress}" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column1">
+						<h:outputText value="工程开始日期" />
+					</p:column>
+					<p:column styleClass="column2">
+						<h:outputText value="#{projectStateCreateBean.projectStateCreateDto.beginDate}">
+							<f:convertDateTime pattern="yyyy-MM-dd" timeStyle="Asia/Shanghai"/>
+						</h:outputText>
+					</p:column>
+					<p:column styleClass="column1">
+						<h:outputText value="工程结束日期" />
+					</p:column>
+					<p:column styleClass="column4">
+						<h:outputText value="#{projectStateCreateBean.projectStateCreateDto.endDate}">
+							<f:convertDateTime pattern="yyyy-MM-dd" timeStyle="Asia/Shanghai"/>
+						</h:outputText>
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column1">
+						<h:outputText value="预算方量" />
+					</p:column>
+					<p:column styleClass="column2">
+						<h:outputText value="#{projectStateCreateBean.projectStateCreateDto.actualVolume}（立方）" />
+					</p:column>
+					<p:column styleClass="column1" style="color: #FF0000;">
+						<h:outputText value="实际方量" />
+					</p:column>
+					<p:column styleClass="column4" style="color: #FF0000;">
+						<h:outputText value="#{projectStateCreateBean.projectStateCreateDto.schedule}（立方）" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column1">
+						<h:outputText value="单价" />
+					</p:column>
+					<p:column styleClass="column2">
+						<h:outputText value="#{projectStateCreateBean.projectStateCreateDto.pumpPrice}" />
+					</p:column>
+					<p:column styleClass="column1">
+						<h:outputText value="预算总金额" />
+					</p:column>
+					<p:column styleClass="column4">
+						<h:outputText value="#{projectStateCreateBean.projectStateCreateDto.money}" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column1">
+						<h:outputText value="工作内容" />
+					</p:column>
+					<p:column styleClass="column4" colspan="3">
+						<h:outputText value="#{projectStateCreateBean.projectStateCreateDto.remark}" escape="false" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column1">
+						<h:outputText value="创建人" />
+					</p:column>
+					<p:column styleClass="column4" colspan="3">
+						<h:outputText value="#{projectStateCreateBean.projectStateCreateDto.creater.userName}" />
+					</p:column>
+				</p:row>
+			</p:panelGrid>
+			<p:dataTable var="model" value="#{projectStateCreateBean.projectStateCreateDto.engineeringProjectDetailList}" id="engineeringProjectDetail">
+				<f:facet name="header" >
+					工作车辆安排列表
+				</f:facet>
+				<p:column headerText="车辆编号" width="120px;">
+					<h:outputText value="#{model.vehicleNumber}" />
+				</p:column>
+				<p:column headerText="泵送部位" width="120px;">
+					<h:outputText value="#{model.pumpParts}" />
+				</p:column>
+				<p:column headerText="工作情况" width="100px;">
+					<h:outputText value="#{model.workVolume}"  />
+					<br/>
+					<h:outputText value="#{model.schedule}"  />
+				</p:column>
+				<p:column headerText="加油情况" width="120px;">
+					<h:outputText value="油量：#{model.gasVolume}"  />
+					<br/>
+					<h:outputText value="油费#{model.gasPrice}"  />
+				</p:column>
+				<p:column headerText="开始时间" width="100px;">
+					<h:outputText value="#{model.startPumpDate}">
+						<f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" timeZone="Asia/Shanghai" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="结束时间" width="100px;">
+					<h:outputText value="#{model.endPumpDate}">
+						<f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" timeZone="Asia/Shanghai" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="备注">
+					<h:outputText value="#{model.remark}" />
+				</p:column>
+				<p:column headerText="开机人" width="120px;">
+					<table>
+						<tr>
+							<ui:repeat var="projectEmployeeDetail" value="#{model.projectEmployeeDetailList}">
+								<td><h:outputText value="#{projectEmployeeDetail.name}" /></td>
+							</ui:repeat>
+						</tr>
+					</table>
+				</p:column>
+			</p:dataTable>
+		</div>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,16 @@
+package com.qylm.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import com.qylm.dao.MaterialsGrantDao;
+import com.qylm.entity.MaterialsGrant;
+
+@Service("materialsGrantService")
+public class MaterialsGrantServiceImpl extends GenericServiceImpl<MaterialsGrant, Integer> implements MaterialsGrantService {
+
+	@Autowired
+	protected MaterialsGrantServiceImpl(MaterialsGrantDao materialsGrantDao) {
+		super(materialsGrantDao);
+	}
+
+}

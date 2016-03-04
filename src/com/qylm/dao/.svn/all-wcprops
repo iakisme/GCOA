@@ -1,0 +1,461 @@
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/GCOA/!svn/ver/12/src/com/qylm/dao
+END
+CommonSmsDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/GCOA/!svn/ver/7/src/com/qylm/dao/CommonSmsDao.java
+END
+FittingStorageDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/GCOA/!svn/ver/1/src/com/qylm/dao/FittingStorageDaoImpl.java
+END
+ProjectEmployeeDetailDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/GCOA/!svn/ver/1/src/com/qylm/dao/ProjectEmployeeDetailDaoImpl.java
+END
+FittingLibraryDetailDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/GCOA/!svn/ver/1/src/com/qylm/dao/FittingLibraryDetailDao.java
+END
+MaterialsGrantDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/GCOA/!svn/ver/12/src/com/qylm/dao/MaterialsGrantDao.java
+END
+TreeItemDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/GCOA/!svn/ver/1/src/com/qylm/dao/TreeItemDao.java
+END
+FittingPurchaseDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/GCOA/!svn/ver/1/src/com/qylm/dao/FittingPurchaseDaoImpl.java
+END
+EngineeringProjectDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/GCOA/!svn/ver/1/src/com/qylm/dao/EngineeringProjectDao.java
+END
+RoleDetailDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/GCOA/!svn/ver/1/src/com/qylm/dao/RoleDetailDao.java
+END
+CustomerFinancialDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/GCOA/!svn/ver/1/src/com/qylm/dao/CustomerFinancialDaoImpl.java
+END
+FittingStorageDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/GCOA/!svn/ver/1/src/com/qylm/dao/FittingStorageDao.java
+END
+ProjectEmployeeDetailDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/GCOA/!svn/ver/1/src/com/qylm/dao/ProjectEmployeeDetailDao.java
+END
+FittingPurchaseDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/GCOA/!svn/ver/1/src/com/qylm/dao/FittingPurchaseDao.java
+END
+FinancialCollectDetailDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/GCOA/!svn/ver/1/src/com/qylm/dao/FinancialCollectDetailDaoImpl.java
+END
+UserDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/GCOA/!svn/ver/1/src/com/qylm/dao/UserDaoImpl.java
+END
+PlanArrangementDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/GCOA/!svn/ver/1/src/com/qylm/dao/PlanArrangementDaoImpl.java
+END
+VehicleInfoDetailDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/GCOA/!svn/ver/1/src/com/qylm/dao/VehicleInfoDetailDaoImpl.java
+END
+EmployeeDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/GCOA/!svn/ver/1/src/com/qylm/dao/EmployeeDaoImpl.java
+END
+FittingRepertoryDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/GCOA/!svn/ver/1/src/com/qylm/dao/FittingRepertoryDaoImpl.java
+END
+FileControlDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/GCOA/!svn/ver/1/src/com/qylm/dao/FileControlDaoImpl.java
+END
+CustomerFinancialDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/GCOA/!svn/ver/1/src/com/qylm/dao/CustomerFinancialDao.java
+END
+ProcedureSetDetailDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/GCOA/!svn/ver/1/src/com/qylm/dao/ProcedureSetDetailDaoImpl.java
+END
+VehicleServicingDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/GCOA/!svn/ver/1/src/com/qylm/dao/VehicleServicingDaoImpl.java
+END
+FinancialCollectDetailDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/GCOA/!svn/ver/1/src/com/qylm/dao/FinancialCollectDetailDao.java
+END
+PlanArrangementDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/GCOA/!svn/ver/1/src/com/qylm/dao/PlanArrangementDao.java
+END
+UserDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/GCOA/!svn/ver/1/src/com/qylm/dao/UserDao.java
+END
+VehicleInfoDetailDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/GCOA/!svn/ver/1/src/com/qylm/dao/VehicleInfoDetailDao.java
+END
+EmployeeDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/GCOA/!svn/ver/1/src/com/qylm/dao/EmployeeDao.java
+END
+FittingRepertoryDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/GCOA/!svn/ver/1/src/com/qylm/dao/FittingRepertoryDao.java
+END
+FileControlDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/GCOA/!svn/ver/1/src/com/qylm/dao/FileControlDao.java
+END
+UserRoleDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/GCOA/!svn/ver/1/src/com/qylm/dao/UserRoleDaoImpl.java
+END
+EngineeringProjectDetailDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/GCOA/!svn/ver/1/src/com/qylm/dao/EngineeringProjectDetailDaoImpl.java
+END
+ProcedureSetDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/GCOA/!svn/ver/1/src/com/qylm/dao/ProcedureSetDaoImpl.java
+END
+ProcedureSetDetailDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/GCOA/!svn/ver/1/src/com/qylm/dao/ProcedureSetDetailDao.java
+END
+VehicleServicingDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/GCOA/!svn/ver/1/src/com/qylm/dao/VehicleServicingDao.java
+END
+FittingStorageDetailDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/GCOA/!svn/ver/1/src/com/qylm/dao/FittingStorageDetailDaoImpl.java
+END
+UserRoleDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/GCOA/!svn/ver/1/src/com/qylm/dao/UserRoleDao.java
+END
+EngineeringProjectDetailDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/GCOA/!svn/ver/1/src/com/qylm/dao/EngineeringProjectDetailDao.java
+END
+FittingPurchaseDetailDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/GCOA/!svn/ver/1/src/com/qylm/dao/FittingPurchaseDetailDaoImpl.java
+END
+ProcedureSetDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/GCOA/!svn/ver/1/src/com/qylm/dao/ProcedureSetDao.java
+END
+VehiclePeccancyDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/GCOA/!svn/ver/1/src/com/qylm/dao/VehiclePeccancyDaoImpl.java
+END
+FittingLibraryDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/GCOA/!svn/ver/1/src/com/qylm/dao/FittingLibraryDaoImpl.java
+END
+FittingStorageDetailDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/GCOA/!svn/ver/1/src/com/qylm/dao/FittingStorageDetailDao.java
+END
+FittingRejectedDetailDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/GCOA/!svn/ver/1/src/com/qylm/dao/FittingRejectedDetailDaoImpl.java
+END
+EngineeringFinancialDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/GCOA/!svn/ver/1/src/com/qylm/dao/EngineeringFinancialDaoImpl.java
+END
+FittingPurchaseDetailDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/GCOA/!svn/ver/1/src/com/qylm/dao/FittingPurchaseDetailDao.java
+END
+CustomerDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/GCOA/!svn/ver/1/src/com/qylm/dao/CustomerDaoImpl.java
+END
+RoleDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/GCOA/!svn/ver/1/src/com/qylm/dao/RoleDaoImpl.java
+END
+EntityClassDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/GCOA/!svn/ver/1/src/com/qylm/dao/EntityClassDaoImpl.java
+END
+VehiclePeccancyDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/GCOA/!svn/ver/1/src/com/qylm/dao/VehiclePeccancyDao.java
+END
+FittingLibraryDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/GCOA/!svn/ver/1/src/com/qylm/dao/FittingLibraryDao.java
+END
+FittingRejectedDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/GCOA/!svn/ver/1/src/com/qylm/dao/FittingRejectedDaoImpl.java
+END
+FittingRejectedDetailDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/GCOA/!svn/ver/1/src/com/qylm/dao/FittingRejectedDetailDao.java
+END
+EngineeringFinancialDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/GCOA/!svn/ver/1/src/com/qylm/dao/EngineeringFinancialDao.java
+END
+CustomerDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/GCOA/!svn/ver/1/src/com/qylm/dao/CustomerDao.java
+END
+RoleDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/GCOA/!svn/ver/1/src/com/qylm/dao/RoleDao.java
+END
+FittingInfoDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/GCOA/!svn/ver/1/src/com/qylm/dao/FittingInfoDaoImpl.java
+END
+EntityClassDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/GCOA/!svn/ver/1/src/com/qylm/dao/EntityClassDao.java
+END
+FinancialPayDetailDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/GCOA/!svn/ver/1/src/com/qylm/dao/FinancialPayDetailDaoImpl.java
+END
+FileExportDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/GCOA/!svn/ver/1/src/com/qylm/dao/FileExportDaoImpl.java
+END
+FunctionDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/GCOA/!svn/ver/1/src/com/qylm/dao/FunctionDaoImpl.java
+END
+FittingRejectedDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/GCOA/!svn/ver/1/src/com/qylm/dao/FittingRejectedDao.java
+END
+VehicleInfoDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/GCOA/!svn/ver/1/src/com/qylm/dao/VehicleInfoDaoImpl.java
+END
+FittingInfoDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/GCOA/!svn/ver/1/src/com/qylm/dao/FittingInfoDao.java
+END
+FileExportDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/GCOA/!svn/ver/1/src/com/qylm/dao/FileExportDao.java
+END
+FinancialPayDetailDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/GCOA/!svn/ver/1/src/com/qylm/dao/FinancialPayDetailDao.java
+END
+FunctionDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/GCOA/!svn/ver/1/src/com/qylm/dao/FunctionDao.java
+END
+FittingPurchaseExamineDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/GCOA/!svn/ver/1/src/com/qylm/dao/FittingPurchaseExamineDaoImpl.java
+END
+VehicleInfoDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/GCOA/!svn/ver/1/src/com/qylm/dao/VehicleInfoDao.java
+END
+CommonSmsDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/GCOA/!svn/ver/7/src/com/qylm/dao/CommonSmsDaoImpl.java
+END
+FittingLibraryDetailDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/GCOA/!svn/ver/1/src/com/qylm/dao/FittingLibraryDetailDaoImpl.java
+END
+MaterialsGrantDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/GCOA/!svn/ver/12/src/com/qylm/dao/MaterialsGrantDaoImpl.java
+END
+TreeItemDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/GCOA/!svn/ver/1/src/com/qylm/dao/TreeItemDaoImpl.java
+END
+EngineeringProjectDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/GCOA/!svn/ver/1/src/com/qylm/dao/EngineeringProjectDaoImpl.java
+END
+RoleDetailDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/GCOA/!svn/ver/1/src/com/qylm/dao/RoleDetailDaoImpl.java
+END
+FittingPurchaseExamineDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/GCOA/!svn/ver/1/src/com/qylm/dao/FittingPurchaseExamineDao.java
+END

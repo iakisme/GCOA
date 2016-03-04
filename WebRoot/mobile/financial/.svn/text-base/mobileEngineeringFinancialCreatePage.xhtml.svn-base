@@ -1,0 +1,83 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:rw="http://www.qylm.com"
+	xmlns:util="http://java.sun.com/jsf/composite/component/util"
+	template="/WEB-INF/facelets/templates/template.xhtml">
+	<ui:param name="title" value="未收款的客户" />
+	<ui:define name="tableCenter">
+		<t:saveState value="#{mobileEngineeringFinancialCreateBean.mobileEngineeringFinancialCreateDto}" />
+		<div class="buttonNorth">
+			<p:commandButton value="返回" action="#{mobileEngineeringFinancialCreateBean.back}" 
+				ajax="false" styleClass="createBtn" accesskey="c"/>
+		</div>
+		<div class="tableCenter">
+			<p:panelGrid id="manageGrid" styleClass="dataTable">
+				<p:row>
+					<p:column styleClass="column4">
+						<h:outputText value="编号：#{mobileEngineeringFinancialCreateBean.mobileEngineeringFinancialCreateDto.customerFinancial.number}" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column4">
+						<h:outputText value="收款客户：#{mobileEngineeringFinancialCreateBean.mobileEngineeringFinancialCreateDto.customerFinancial.customer.name}" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column4">
+						<h:outputText value="收款方式：#{rw:label(genericCodeBean.c0202,mobileEngineeringFinancialCreateBean.mobileEngineeringFinancialCreateDto.customerFinancial.type)}" />
+						&#160;&#160;
+						<h:outputText value="收费：#{mobileEngineeringFinancialCreateBean.mobileEngineeringFinancialCreateDto.customerFinancial.pumpPrice}" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column4">
+						收款日期：
+						<h:outputText value="#{mobileEngineeringFinancialCreateBean.mobileEngineeringFinancialCreateDto.customerFinancial.financialDate}">
+							<f:convertDateTime pattern="yyyy-MM-dd" timeZone="Asia/Shanghai" />
+						</h:outputText>
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column4">
+						<h:outputText value="项目金额：#{mobileEngineeringFinancialCreateBean.mobileEngineeringFinancialCreateDto.customerFinancial.money}" />
+						&#160;&#160;
+						<h:outputText value="总方量：#{mobileEngineeringFinancialCreateBean.mobileEngineeringFinancialCreateDto.customerFinancial.sumSchedule}" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column4">
+						<p:dataTable var="model" value="#{mobileEngineeringFinancialCreateBean.mobileEngineeringFinancialCreateDto.customerFinancial.engineeringFinancialList}" 
+							id="engineeringFinancial">
+							<f:facet name="header" >
+								收款项目
+							</f:facet>
+							<p:column headerText="项目期限" width="80px;">
+								<h:outputText value="#{model.engineeringProject.beginDate}">
+									<f:convertDateTime pattern="yyyy-MM-dd" timeZone="Asia/Shanghai"/>
+								</h:outputText>
+								<br/>
+								~
+								<br/>
+								<h:outputText value="#{model.engineeringProject.endDate}">
+									<f:convertDateTime pattern="yyyy-MM-dd" timeZone="Asia/Shanghai" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="工作情况">
+								<div style="text-align: left;">
+									<h:outputText value="工作地址：#{model.engineeringProject.workAddress}" />
+									<br />
+									<h:outputText value="实际方量：#{model.engineeringProject.schedule}（立方）"/>
+								</div>
+							</p:column>
+						</p:dataTable>
+					</p:column>
+				</p:row>
+			</p:panelGrid>
+		</div>
+	</ui:define>
+</ui:composition>

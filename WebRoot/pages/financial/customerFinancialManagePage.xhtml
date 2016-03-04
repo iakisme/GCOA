@@ -1,0 +1,310 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:rw="http://www.qylm.com"
+	xmlns:util="http://java.sun.com/jsf/composite/component/util"
+	template="/WEB-INF/facelets/templates/template.xhtml">
+	<ui:param name="title" value="客户收支明细管理" />
+	<ui:define name="tableCenter">
+		<t:saveState value="#{customerFinancialManageBean.customerFinancialManageDto}" />
+		<t:saveState value="#{customerFinancialManageBean.customerFinancialList}" />
+		<div class="buttonNorth">
+			<p:commandButton value="添加" action="#{customerFinancialManageBean.newCustomerFinancial}" ajax="false" styleClass="createBtn" accesskey="c"
+				rendered="#{userBean.isCheckPermission('financial_customerFinancial', '添加')}"/>
+			<p:commandButton value="批量删除" actionListener="#{customerFinancialManageBean.deleteMul}" 
+				update="viewTable :form:messages" onstart="return deleteConfirm();" styleClass="multipleDelBtn" accesskey="d"
+				rendered="#{userBean.isCheckPermission('financial_customerFinancial', '删除')}"/>
+		</div>
+		<div class="searchRequirementNorth">
+			<p:focus for="number" />
+			<h:panelGrid id="manageGrid" columns="1">
+				<h:panelGroup>
+					<h:outputLabel for="number" value="编号" />
+					<p:inputText styleClass="inputText" id="number" size="10" maxlength="10"
+						value="#{customerFinancialManageBean.customerFinancialManageDto.number}" />
+					<h:outputLabel for="customerName" value="客户" />
+					<p:inputText styleClass="inputText" id="customerName" size="20" maxlength="40"
+						value="#{customerFinancialManageBean.customerFinancialManageDto.customerName}" />
+					<h:outputLabel for="beginFinancialDate" value="项目日期（开始）" />
+					<p:calendar navigator="true" id="beginFinancialDate" size="10" maxlength="10" locale="tr"
+						value="#{customerFinancialManageBean.customerFinancialManageDto.beginFinancialDate}"
+						pattern="yyyy-MM-dd"/>
+					~
+					<p:calendar navigator="true" id="endFinancialDate" size="10" maxlength="10" locale="tr"
+						value="#{customerFinancialManageBean.customerFinancialManageDto.endFinancialDate}"
+						pattern="yyyy-MM-dd"/>
+					<h:outputLabel for="state" value="收款状态" />
+					<h:selectOneMenu id="state" value="#{customerFinancialManageBean.customerFinancialManageDto.state}">
+						<f:selectItems value="#{genericCodeBean.c0601}" />
+					</h:selectOneMenu>
+					<p:commandButton id="searchBtn" value="搜索" action="#{customerFinancialManageBean.selectCustomerFinancial}" process=":form:manageGrid" 
+						ajax="false" styleClass="searchBtn" accesskey="s" />
+				</h:panelGroup>
+			</h:panelGrid>
+		</div>
+		<rw:paging pageBean="#{customerFinancialManageBean}" />
+		<span style="font-size: 20px;">
+			<h:outputText value="总需收款金额：#{customerFinancialManageBean.sumMoney} ￥" />
+		</span>
+		<div class="tableCenter">
+			<p:dataTable emptyMessage="暂无数据" var="model" value="#{customerFinancialManageBean.customerFinancialList}" rowIndexVar="rowIndex"
+				widgetVar="viewTable" rowKey="#{model.id}" paginatorAlwaysVisible="true" id="viewTable"
+				selection="#{customerFinancialManageBean.selectedModels}">
+				<f:facet name="header" >
+					客户收支明细信息列表
+				</f:facet>
+				<p:column selectionMode="multiple" exportable="false" style="width:32px" />
+				<p:column headerText="编号" sortBy="#{model.number}" width="100px;">
+					<h:outputText value="#{model.number}" />
+				</p:column>
+				<p:column headerText="客户" sortBy="#{model.customer.name}" width="100px;">
+					<h:outputText value="#{model.customer.name}" />
+				</p:column>
+				<p:column headerText="收款日期" width="120px;">
+					<h:outputText value="#{model.financialDate}">
+						<f:convertDateTime pattern="yyyy-MM-dd" timeZone="Asia/Shanghai" />
+					</h:outputText>
+					<br/>
+				</p:column>
+				<p:column headerText="收款类型" sortBy="#{model.type}" width="100px;">
+					<div style="text-align: left;">
+						<h:outputText value="类型：#{rw:label(genericCodeBean.c0202,model.type)}"/>
+						<br />
+						<h:outputText value="费用：#{model.pumpPrice}"/>
+					</div>
+				</p:column>
+				<p:column headerText="收款情况">
+					<div style="width: 100%; text-align: left;">
+						<h:outputText value="收款金额： #{model.money}￥" />
+						<br />
+						<h:outputText style="color: #00FF00;" value="已  收  款：  #{model.collectMoney}￥" />
+						<br />
+						<h:outputText value="未  收  款： #{model.notMoney}￥" />
+						<br />
+						<h:outputText style="color: #FF0000;" value="支付金额： #{model.payMoney}￥" />
+					</div>
+				</p:column>
+				<p:column headerText="总方量" sortBy="#{model.sumSchedule}" width="120px;">
+					<h:outputText value="#{model.sumSchedule}（立方）"/>
+				</p:column>
+				<p:column headerText="收款状态" sortBy="#{model.state}" width="80px;">
+					<h:outputText value="#{rw:label(genericCodeBean.c0601,model.state)}" style="color:#{model.typeColor};"/>
+				</p:column>
+				<p:column headerText="基本操作" exportable="false" style="width: 100px;">
+					<p:commandButton value="#{model.state == '3' ? '详细' : '修改'}" action="#{customerFinancialManageBean.updateCustomerFinancial(model)}"
+						ajax="false" styleClass="modifyBtn"
+						rendered="#{userBean.isCheckPermission('financial_customerFinancial', '修改')}"/>
+					&#160;&#160;
+					<p:commandButton value="删除" action="#{customerFinancialManageBean.deleteCustomerFinancial(model)}"
+						partialSubmit="true" process="@this"  update="viewTable :form:messages"
+						onstart="return deleteConfirm();" styleClass="singleDelBtn"
+						rendered="#{userBean.isCheckPermission('financial_customerFinancial', '删除')}"/>
+					<br />
+					<p:commandButton value="登记收款明细" action="#{customerFinancialManageBean.addCollectDetail(model)}"
+						partialSubmit="true" process="@this" update=":form:financialCollectDetailVehicle :form:messages :form:financialCollectDetail" styleClass="modifyBtn" 
+						oncomplete="PF('financialCollectDetailVehicle').show();"
+						rendered="#{userBean.isCheckPermission('financial_customerFinancial', '登记收款明细')}"/>
+					<p:commandButton value="登记付款明细" action="#{customerFinancialManageBean.addPayDetail(model)}"
+						partialSubmit="true" process="@this" update=":form:financialPayDetailVehicle :form:financialPayDetail :form:messages" styleClass="modifyBtn" 
+						oncomplete="PF('financialPayDetailVehicle').show();"
+						rendered="#{userBean.isCheckPermission('financial_customerFinancial', '登记付款明细')}"/>
+					<p:commandButton value="查看收款项目" action="#{customerFinancialManageBean.arrangeVehicle(model)}"
+						partialSubmit="true" process="@this" update=":form:arrangeVehicle :form:messages" styleClass="modifyBtn" 
+						oncomplete="PF('arrangeVehicle').show();"
+						rendered="#{userBean.isCheckPermission('financial_customerFinancial', '查看收款项目')}"/>
+					<p:commandButton value="确认完结收款" action="#{customerFinancialManageBean.queryFinish(model)}"
+						partialSubmit="true" process="@this" update="viewTable :form:messages" styleClass="modifyBtn" 
+						onstart="return queryFinishConfirm();"
+						disabled="#{model.state eq '3'}"
+						rendered="#{userBean.isCheckPermission('financial_customerFinancial', '确认完结收款')}"/>
+				</p:column>
+			</p:dataTable>
+			<p:dialog header="收款工程项目" id="arrangeVehicle" widgetVar="arrangeVehicle" modal="true" width="600" height="500">
+				<p:dataTable var="model" value="#{customerFinancialManageBean.customerFinancialManageDto.engineeringFinancialList}" id="engineeringFinancialList">
+					<f:facet name="header" >
+						收款工程项目
+					</f:facet>
+					<p:column headerText="项目期限" width="140px;">
+						开始日期：
+						<h:outputText value="#{model.engineeringProject.beginDate}">
+							<f:convertDateTime pattern="yyyy-MM-dd" timeZone="Asia/Shanghai"/>
+						</h:outputText>
+						<br/>
+						结束日期：
+						<h:outputText value="#{model.engineeringProject.endDate}">
+							<f:convertDateTime pattern="yyyy-MM-dd" timeZone="Asia/Shanghai" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="工作地址" sortBy="#{model.engineeringProject.workAddress}">
+						<h:outputText value="#{model.engineeringProject.workAddress}" />
+					</p:column>
+					<!--  
+					<p:column headerText="项目金额" sortBy="#{model.engineeringProject.money}" width="160px;">
+						<div style="width: 100%; text-align: left;">
+							<h:outputText value="预算金额：#{model.engineeringProject.money} ￥" />
+							<br />
+							<h:outputText style="color: #00FF00;" value="已  收  款：#{model.engineeringProject.collectMoney} ￥" />
+							<br />
+							<h:outputText value="未  收  款：#{model.engineeringProject.notCollectMoney} ￥" />
+							<br />
+							<h:outputText style="color: #FF0000;" value="消费金额：#{model.engineeringProject.payMoney} ￥" />
+						</div>
+					</p:column>
+					-->
+					<p:column headerText="工作量情况" width="200px;">
+						<h:outputText value="实际方量：#{model.engineeringProject.schedule}（立方）"/>
+					</p:column>
+					<p:column headerText="项目状态" sortBy="#{model.engineeringProject.type}" width="80px;">
+						<h:outputText value="#{rw:label(genericCodeBean.c0501,model.engineeringProject.type)}" style="color:#{model.engineeringProject.typeColor};"/>
+					</p:column>
+				</p:dataTable>
+			</p:dialog>
+			<p:dialog header="登记收款明细" id="financialCollectDetailVehicle" widgetVar="financialCollectDetailVehicle" modal="true" width="800" height="500">
+				<div class="buttonNorth">
+					<p:commandButton value="增加收款明细" action="#{customerFinancialManageBean.addEngineeringFinancial}"
+						styleClass="backBtn" update=":form:financialCollectDetail messages"/>
+					<p:commandButton value="关闭" styleClass="backBtn" update=":form:viewTable messages" oncomplete="PF('financialCollectDetailVehicle').hide();"/>
+				</div>
+				<p:dataTable var="model" value="#{customerFinancialManageBean.customerFinancialManageDto.financialCollectDetailList}" id="financialCollectDetail">
+					<f:facet name="header" >
+						项目收款明细
+					</f:facet>
+					<p:column headerText="收款人" width="150px;">
+						<ui:fragment rendered="#{!model.state}">
+							<p:autoComplete id="employeeName" value="#{model.employee}" 
+								completeMethod="#{selectBean.selectResponsibleEmployee}" label="收款人必须输入" required="true" size="10" maxlength="10"
+								var="employee" itemLabel="#{employee.name}" dropdown="true"
+								itemValue="#{employee}" converter="employeeConverter" forceSelection="true">
+								<p:column>
+									<h:outputText value="#{employee.name}" />
+								</p:column>
+								<p:column>
+									<h:outputText value="#{employee.identification}" />
+								</p:column>
+							</p:autoComplete>
+						</ui:fragment>
+						<ui:fragment rendered="#{model.state}">
+							<h:outputText value="#{model.employee.name}" />
+						</ui:fragment>
+					</p:column>
+					<p:column headerText="收款日期" width="120px;">
+						<ui:fragment rendered="#{!model.state}">
+							<p:calendar navigator="true" size="10" maxlength="10"
+								value="#{model.collectDate}" locale="tr"
+								pattern="yyyy-MM-dd"/>
+						</ui:fragment>
+						<ui:fragment rendered="#{model.state}">
+							<h:outputText value="#{model.collectDate}">
+								<f:convertDateTime pattern="yyyy-MM-dd" timeZone="Asia/Shanghai" />
+							</h:outputText>
+						</ui:fragment>
+					</p:column>
+					<p:column headerText="收款金额" width="120px;">
+						<ui:fragment rendered="#{!model.state}">
+							<pe:inputNumber maxlength="10" size="12" value="#{model.money}" 
+								minValue="0.00" emptyValue="0" decimalPlaces="2" />
+						</ui:fragment>
+						<ui:fragment rendered="#{model.state}">
+							<h:outputText value="#{model.money}" />
+						</ui:fragment>
+					</p:column>
+					<p:column headerText="备注">
+						<ui:fragment rendered="#{!model.state}">
+							<p:inputTextarea value="#{model.remark}" maxlength="2000" cols="80" rows="2" />
+						</ui:fragment>
+						<ui:fragment rendered="#{model.state}">
+							<h:outputText value="#{model.remark}" />
+						</ui:fragment>
+					</p:column>
+					<p:column headerText="基本操作" width="80px;">
+						<p:commandButton value="确认" action="#{customerFinancialManageBean.saveFinancialCollectDetail(model)}"
+							disabled="#{model.state}" update="financialCollectDetail :form:viewTable :form:messages"/>
+				        <p:commandButton value="删除" action="#{customerFinancialManageBean.deleteFinancialCollectDetail(model)}" 
+				        	partialSubmit="true" process="@this"  update="financialCollectDetail :form:messages :form:viewTable"
+							onstart="return deleteConfirm();" styleClass="singleDelBtn"/>
+					</p:column>
+				</p:dataTable>
+			</p:dialog>
+			<p:dialog header="登记支付明细" id="financialPayDetailVehicle" widgetVar="financialPayDetailVehicle" modal="true" width="800" height="500">
+				<div class="buttonNorth">
+					<p:commandButton value="增加付款明细" action="#{customerFinancialManageBean.addFinancialPayDetail}" 
+						styleClass="backBtn" update=":form:financialPayDetail :form:messages"/>
+					<p:commandButton value="关闭" styleClass="backBtn" update=":form:viewTable messages" oncomplete="PF('financialPayDetailVehicle').hide();"/>
+				</div>
+				<p:dataTable var="model" value="#{customerFinancialManageBean.customerFinancialManageDto.financialPayDetailList}" id="financialPayDetail">
+					<f:facet name="header" >
+						项目付款明细
+					</f:facet>
+					<p:column headerText="消费人" width="150px;">
+						<ui:fragment rendered="#{!model.state}">
+							<p:autoComplete id="employeeName" value="#{model.employee}" 
+								completeMethod="#{selectBean.selectEmployee}" size="10" maxlength="10"
+								var="employee" itemLabel="#{employee.name}" dropdown="true"
+								itemValue="#{employee}" converter="employeeConverter" forceSelection="true">
+								<p:column>
+									<h:outputText value="#{employee.name}" />
+								</p:column>
+								<p:column>
+									<h:outputText value="#{employee.identification}" />
+								</p:column>
+							</p:autoComplete>
+						</ui:fragment>
+						<ui:fragment rendered="#{model.state}">
+							<h:outputText value="#{model.employee.name}" />
+						</ui:fragment>
+					</p:column>
+					<p:column headerText="付款日期" width="120px;">
+						<ui:fragment rendered="#{!model.state}">
+							<p:calendar navigator="true" size="10" maxlength="10"
+								value="#{model.payDate}" locale="tr"
+								pattern="yyyy-MM-dd"/>
+						</ui:fragment>
+						<ui:fragment rendered="#{model.state}">
+							<h:outputText value="#{model.payDate}">
+								<f:convertDateTime pattern="yyyy-MM-dd" timeZone="Asia/Shanghai" />
+							</h:outputText>
+						</ui:fragment>
+					</p:column>
+					<p:column headerText="付款类型" width="80px;">
+						<ui:fragment rendered="#{!model.state}">
+							<h:selectOneMenu id="payment" value="#{model.type}">
+								<f:selectItems value="#{genericCodeBean.c0602}" />
+							</h:selectOneMenu>
+						</ui:fragment>
+						<ui:fragment rendered="#{model.state}">
+							<h:outputText value="#{rw:label(genericCodeBean.c0602,model.type)}" />
+						</ui:fragment>
+					</p:column>
+					<p:column headerText="付款金额" width="120px;">
+						<ui:fragment rendered="#{!model.state}">
+							<pe:inputNumber maxlength="10" size="12" value="#{model.money}" 
+								minValue="0.00" emptyValue="0" decimalPlaces="2" />
+						</ui:fragment>
+						<ui:fragment rendered="#{model.state}">
+							<h:outputText value="#{model.money}" />
+						</ui:fragment>
+					</p:column>
+					<p:column headerText="备注">
+						<ui:fragment rendered="#{!model.state}">
+							<p:inputTextarea value="#{model.remark}" maxlength="2000" cols="80" rows="2" />
+						</ui:fragment>
+						<ui:fragment rendered="#{model.state}">
+							<h:outputText value="#{model.remark}" />
+						</ui:fragment>
+					</p:column>
+					<p:column headerText="基本操作" width="80px;">
+						<p:commandButton value="确认" action="#{customerFinancialManageBean.saveFinancialPayDetail(model)}"
+							disabled="#{model.state}" update="financialPayDetail :form:viewTable :form:messages"/>
+				        <p:commandButton value="删除" action="#{customerFinancialManageBean.deleteFinancialPayDetail(model)}" 
+				        	partialSubmit="true" process="@this"  update="financialPayDetail :form:messages :form:viewTable"
+							onstart="return deleteConfirm();" styleClass="singleDelBtn"/>
+					</p:column>
+				</p:dataTable>
+			</p:dialog>
+		</div>
+	</ui:define>
+</ui:composition>

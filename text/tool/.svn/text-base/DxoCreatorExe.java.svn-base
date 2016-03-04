@@ -1,0 +1,19 @@
+package tool;
+
+import java.io.IOException;
+
+import com.qylm.dto.engineeringMaterials.MaterialsGrantCreateDto;
+import com.qylm.entity.MaterialsGrant;
+import com.qylm.tool.DxoCreator;
+
+public class DxoCreatorExe {
+
+	public static void main(String[] args) {
+		try {
+			DxoCreator.create(MaterialsGrantCreateDto.class, MaterialsGrant.class);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+}

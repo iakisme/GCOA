@@ -1,0 +1,131 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:rw="http://www.qylm.com"
+	template="/WEB-INF/facelets/templates/template.xhtml">
+	<ui:param name="title" value="配件库存登录" />
+	<ui:define name="tableCenter">
+		<t:saveState value="#{fittingRepertoryCreateBean.fittingRepertoryCreateDto}" />
+		<div class="buttonNorth">
+			<p:commandButton value="返回" action="#{fittingRepertoryCreateBean.back}" immediate="true" ajax="false" styleClass="backBtn" />
+			<p:commandButton value="添加" action="#{fittingRepertoryCreateBean.newFittingRepertory}" immediate="true" update="@form" styleClass="createBtn" />
+			<p:commandButton value="保存" action="#{fittingRepertoryCreateBean.saveFittingRepertory}" ajax="false" update="@form" styleClass="saveBtn" 
+				rendered="#{userBean.isCheckPermission('fitting_fittingRepertory', '添加') or userBean.isCheckPermission('fitting_fittingRepertory', '修改')}"/>
+			<p:commandButton value="选择配件" action="#{fittingRepertoryCreateBean.selectFittingInfo}" styleClass="saveBtn" 
+				rendered="#{userBean.isCheckPermission('fitting_fittingRepertory', '添加') or userBean.isCheckPermission('fitting_fittingRepertory', '修改')}"
+				oncomplete="PF('fittingVehicle').show();" update=":form:fittingVehicle :form:messages" />
+		</div>
+		<div class="tableCenter">
+			<p:panelGrid id="manageGrid" styleClass="dataTable"> 
+				<p:row>
+					<p:column styleClass="column1">
+						<h:outputText value="车辆名称" />
+					</p:column>
+					<p:column styleClass="column4">
+						<h:outputText value="#{fittingRepertoryCreateBean.fittingRepertoryCreateDto.fittingInfo.carName}" /> 
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column1">
+						<h:outputText value="配件品牌" />
+					</p:column>
+					<p:column styleClass="column4">
+						<h:outputText value="#{fittingRepertoryCreateBean.fittingRepertoryCreateDto.fittingInfo.fittingBrand}" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column1">
+						<h:outputText value="配件名称" />
+					</p:column>
+					<p:column styleClass="column4">
+						<h:outputText value="#{fittingRepertoryCreateBean.fittingRepertoryCreateDto.fittingInfo.fittingName}" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column1">
+						<h:outputText value="型号" />
+					</p:column>
+					<p:column styleClass="column4">
+						<h:outputText value="#{fittingRepertoryCreateBean.fittingRepertoryCreateDto.fittingInfo.model}" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column1">
+						<h:outputText value="最近单价" />
+					</p:column>
+					<p:column styleClass="column4">
+						<h:outputText value="#{fittingRepertoryCreateBean.fittingRepertoryCreateDto.fittingInfo.price}" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column1">
+						<h:outputText value="保养天数" />
+					</p:column>
+					<p:column styleClass="column4">
+						<h:outputText value="#{fittingRepertoryCreateBean.fittingRepertoryCreateDto.fittingInfo.maintenanceDay}"  />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column1">
+						<h:outputText value="保养立方" />
+					</p:column>
+					<p:column styleClass="column4">
+						<h:outputText value="#{fittingRepertoryCreateBean.fittingRepertoryCreateDto.fittingInfo.maintenanceCubic}" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column1">
+						<h:outputText value="库存数量" />
+					</p:column>
+					<p:column styleClass="column4">
+						<p:spinner maxlength="5" size="5" value="#{fittingRepertoryCreateBean.fittingRepertoryCreateDto.repertorySum}" min="1" max="99999" />
+					</p:column>
+				</p:row>
+			</p:panelGrid>
+			<p:dialog header="选择配件" id="fittingVehicle" widgetVar="fittingVehicle" modal="true" width="700">
+				<div class="searchRequirementNorth">
+					<h:panelGrid columns="3" id="fittingVehicleGrid">
+						<h:outputLabel for="fittingName" value="配件名称" />
+						<p:inputText styleClass="inputText" id="fittingName" size="20" maxlength="20"
+							value="#{fittingRepertoryCreateBean.fittingRepertoryCreateDto.fittingName}" />
+						<p:commandButton value="搜索" action="#{fittingRepertoryCreateBean.selectFittingInfo}" process=":form:fittingVehicleGrid" 
+							update=":form:viewTable messages" styleClass="searchBtn" accesskey="s" />
+					</h:panelGrid>
+				</div>
+				<div class="tableCenter">
+					<p:dataTable emptyMessage="暂无数据" var="model" value="#{fittingRepertoryCreateBean.fittingRepertoryCreateDto.fittingInfoList}" rowIndexVar="rowIndex"
+						widgetVar="viewTable" rowKey="#{model.id}" paginatorAlwaysVisible="true"
+						sortBy="createDate" sortOrder="descending" id="viewTable">
+						<f:facet name="header" >
+							车辆信息列表
+						</f:facet>
+						<p:column width="40px;" headerText="选择">
+							<p:commandButton value="选择" action="#{fittingRepertoryCreateBean.findFittingInfo(model)}"
+								partialSubmit="true" process="@this" update=" :form:manageGrid :form:messages" styleClass="modifyBtn" 
+								oncomplete="PF('fittingVehicle').hide();"/>
+						</p:column>
+						<p:column headerText="车辆名称">
+							<h:outputText value="#{model.carName}" />
+						</p:column>
+						<p:column headerText="配件品牌" width="120px;">
+							<h:outputText value="#{model.fittingBrand}" />
+						</p:column>
+						<p:column headerText="配件名称" width="80px;">
+							<h:outputText value="#{model.fittingName}" />
+						</p:column>
+						<p:column headerText="型号" width="80px;">
+							<h:outputText value="#{model.model}" />
+						</p:column>
+						<p:column headerText="最新单价" width="80px;">
+							<h:outputText value="#{model.price}￥" />
+						</p:column>
+					</p:dataTable>
+				</div>
+			</p:dialog>
+		</div>
+	</ui:define>
+</ui:composition>

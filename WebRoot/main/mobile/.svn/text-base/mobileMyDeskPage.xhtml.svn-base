@@ -1,0 +1,50 @@
+﻿<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:rw="http://www.qylm.com"
+	xmlns:util="http://java.sun.com/jsf/composite/component/util"
+	template="/WEB-INF/facelets/templates/mobileTemplate.xhtml">
+	<ui:param name="title" value="欢迎界面" />
+	<ui:define name="tableCenter">
+		<ui:fragment>
+			<div style="width: 120px; text-align: center; height: 120px; float: left;">
+				<h:commandLink action="#{mobileMyDeskBean.selectEngineering('1')}" style="width:120px;height:120px;" immediate="true">
+					<h:graphicImage value="#{resource['images/mobile:xmqk.png']}" />
+					<br />
+					<h:outputText value="工程方量情况" />
+				</h:commandLink>
+			</div>
+		</ui:fragment>
+		<ui:fragment>
+			<div style="width: 120px; text-align: center; height: 120px; float: left;">
+				<h:commandLink action="#{mobileMyDeskBean.selectEngineering('2')}" style="width:120px;height:120px;" immediate="true">
+					<h:graphicImage value="#{resource['images/mobile:gcsk.png']}" />
+					<br />
+					<h:outputText value="工程收款情况" />
+				</h:commandLink>
+			</div>
+		</ui:fragment>
+		<ui:fragment>
+			<div style="width: 120px; text-align: center; height: 120px; float: left;">
+				<h:commandLink action="#{mobileMyDeskBean.selectEngineering('3')}" style="width:120px;height:120px;" immediate="true">
+					<h:graphicImage value="#{resource['images/mobile:clgz.png']}" />
+					<br />
+					<h:outputText value="车辆工作情况" />
+				</h:commandLink>
+			</div>
+		</ui:fragment>
+		<ui:fragment>
+			<div style="width: 120px; text-align: center; height: 120px; float: left;">
+				<h:commandLink action="#{mobileMyDeskBean.selectEngineering('3')}" style="width:120px;height:120px;" immediate="true">
+					<h:graphicImage value="#{resource['images/mobile:rw.png']}" />
+					<br />
+					<h:outputText value="日程计划查看" />
+				</h:commandLink>
+			</div>
+		</ui:fragment>
+	</ui:define>
+</ui:composition>

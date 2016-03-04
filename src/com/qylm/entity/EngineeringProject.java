@@ -1,0 +1,524 @@
+package com.qylm.entity;
+
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.List;
+
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import com.qylm.bean.customer.CustomerManageBean;
+import com.qylm.common.Tool;
+import com.qylm.common.utils.BigDecimalUtil;
+import com.qylm.constants.Constants;
+
+/**
+ * 工程项目管理
+ * @author smj
+ */
+@Entity
+@Table(uniqueConstraints = {}, name = "engineeringproject")
+@DiscriminatorValue(EngineeringProject.DISCRIMINATOR_ENGINEERING_PROJECT)
+public class EngineeringProject extends BaseEntity {
+
+	/**
+	 * serialVersionUID
+	 */
+	private static final long serialVersionUID = -5599956745270416522L;
+	
+	/**
+	 * @DiscriminatorValue
+	 */
+	public static final String DISCRIMINATOR_ENGINEERING_PROJECT = "engineeringProject";
+	
+	/**
+	 * customer
+	 */
+	public static final String CUSTOMER = "customer";
+	
+	/**
+	 * customer.name
+	 */
+	public static final String CUSTOMER_NAME = "customer.name";
+	
+	/**
+	 * employee
+	 */
+	public static final String EMPLOYEE = "employee";
+	
+	/**
+	 * beginDate
+	 */
+	public static final String BEGIN_DATE = "beginDate";
+	
+	/**
+	 * endDate
+	 */
+	public static final String END_DATE = "endDate";
+	
+	/**
+	 * workAddress
+	 */
+	public static final String WORK_ADDRESS = "workAddress";
+	
+	/**
+	 * constructionName
+	 */
+	public static final String CONSTRUCTION_NAME = "constructionName";
+	
+	/**
+	 * schedule
+	 */
+	public static final String SCHEDULE = "schedule";
+	
+	/**
+	 * money
+	 */
+	public static final String MONEY = "money";
+	
+	/**
+	 * type
+	 */
+	public static final String TYPE = "type";
+	
+	/**
+	 * type.未生效
+	 */
+	public static final String TYPE_1 = "1";
+	
+	/**
+	 * type.工作安排中
+	 */
+	public static final String TYPE_2 = "2";
+	
+	/**
+	 * type.工作进行中
+	 */
+	public static final String TYPE_3 = "3";
+	
+	/**
+	 * type.工作已汇报
+	 */
+	public static final String TYPE_4 = "4";
+	
+	/**
+	 * type.工作暂停
+	 */
+	public static final String TYPE_5 = "5";
+	
+	/**
+	 * type.工作完结
+	 */
+	public static final String TYPE_6 = "6";
+	
+	/**
+	 * type.存在拒绝信息
+	 */
+	public static final String TYPE_7 = "7";
+	
+	/**
+	 * 客户
+	 */
+	@ManyToOne(targetEntity = Customer.class,fetch=FetchType.LAZY)
+	@JoinColumn(name = "customerId")
+	private Customer customer;
+	
+	/**
+	 * 项目负责人
+	 */
+	@ManyToOne(targetEntity = Employee.class,fetch=FetchType.LAZY)
+	@JoinColumn(name = "employeeId")
+	private Employee employee;
+	
+	/**
+	 * 项目开始日期
+	 */
+	private Date beginDate;
+	
+	/**
+	 * 项目结束日期
+	 */
+	private Date endDate;
+	
+	/**
+	 * 工作地址
+	 */
+	private String workAddress;
+
+	/**
+	 * 工地名称
+	 */
+	private String constructionName;
+	
+	/**
+	 * 工作内容
+	 */
+	private String remark;
+	
+	/**
+	 * 预算总金额
+	 */
+	private BigDecimal money;
+	
+	/**
+	 * 单价
+	 */
+	private BigDecimal pumpPrice;
+	
+	/**
+	 * 预算方量
+	 */
+	private BigDecimal actualVolume;
+	
+	/**
+	 * 完成量，进度条
+	 */
+	private BigDecimal schedule;
+	
+	/**
+	 * 项目状态
+	 * 1：未生效，（显示黑色#000000）
+	 * 2：工作安排中，（显示暗红色#FF4040）
+	 * 3：工作进行中，（显示红色#FF0000）
+	 * 4：工作已汇报，（显示绿色#00FF00）
+	 * 5：工作暂停，（显示黄色#FFD700）
+	 * 6：工作完结，（显示蓝色#0000FF）
+	 * 7：存在拒绝信息（显示黄色#FFD700）
+	 * 8.此项目原料运输异常（显示黑色#000000）
+	 */
+	private String type;
+	
+	/**
+	 * 用于客户检索
+	 */
+	@Transient
+	private String customerName;
+	
+	/**
+	 * 已收款金额
+	 */
+	@Transient
+	private BigDecimal collectMoney;
+	
+	/**
+	 * 消费金额
+	 */
+	@Transient
+	private BigDecimal payMoney;
+	
+	/**
+	 * 存放工作安排详细
+	 */
+	@Transient
+	private List<EngineeringProjectDetail> engineeringProjectDetailList;
+	
+	/**
+	 * 车辆编号
+	 */
+	@Transient
+	private List<String> vehicleInfoList;
+	
+	/**
+	 * 验证是否可以操作
+	 * @return true不可以操作反之可操作
+	 */
+	public boolean isOperation() {
+		return EngineeringProject.TYPE_1.equals(type);
+	}
+	
+	/**
+	 * 此方法用于页面显示，获取项目状态的颜色样子
+	 * @return
+	 */
+	public String getTypeColor() {
+		int i = Integer.valueOf(type);
+		String color;
+		switch (i) {
+		case 1:
+			color = "#000000";// 黑色
+			break;
+		case 2:
+			color = "#FF4040";// 暗红色
+			break;
+		case 3:
+			color = "#FF0000";// 红色
+			break;
+		case 4:
+			color = "#00FF00";// 绿色
+			break;
+		case 5:
+			color = "#FFD700";// 黄色
+		break;
+		case 6:
+			color = "#0000FF";// 蓝色
+		break;
+		case 7:
+			color = "#FFD700";// 黄色
+			break;
+		default:
+			color = "#FF0000";// 黑色
+			break;
+		}
+		return color;
+	}
+	
+	/**
+	 * 获取到未收款
+	 * @return
+	 */
+	public BigDecimal getNotCollectMoney() {
+		if (BigDecimalUtil.isNullOrZero(money)) {
+			money = Constants.BIGDECIMAL_ZERO;
+		}
+		return BigDecimalUtil.subtract(money, collectMoney);
+			
+	}
+
+	/**
+	 * @return the customer
+	 */
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	/**
+	 * @param customer the customer to set
+	 */
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+
+	/**
+	 * @return the employee
+	 */
+	public Employee getEmployee() {
+		return employee;
+	}
+
+	/**
+	 * @param employee the employee to set
+	 */
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
+	}
+
+	/**
+	 * @return the beginDate
+	 */
+	public Date getBeginDate() {
+		return beginDate;
+	}
+
+	/**
+	 * @param beginDate the beginDate to set
+	 */
+	public void setBeginDate(Date beginDate) {
+		this.beginDate = beginDate;
+	}
+
+	/**
+	 * @return the endDate
+	 */
+	public Date getEndDate() {
+		return endDate;
+	}
+
+	/**
+	 * @param endDate the endDate to set
+	 */
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
+
+	/**
+	 * @return the workAddress
+	 */
+	public String getWorkAddress() {
+		return workAddress;
+	}
+
+	/**
+	 * @param workAddress the workAddress to set
+	 */
+	public void setWorkAddress(String workAddress) {
+		this.workAddress = workAddress;
+	}
+
+	/**
+	 * @return the constructionName
+	 */
+	public String getConstructionName() {
+		return constructionName;
+	}
+
+	/**
+	 * @param constructionName the constructionName to set
+	 */
+	public void setConstructionName(String constructionName) {
+		this.constructionName = constructionName;
+	}
+
+	/**
+	 * @return the remark
+	 */
+	public String getRemark() {
+		return remark;
+	}
+
+	/**
+	 * @param remark the remark to set
+	 */
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+
+	/**
+	 * @return the money
+	 */
+	public BigDecimal getMoney() {
+		return money;
+	}
+
+	/**
+	 * @param money the money to set
+	 */
+	public void setMoney(BigDecimal money) {
+		this.money = money;
+	}
+
+	/**
+	 * @return the pumpPrice
+	 */
+	public BigDecimal getPumpPrice() {
+		return pumpPrice;
+	}
+
+	/**
+	 * @param pumpPrice the pumpPrice to set
+	 */
+	public void setPumpPrice(BigDecimal pumpPrice) {
+		this.pumpPrice = pumpPrice;
+	}
+
+	/**
+	 * @return the actualVolume
+	 */
+	public BigDecimal getActualVolume() {
+		return actualVolume;
+	}
+
+	/**
+	 * @param actualVolume the actualVolume to set
+	 */
+	public void setActualVolume(BigDecimal actualVolume) {
+		this.actualVolume = actualVolume;
+	}
+
+	/**
+	 * @return the schedule
+	 */
+	public BigDecimal getSchedule() {
+		return schedule;
+	}
+
+	/**
+	 * @param schedule the schedule to set
+	 */
+	public void setSchedule(BigDecimal schedule) {
+		this.schedule = schedule;
+	}
+
+	/**
+	 * @return the type
+	 */
+	public String getType() {
+		return type;
+	}
+
+	/**
+	 * @param type the type to set
+	 */
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	/**
+	 * @return the customerName
+	 */
+	public String getCustomerName() {
+		if (customer != null) {
+			customerName = Tool.getBackBean(CustomerManageBean.class).findCustomerName(customer.getId());
+		}
+		return customerName;
+	}
+
+	/**
+	 * @param customerName the customerName to set
+	 */
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
+	}
+
+	/**
+	 * @return the collectMoney
+	 */
+	public BigDecimal getCollectMoney() {
+		return collectMoney;
+	}
+
+	/**
+	 * @param collectMoney the collectMoney to set
+	 */
+	public void setCollectMoney(BigDecimal collectMoney) {
+		this.collectMoney = collectMoney;
+	}
+
+	/**
+	 * @return the payMoney
+	 */
+	public BigDecimal getPayMoney() {
+		return payMoney;
+	}
+
+	/**
+	 * @param payMoney the payMoney to set
+	 */
+	public void setPayMoney(BigDecimal payMoney) {
+		this.payMoney = payMoney;
+	}
+
+	/**
+	 * @return the engineeringProjectDetailList
+	 */
+	public List<EngineeringProjectDetail> getEngineeringProjectDetailList() {
+		return engineeringProjectDetailList;
+	}
+
+	/**
+	 * @param engineeringProjectDetailList the engineeringProjectDetailList to set
+	 */
+	public void setEngineeringProjectDetailList(
+			List<EngineeringProjectDetail> engineeringProjectDetailList) {
+		this.engineeringProjectDetailList = engineeringProjectDetailList;
+	}
+
+	/**
+	 * @return the vehicleInfoList
+	 */
+	public List<String> getVehicleInfoList() {
+		return vehicleInfoList;
+	}
+
+	/**
+	 * @param vehicleInfoList the vehicleInfoList to set
+	 */
+	public void setVehicleInfoList(List<String> vehicleInfoList) {
+		this.vehicleInfoList = vehicleInfoList;
+	}
+	
+}

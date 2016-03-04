@@ -1,0 +1,255 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:rw="http://www.qylm.com"
+	xmlns:util="http://java.sun.com/jsf/composite/component/util"
+	template="/WEB-INF/facelets/templates/template.xhtml">
+	<ui:param name="title" value="原料登记管理" />
+	<ui:define name="tableCenter">
+		<t:saveState
+			value="#{problemProjectManageBean.problemProjectManageDto}" />
+		<t:saveState
+			value="#{problemProjectManageBean.engineeringProjectList}" />
+		<ui:fragment>
+		</ui:fragment>
+		<div class="searchRequirementNorth" style="margin-top: 6px;">
+			<p:focus for="number" />
+			<h:panelGrid id="manageGrid" columns="1">
+				<h:panelGroup>
+					<p:outputLabel for="number" value="车辆编号" />
+					<p:autoComplete id="number" dropdown="true" maxlength="10"
+						size="10"
+						value="#{problemProjectManageBean.problemProjectManageDto.vehicleNumber}"
+						completeMethod="#{selectBean.selectVehicleNumber}" />
+					<h:outputLabel for="customerName" value="客户"
+						style="margin-left: 30px;" />
+					<p:inputText styleClass="inputText" id="customerName" size="10"
+						maxlength="40"
+						value="#{problemProjectManageBean.problemProjectManageDto.customerName}" />
+					<h:outputLabel for="workAddress" value="工地地址" />
+					<p:inputText styleClass="inputText" id="workAddress" size="10"
+						maxlength="40"
+						value="#{problemProjectManageBean.problemProjectManageDto.workAddress}" />
+					<h:outputLabel for="beginDate" value="项目开始日期（开始）" />
+					<p:calendar navigator="true" id="beginDate" size="10"
+						maxlength="10" locale="tr"
+						value="#{problemProjectManageBean.problemProjectManageDto.startBeginDate}"
+						pattern="yyyy-MM-dd" />
+					~
+					<p:calendar navigator="true" id="endDate" size="10" maxlength="10"
+						locale="tr"
+						value="#{problemProjectManageBean.problemProjectManageDto.endBeginDate}"
+						pattern="yyyy-MM-dd" />
+					<p:commandButton id="searchBtn" value="搜索"
+						action="#{problemProjectManageBean.selectMaterialsGrant}"
+						process=":form:manageGrid" ajax="false" styleClass="searchBtn"
+						accesskey="s" />
+				</h:panelGroup>
+			</h:panelGrid>
+		</div>
+		<rw:paging pageBean="#{problemProjectManageBean}" />
+		<span style="font-size: 20px;"> <h:outputText
+				value="总实际方量：#{projectStateManageBean.sumSchedule} （立方）" /> </span>
+		<div class="tableCenter">
+			<p:dataTable emptyMessage="暂无数据" var="model"
+				value="#{problemProjectManageBean.engineeringProjectList}"
+				rowIndexVar="rowIndex" widgetVar="viewTable" rowKey="#{model.id}"
+				paginatorAlwaysVisible="true" id="viewTable">
+				<f:facet name="header">
+					工作登记信息列表
+				</f:facet>
+				<p:column>
+					<table width="100%" style="border: 1px; text-align:center;">
+						<tr>
+							<td class="tableLabel" width="80px;">客户</td>
+							<td class="tableLabel" width="120px;">项目期限</td>
+							<td class="tableLabel">工作地址</td>
+							<td class="tableLabel" width="80px;">预算方量</td>
+							<td class="tableLabel" width="200px;">实际量</td>
+							<td class="tableLabel" width="80px;">项目状态</td>
+						</tr>
+						<tr>
+							<td><h:outputText value="#{model.customer.name}" /></td>
+							<td align="left">开始：<h:outputText value="#{model.beginDate}">
+									<f:convertDateTime pattern="yyyy-MM-dd"
+										timeZone="Asia/Shanghai" />
+								</h:outputText> <br /> 结束：<h:outputText value="#{model.endDate}">
+									<f:convertDateTime pattern="yyyy-MM-dd"
+										timeZone="Asia/Shanghai" />
+								</h:outputText></td>
+							<td><h:outputText value="#{model.workAddress}" /></td>
+							<td style="text-align: left;"><h:outputText
+									value="#{model.actualVolume}（立方）" /></td>
+							<td style="text-align: left;"><h:outputText
+									value="#{model.schedule}（立方）" /></td>
+							<td><h:outputText
+									value="#{rw:label(genericCodeBean.c0501,model.type)}"
+									style="color:#{model.typeColor};" /></td>
+						</tr>
+						<tr>
+							<td colspan="6">
+								<table width="100%" style="border: 1px; text-align:center;">
+									<tr>
+										<td class="tableTd" width="120px;">车辆编号</td>
+										<td class="tableTd" width="120px;">泵送部位</td>
+										<td class="tableTd">工作量情况</td>
+										<td class="tableTd" width="100px;">工作时间</td>
+										<td class="tableTd" width="140px;">开机人</td>
+										<td class="tableTd" width="80px;">基本操作</td>
+									</tr>
+									<ui:repeat var="engineeringProjectDetail"
+										value="#{model.engineeringProjectDetailList}">
+										<tr>
+											<td><h:outputText
+													value="#{engineeringProjectDetail.vehicleNumber}" /></td>
+											<td><h:outputText
+													value="#{engineeringProjectDetail.pumpParts}" /></td>
+											<td style="text-align: left;"><h:outputText
+													value="预计工作方量：#{engineeringProjectDetail.workVolume}（立方）" />
+												<br /> <h:outputText
+													value="实际完成方量：#{engineeringProjectDetail.schedule}（立方）" />
+											</td>
+											<td><h:outputText
+													value="#{engineeringProjectDetail.startPumpDate}">
+													<f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss"
+														timeZone="Asia/Shanghai" />
+												</h:outputText> <br /> <h:outputText
+													value="#{engineeringProjectDetail.endPumpDate}">
+													<f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss"
+														timeZone="Asia/Shanghai" />
+												</h:outputText></td>
+											<td>
+												<table>
+													<tr>
+														<ui:repeat var="projectEmployeeDetail"
+															value="#{engineeringProjectDetail.projectEmployeeDetailList}">
+															<td><h:outputText
+																	value="#{projectEmployeeDetail.name}" />
+															</td>
+														</ui:repeat>
+													</tr>
+												</table></td>
+											<td rowspan="2"><p:commandButton value="处理问题项目"
+													action="#{problemProjectManageBean.registerEngineeringProjectDetail(engineeringProjectDetail)}"
+													update=":form:engineeringProjectDetail :form:messages"
+													styleClass="modifyBtn" align="center"
+													oncomplete="PF('engineeringProjectDetail').show();"
+													rendered="true" />
+											</td>
+										</tr>
+										<tr>
+											<td>备注</td>
+											<td colspan="5" style="text-align: left;"><h:outputText
+													value="#{engineeringProjectDetail.remark}" escape="false" />
+											</td>
+										</tr>
+									</ui:repeat>
+								</table></td>
+						</tr>
+					</table>
+				</p:column>
+				<p:column headerText="基本操作" exportable="false" style="width: 60px;">
+					<p:commandButton value="详细"
+						action="#{problemProjectManageBean.updateEngineeringProject(model)}"
+						ajax="false" styleClass="modifyBtn" />
+				</p:column>
+			</p:dataTable>
+			<p:dialog header="工作车辆安排" id="engineeringProjectDetail"
+				widgetVar="engineeringProjectDetail" modal="true">
+				<p:panelGrid styleClass="dataTable">
+					<p:row>
+						<p:column styleClass="column1">
+							<p:outputLabel for="address" value="工作地址" />
+						</p:column>
+						<p:column styleClass="column4" colspan="3">
+							<p:inputText id="address"
+								value="#{problemProjectManageBean.problemProjectManageDto.address}"
+								size="40" maxlength="40" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column styleClass="column1">
+							<p:outputLabel for="pumpParts" value="泵送部位" />
+						</p:column>
+						<p:column styleClass="column4" colspan="3">
+							<p:inputText id="pumpParts"
+								value="#{problemProjectManageBean.problemProjectManageDto.pumpParts}"
+								size="20" maxlength="20" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column styleClass="column1">
+							<h:outputText value="预算方量" />
+						</p:column>
+						<p:column styleClass="column4" colspan="3">
+							<h:outputText
+								value="#{problemProjectManageBean.problemProjectManageDto.workVolume}" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column styleClass="column1">
+							<h:outputText value="已完成方量" />
+						</p:column>
+						<p:column styleClass="column4" colspan="3">
+							<h:outputText
+								value="#{problemProjectManageBean.problemProjectManageDto.schedule}" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column styleClass="column1">
+							<h:outputText value="工作开始时间" />
+						</p:column>
+						<p:column styleClass="column2">
+							<p:calendar navigator="true" size="20" maxlength="19"
+								value="#{problemProjectManageBean.problemProjectManageDto.startPumpDate}"
+								locale="tr" pattern="yyyy-MM-dd HH:mm:ss" />
+						</p:column>
+						<p:column styleClass="column1">
+							<h:outputText value="工作结束时间" />
+						</p:column>
+						<p:column styleClass="column4">
+							<p:calendar navigator="true" size="20" maxlength="19"
+								value="#{problemProjectManageBean.problemProjectManageDto.endPumpDate}"
+								locale="tr" pattern="yyyy-MM-dd HH:mm:ss" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column styleClass="column1">
+							<p:outputLabel value="运送负责人" />
+						</p:column>
+						<p:column styleClass="column4" colspan="3">
+						<ui:repeat var="projectEmployeeDetail"
+						value="#{engineeringProjectDetail.projectEmployeeDetailList}">
+						<h:outputText
+						value="#{projectEmployeeDetail.name}" />
+						<h:outputText
+						value="#{projectEmployeeDetail.employee.mobile}" />
+						</ui:repeat>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column styleClass="column1">
+							<p:outputLabel for="remark" value="备注(项目异常原因以及处理结果)" />
+						</p:column>
+						<p:column styleClass="column4" colspan="3">
+							<p:inputTextarea id="remark" maxlength="1000" cols="40" rows="4"
+								value="#{problemProjectManageBean.materialsGrantCreateDto.remark}" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column styleClass="column4" colspan="4">
+							<p:commandButton value="保存"
+								action="#{problemProjectManageBean.saveMaterialsGrant}"
+								update=":form:viewTable :form:messages" styleClass="modifyBtn"
+								ajax="false" oncomplete="PF('engineeringProjectDetail').hide();" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+			</p:dialog>
+		</div>
+	</ui:define>
+</ui:composition>

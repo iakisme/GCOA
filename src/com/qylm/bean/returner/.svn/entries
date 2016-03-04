@@ -1,0 +1,92 @@
+10
+
+dir
+15
+http://www.zjlskj.com:8089/svn/GCOA/src/com/qylm/bean/returner
+http://www.zjlskj.com:8089/svn/GCOA
+
+
+
+2015-11-06T00:49:40.359420Z
+12
+smj
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+792c988d-25e9-2a44-a787-256f8b0cfce2
+
+vehicle
+dir
+
+customer
+dir
+
+MyDeskReturner.java
+file
+
+
+
+
+2015-12-01T09:09:52.150011Z
+4e4e2494cf457c1c7c07ceba340f180c
+2015-07-30T03:01:19.486780Z
+5
+smj
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+501
+
+financial
+dir
+
+fitting
+dir
+
+personnel
+dir
+
+company
+dir
+
+mobile
+dir
+
+procedure
+dir
+
+engineering
+dir
+
+engineeringMaterials
+dir
+

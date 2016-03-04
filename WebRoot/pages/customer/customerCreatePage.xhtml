@@ -1,0 +1,202 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:rw="http://www.qylm.com"
+	template="/WEB-INF/facelets/templates/template.xhtml">
+	<ui:param name="title" value="客户登录" />
+	<ui:define name="tableCenter">
+		<t:saveState value="#{customerCreateBean.customerCreateDto}" />
+		<div class="buttonNorth">
+			<p:commandButton value="返回" action="#{customerCreateBean.back}" immediate="true" ajax="false" styleClass="backBtn" />
+			<p:commandButton value="添加" action="#{customerCreateBean.newCustomer}" immediate="true" update="@form" styleClass="createBtn" />
+			<p:commandButton value="保存" action="#{customerCreateBean.saveCustomer}" update="@form" styleClass="saveBtn" 
+				rendered="#{userBean.isCheckPermission('customer_customerInfo', '添加') or userBean.isCheckPermission('customer_customerInfo', '修改')}"/>
+		</div>
+		<div class="tableCenter">
+			<p:focus for="serialNumber" />
+			<p:panelGrid id="manageGrid" styleClass="dataTable"> 
+				<p:row>
+					<p:column styleClass="column1">
+						<p:outputLabel for="serialNumber" value="客户编号" />
+					</p:column>
+					<p:column styleClass="column4" colspan="3">
+						<p:inputText styleClass="inputText" id="serialNumber" size="20" maxlength="20"
+							value="#{customerCreateBean.customerCreateDto.serialNumber}" label="客户编号" required="true" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column1">
+						<p:outputLabel for="name" value="公司名称" />
+					</p:column>
+					<p:column styleClass="column2">
+						<p:inputText styleClass="inputText" id="name" size="30" maxlength="50"
+							value="#{customerCreateBean.customerCreateDto.name}" label="公司名称" required="true" />
+					</p:column>
+					<p:column styleClass="column1">
+						<p:outputLabel for="manager" value="法人" />
+					</p:column>
+					<p:column styleClass="column4">
+						<p:inputText styleClass="inputText" id="manager" size="20" maxlength="20"
+							value="#{customerCreateBean.customerCreateDto.manager}" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column1">
+						<p:outputLabel for="registerDate" value="注册时间" />
+					</p:column>
+					<p:column styleClass="column4" colspan="3">
+						<p:calendar navigator="true" id="registerDate" size="10" maxlength="10"
+							locale="tr"
+							value="#{customerCreateBean.customerCreateDto.registerDate}"
+							pattern="yyyy-MM-dd"/>
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column1">
+						<h:outputLabel for="bank" value="开户银行" />
+					</p:column>
+					<p:column styleClass="column2">
+						<p:inputText styleClass="inputText" id="bank" size="20" maxlength="20"
+							value="#{customerCreateBean.customerCreateDto.bank}" />
+					</p:column>
+					<p:column styleClass="column1">
+						<h:outputLabel for="payment" value="支付方式" />
+					</p:column>
+					<p:column styleClass="column4">
+						<h:selectOneMenu id="payment" value="#{customerCreateBean.customerCreateDto.payment}">
+							<f:selectItems value="#{genericCodeBean.c0201}" />
+						</h:selectOneMenu>
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column1">
+						<h:outputLabel for="bankNumber" value="开户行账号" />
+					</p:column>
+					<p:column styleClass="column4" colspan="3">
+						<p:inputText styleClass="inputText" id="bankNumber" size="20" maxlength="20"
+							value="#{customerCreateBean.customerCreateDto.bankNumber}" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column1">
+						<p:outputLabel for="provinceId"  value="省份" />
+					</p:column>
+					<p:column styleClass="column4" colspan="3" >
+						<rw:address requiredCheck="true" requiredMessage="请选择地点"
+							addressEntity="#{customerCreateBean.customerCreateDto.addressEntity}" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column1">
+						<h:outputLabel for="address" value="地址" />
+					</p:column>
+					<p:column styleClass="column4" colspan="3" >
+						<p:inputText styleClass="inputText" id="address" size="50" maxlength="50"
+							value="#{customerCreateBean.customerCreateDto.address}" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column1">
+						<h:outputLabel for="trade" value="所属行业" />
+					</p:column>
+					<p:column styleClass="column2">
+						<p:inputText styleClass="inputText" id="trade" size="20" maxlength="20"
+							value="#{customerCreateBean.customerCreateDto.trade}" />
+					</p:column>
+					<p:column styleClass="column1">
+						<h:outputLabel for="taxNo" value="纳税号" />
+					</p:column>
+					<p:column styleClass="column4">
+						<p:inputText styleClass="inputText" id="taxNo" size="20" maxlength="20"
+							value="#{customerCreateBean.customerCreateDto.taxNo}" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column1">
+						<h:outputLabel for="url" value="公司网址" />
+					</p:column>
+					<p:column styleClass="column2">
+						<p:inputText styleClass="inputText" id="url" size="20" maxlength="20"
+							value="#{customerCreateBean.customerCreateDto.url}" />
+					</p:column>
+					<p:column styleClass="column1">
+						<h:outputLabel for="email" value="Email" />
+					</p:column>
+					<p:column styleClass="column4">
+						<p:inputText styleClass="inputText" id="email" size="20" maxlength="20"
+							value="#{customerCreateBean.customerCreateDto.email}" >
+							<f:validator validatorId="emailValidator" />
+						</p:inputText>
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column1">
+						<h:outputLabel for="fax" value="传真" />
+					</p:column>
+					<p:column styleClass="column2">
+						<p:inputText styleClass="inputText" id="fax" size="20" maxlength="18"
+							value="#{customerCreateBean.customerCreateDto.fax}">
+							<f:validator validatorId="phoneValidator" />
+						</p:inputText>
+					</p:column>
+					<p:column styleClass="column1">
+						<h:outputLabel for="phone" value="电话" />
+					</p:column>
+					<p:column styleClass="column4">
+						<p:inputText styleClass="inputText" id="phone" size="20" maxlength="18"
+							value="#{customerCreateBean.customerCreateDto.phone}" >
+							<f:validator validatorId="phoneValidator" />
+						</p:inputText>
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column1">
+						<p:outputLabel for="mobile" value="手机号" />
+					</p:column>
+					<p:column styleClass="column4" colspan="3" >
+						<p:inputText styleClass="inputText" id="mobile" size="20" maxlength="11"
+							value="#{customerCreateBean.customerCreateDto.mobile}"  >
+							<f:validator validatorId="numberValidator" />
+						</p:inputText>
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column1">
+						<h:outputLabel for="taxState" value="含税" />
+					</p:column>
+					<p:column styleClass="column2">
+						<p:selectBooleanCheckbox id="taxState"  value="#{customerCreateBean.customerCreateDto.taxState}"/>
+					</p:column>
+					<p:column styleClass="column1">
+						<h:outputLabel for="tax" value="税点" />
+					</p:column>
+					<p:column styleClass="column4">
+						<pe:inputNumber id="tax" maxlength="10" size="12" value="#{customerCreateBean.customerCreateDto.tax}" 
+							minValue="0.00" emptyValue="0" decimalPlaces="2" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column1">
+						<h:outputLabel for="type" value="收款方式" />
+					</p:column>
+					<p:column styleClass="column2">
+						<h:selectOneMenu id="type" value="#{customerCreateBean.customerCreateDto.type}">
+							<f:selectItems value="#{genericCodeBean.c0202}" />
+						</h:selectOneMenu>
+					</p:column>
+					<p:column styleClass="column1">
+						<h:outputLabel for="pumpPrice" value="金额" />
+					</p:column>
+					<p:column styleClass="column4">
+						<pe:inputNumber id="pumpPrice" maxlength="12" size="12" value="#{customerCreateBean.customerCreateDto.pumpPrice}" 
+							minValue="0.00" emptyValue="0" decimalPlaces="2" />
+					</p:column>
+				</p:row>
+			</p:panelGrid>
+		</div>
+	</ui:define>
+</ui:composition>

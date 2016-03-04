@@ -1,0 +1,70 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:rw="http://www.qylm.com"
+	xmlns:util="http://java.sun.com/jsf/composite/component/util"
+	template="/WEB-INF/facelets/templates/template.xhtml">
+	<ui:param name="title" value="未收款的客户" />
+	<ui:define name="tableCenter">
+		<t:saveState value="#{mobileEngineeringFinancialManageBean.mobileEngineeringFinancialManageDto}" />
+		<t:saveState value="#{mobileEngineeringFinancialManageBean.customerFinancialList}" />
+		<div class="buttonNorth">
+			<p:commandButton value="返回" action="#{mobileEngineeringFinancialManageBean.back}" 
+				ajax="false" styleClass="createBtn" accesskey="c"/>
+		</div>
+		<div class="searchRequirementNorth">
+			<h:panelGrid id="manageGrid" columns="1">
+				<h:panelGroup>
+					<h:outputLabel for="customerName" value="客户" />
+					<p:inputText styleClass="inputText" id="customerName" size="10" maxlength="10"
+						value="#{mobileEngineeringFinancialManageBean.mobileEngineeringFinancialManageDto.customerName}" />
+					<p:commandButton id="searchBtn" value="搜索" action="#{mobileEngineeringFinancialManageBean.selectMobileEngineeringFinancial}" process=":form:manageGrid" 
+						ajax="false" styleClass="searchBtn" accesskey="s" />
+				</h:panelGroup>
+			</h:panelGrid>
+		</div>
+		<rw:mobilePaging pageBean="#{mobileEngineeringFinancialManageBean}" />
+		<div class="tableCenter">
+			<p:dataTable emptyMessage="暂无数据" var="model" value="#{mobileEngineeringFinancialManageBean.customerFinancialList}" rowIndexVar="rowIndex"
+				widgetVar="viewTable" rowKey="#{model.id}" paginatorAlwaysVisible="true"
+				sortBy="createDate" sortOrder="ascending" id="viewTable">
+				<f:facet name="header" >
+					客户收支明细列表
+				</f:facet>
+				<p:column>
+					<table width="100%" style="border: 1px; text-align:center;">
+						<tr>
+							<td width="100px;">客户：#{model.customer.name}</td>
+							<td>
+								收款日期：
+								<h:outputText value="#{model.financialDate}">
+									<f:convertDateTime pattern="yyyy-MM-dd" timeZone="Asia/Shanghai" />
+								</h:outputText>
+							</td>
+						</tr>
+						<tr>
+							<td width="100px;" colspan="2" style="text-align: left;">
+								<h:outputText value="收款金额： #{model.money}￥" />
+								<br />
+								<h:outputText style="color: #00FF00;" value="已  收  款：  #{model.collectMoney}￥" />
+								<br />
+								<h:outputText value="未  收  款： #{model.notMoney}￥" />
+								<br />
+								<h:outputText style="color: #FF0000;" value="支付金额： #{model.payMoney}￥" />
+							</td>
+						</tr>
+					</table>
+				</p:column>
+				<p:column headerText="详细" width="40px;">
+					<p:commandButton value="详细" action="#{mobileEngineeringFinancialManageBean.updateEngineeringProject(model)}"
+						ajax="false" styleClass="modifyBtn"/>
+				</p:column>
+			</p:dataTable>
+		</div>
+		<rw:mobilePaging pageBean="#{mobileEngineeringFinancialManageBean}" />
+	</ui:define>
+</ui:composition>

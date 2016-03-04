@@ -1,0 +1,174 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:rw="http://www.qylm.com"
+	xmlns:util="http://java.sun.com/jsf/composite/component/util"
+	template="/WEB-INF/facelets/templates/template.xhtml">
+	<ui:param name="title" value="工程项目管理" />
+	<ui:define name="tableCenter">
+		<t:saveState value="#{engineeringProjectManageBean.engineeringProjectManageDto}" />
+		<t:saveState value="#{engineeringProjectManageBean.engineeringProjectList}" />
+		<div class="buttonNorth">
+			<p:commandButton value="添加" action="#{engineeringProjectManageBean.newEngineeringProject}" ajax="false" styleClass="createBtn" accesskey="c"
+				rendered="#{userBean.isCheckPermission('engineering_engineeringProject', '添加')}"/>
+			<p:commandButton value="批量删除" actionListener="#{engineeringProjectManageBean.deleteMul}" 
+				rendered="#{userBean.isCheckPermission('engineering_engineeringProject', '删除')}"
+				update="viewTable :form:messages" onstart="return deleteConfirm();" styleClass="multipleDelBtn" accesskey="d"/>
+			<p:menuButton value="更多操作" >
+				<p:menuitem value="模版下载" action="#{engineeringProjectManageBean.downloadTemplet}" ajax="false" styleClass="modifyBtn" />
+				<p:menuitem value="上传" action="#{engineeringProjectManageBean.fileUpload}" ajax="false" styleClass="modifyBtn"/>
+		    </p:menuButton>
+		</div>
+		<div class="searchRequirementNorth">
+			<p:focus for="customerName" />
+			<h:panelGrid id="manageGrid" columns="11">
+				<h:outputLabel for="customerName" value="客户" />
+				<p:inputText styleClass="inputText" id="customerName" size="20" maxlength="40"
+					value="#{engineeringProjectManageBean.engineeringProjectManageDto.customerName}" />
+				<h:outputLabel for="workAddress" value="工地地址" />
+				<p:inputText styleClass="inputText" id="workAddress" size="20" maxlength="40"
+					value="#{engineeringProjectManageBean.engineeringProjectManageDto.workAddress}" />
+				<h:outputLabel for="beginDate" value="项目开始日期（开始）" />
+				<p:calendar navigator="true" id="beginDate" size="10" maxlength="10" locale="tr"
+					value="#{engineeringProjectManageBean.engineeringProjectManageDto.beginDate}"
+					pattern="yyyy-MM-dd"/>
+				~
+				<p:calendar navigator="true" id="endDate" size="10" maxlength="10" locale="tr"
+					value="#{engineeringProjectManageBean.engineeringProjectManageDto.endDate}"
+					pattern="yyyy-MM-dd"/>
+				<h:outputLabel for="type" value="项目状态" />
+				<h:selectOneMenu id="type" value="#{engineeringProjectManageBean.engineeringProjectManageDto.type}">
+					<f:selectItems value="#{genericCodeBean.c0501}" />
+				</h:selectOneMenu>
+				<p:commandButton id="searchBtn" value="搜索" action="#{engineeringProjectManageBean.selectEngineeringProject}" process=":form:manageGrid" 
+					ajax="false" styleClass="searchBtn" accesskey="s" />
+			</h:panelGrid>
+		</div>
+		<rw:paging pageBean="#{engineeringProjectManageBean}" />
+		<div class="tableCenter">
+			<span style="font-size: 20px;">
+				<h:outputText value="总实际方量：#{engineeringProjectManageBean.sumSchedule} （立方）" />
+				<!--  
+				&#160;&#160;
+				<h:outputText value="总预收款金额：#{engineeringProjectManageBean.money} ￥" />
+				&#160;&#160;
+				<h:outputText value="总已收款金额：#{engineeringProjectManageBean.collectMoney} ￥" />
+				-->
+			</span>
+			<p:dataTable emptyMessage="暂无数据" var="model" value="#{engineeringProjectManageBean.engineeringProjectList}" rowIndexVar="rowIndex"
+				widgetVar="viewTable" rowKey="#{model.id}" paginatorAlwaysVisible="true" id="viewTable"
+				selection="#{engineeringProjectManageBean.selectedModels}">
+				<f:facet name="header" >
+					工程项目信息列表
+				</f:facet>
+				<p:column selectionMode="multiple" exportable="false" style="width:32px" />
+				<p:column headerText="客户" sortBy="#{model.customer.name}" width="100px;">
+					<h:outputText value="#{model.customer.name}" />
+				</p:column>
+				<p:column headerText="项目期限" width="140px;">
+					开始日期：
+					<h:outputText value="#{model.beginDate}">
+						<f:convertDateTime pattern="yyyy-MM-dd" timeZone="Asia/Shanghai"/>
+					</h:outputText>
+					<br/>
+					结束日期：
+					<h:outputText value="#{model.endDate}">
+						<f:convertDateTime pattern="yyyy-MM-dd" timeZone="Asia/Shanghai" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="工作地址" sortBy="#{model.workAddress}">
+					<h:outputText value="#{model.workAddress}" />
+				</p:column>
+				<!--
+				<p:column headerText="项目金额" sortBy="#{model.money}" width="160px;">
+					<div style="width: 100%; text-align: left;">
+						<h:outputText value="预算金额：#{model.money} ￥" />
+						<br />
+						<h:outputText style="color: #00FF00;" value="已  收  款：#{model.collectMoney} ￥" />
+						<br />
+						<h:outputText value="未  收  款：#{model.notCollectMoney} ￥" />
+						<br />
+						<h:outputText style="color: #FF0000;" value="消费金额：#{model.payMoney} ￥" />
+					</div>
+				</p:column>
+				-->
+				<p:column headerText="工作量情况" width="200px;">
+					<h:outputText value="预计方量：#{model.actualVolume}（立方）" />
+					<br />
+					<h:outputText value="实际方量：#{model.schedule}（立方）" />
+				</p:column>
+				<p:column headerText="项目状态" sortBy="#{model.type}" width="80px;">
+					<h:outputText value="#{rw:label(genericCodeBean.c0501,model.type)}" style="color:#{model.typeColor};"/>
+				</p:column>
+				<p:column headerText="基本操作" exportable="false" style="width: 100px;">
+					<p:commandButton value="#{model.operation ? '修改' : '详细'}" action="#{engineeringProjectManageBean.updateEngineeringProject(model)}"
+						ajax="false" styleClass="modifyBtn"
+						rendered="#{userBean.isCheckPermission('engineering_engineeringProject', '修改')}"/>
+					&#160;&#160;
+					<p:commandButton value="删除" action="#{engineeringProjectManageBean.deleteEngineeringProject(model)}"
+						partialSubmit="true" process="@this"  update="viewTable :form:messages"
+						onstart="return deleteConfirm();" styleClass="singleDelBtn"
+						rendered="#{userBean.isCheckPermission('engineering_engineeringProject', '删除')}"/>
+					<br />
+					<p:commandButton value="查看安排车辆" id="arrangeVehicleDD" action="#{engineeringProjectManageBean.arrangeVehicle(model)}"
+						partialSubmit="true" process="@this" update=":form:arrangeVehicle :form:messages" styleClass="modifyBtn" 
+						oncomplete="PF('arrangeVehicle').show();"
+						rendered="#{userBean.isCheckPermission('engineering_engineeringProject', '查看车辆安排')}"/>
+				</p:column>
+				<f:facet name="footer" >
+					<h:outputText value="本页总实际方量：#{engineeringProjectManageBean.engineeringProjectManageDto.sumSchedule} （立方）" />
+					<!--
+					&#160;&#160;
+					<h:outputText value="本页总预收款金额：#{engineeringProjectManageBean.engineeringProjectManageDto.sumMoney} ￥" />
+					&#160;&#160;
+					<h:outputText value="本页总已收款金额：#{engineeringProjectManageBean.engineeringProjectManageDto.sumCollectMoney} ￥" />
+					-->
+				</f:facet>
+			</p:dataTable>
+			<p:dialog header="工作车辆安排" id="arrangeVehicle" widgetVar="arrangeVehicle" modal="true">
+				<p:dataTable var="model" value="#{engineeringProjectManageBean.engineeringProjectDetailList}" id="engineeringProjectDetail">
+					<f:facet name="header" >
+						工作车辆安排列表
+					</f:facet>
+					<p:column headerText="车辆编号" width="120px;">
+						<h:outputText value="#{model.vehicleNumber}" />
+					</p:column>
+					<p:column headerText="泵送部位" width="120px;">
+						<h:outputText value="#{model.pumpParts}" />
+					</p:column>
+					<p:column headerText="工作量情况" width="180px;">
+						<h:outputText value="预计方量：#{model.workVolume}（立方）" />
+						<br />
+						<h:outputText value="实际方量：#{model.schedule}（立方）" />
+					</p:column>
+					<p:column headerText="加油量" width="80px;">
+						<h:outputText value="#{model.gasVolume}" />
+					</p:column>
+					<p:column headerText="开始时间" width="120px;">
+						<h:outputText value="#{model.startPumpDate}">
+							<f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" timeZone="Asia/Shanghai" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="结束时间" width="120px;">
+						<h:outputText value="#{model.endPumpDate}">
+							<f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" timeZone="Asia/Shanghai" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="开机人">
+						<table>
+							<tr>
+								<ui:repeat var="projectEmployeeDetail" value="#{model.projectEmployeeDetailList}">
+									<td><h:outputText value="#{projectEmployeeDetail.name}" /></td>
+								</ui:repeat>
+							</tr>
+						</table>
+					</p:column>
+				</p:dataTable>
+			</p:dialog>
+		</div>
+	</ui:define>
+</ui:composition>

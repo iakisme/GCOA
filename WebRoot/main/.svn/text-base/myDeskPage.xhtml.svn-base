@@ -1,0 +1,48 @@
+﻿<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:rw="http://www.qylm.com"
+	xmlns:util="http://java.sun.com/jsf/composite/component/util"
+	template="/WEB-INF/facelets/templates/template.xhtml">
+	<ui:param name="title" value="欢迎界面" />
+	<ui:define name="tableCenter">
+		<t:saveState value="#{myDeskBean.myDeskDto}" />
+		<p:poll interval="10" listener="#{myDeskBean.refreshDesk}" update=":form:viewTable" />
+		<ui:fragment rendered="#{myDeskBean.isShowTable(myDeskBean.myDeskDto.engineeringProjectList) or myDeskBean.isShowTable(myDeskBean.myDeskDto.engineeringWorkInList)}">
+			<table style="width: 100%; height: 300px; margin-top: 5px;">
+				<tr>
+					<td width="50%" height="300px;" valign="top">
+						<ui:include src="/WEB-INF/facelets/tags/myDesk/engineeringWork.xhtml" />
+					</td>
+					<td valign="top">
+						<ui:include src="/WEB-INF/facelets/tags/myDesk/engineeringWorkIn.xhtml" />
+					</td>
+				</tr>
+			</table>
+		</ui:fragment>
+		<p:dialog id="engineeringWorkDetail" header="车辆安排情况" widgetVar="engineeringWorkDetail" modal="true" width="800">
+			<ui:include src="/WEB-INF/facelets/tags/myDesk/engineeringWorkDetail.xhtml" />
+		</p:dialog>
+		<!--
+		<ui:fragment rendered="#{myDeskBean.isShowTable(myDeskBean.myDeskDto.engineeringProjectList)}">
+			<ui:include src="/WEB-INF/facelets/tags/myDesk/engineeringWork.xhtml" />
+		</ui:fragment>
+		<ui:fragment rendered="#{myDeskBean.isShowTable(myDeskBean.myDeskDto.fittingPurchaseList)}">
+			<ui:include src="/WEB-INF/facelets/tags/myDesk/fittingPurchase.xhtml" />
+		</ui:fragment>
+		<ui:fragment rendered="#{myDeskBean.isShowTable(myDeskBean.myDeskDto.storageFittingPutchaseList)}">
+			<ui:include src="/WEB-INF/facelets/tags/myDesk/storageFittingPutchase.xhtml" />
+		</ui:fragment>
+		<ui:fragment rendered="#{myDeskBean.isShowTable(myDeskBean.myDeskDto.fittingPurchaseExamineList)}">
+			<ui:include src="/WEB-INF/facelets/tags/myDesk/fittingExamine.xhtml" />
+		</ui:fragment>
+		<ui:fragment rendered="#{myDeskBean.isShowTable(myDeskBean.myDeskDto.planArrangementList)}">
+			<ui:include src="/WEB-INF/facelets/tags/myDesk/planArrangement.xhtml" />
+		</ui:fragment>
+		-->
+	</ui:define>
+</ui:composition>

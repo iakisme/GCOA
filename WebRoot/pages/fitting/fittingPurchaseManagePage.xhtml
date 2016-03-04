@@ -1,0 +1,114 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:rw="http://www.qylm.com"
+	xmlns:util="http://java.sun.com/jsf/composite/component/util"
+	template="/WEB-INF/facelets/templates/template.xhtml">
+	<ui:param name="title" value="配件采购管理" />
+	<ui:define name="tableCenter">
+		<t:saveState value="#{fittingPurchaseManageBean.fittingPurchaseManageDto}" />
+		<t:saveState value="#{fittingPurchaseManageBean.fittingPurchaseList}" />
+		<div class="buttonNorth">
+			<p:commandButton value="添加" action="#{fittingPurchaseManageBean.newFittingPurchase}" ajax="false" styleClass="createBtn" accesskey="c"
+				rendered="#{userBean.isCheckPermission('fitting_fittingPurchase', '添加')}"/>
+			<p:commandButton value="批量删除" actionListener="#{fittingPurchaseManageBean.deleteMul}" 
+				rendered="#{userBean.isCheckPermission('fitting_fittingPurchase', '删除')}"
+				update="viewTable :form:messages" onstart="return deleteConfirm();" styleClass="multipleDelBtn" accesskey="d"/>
+		</div>
+		<div class="searchRequirementNorth">
+			<p:focus for="serialNumber" />
+			<h:panelGrid id="manageGrid" columns="11">
+				<h:outputLabel for="serialNumber" value="采购编号" />
+				<p:inputText styleClass="inputText" id="serialNumber" size="10" maxlength="10"
+					value="#{fittingPurchaseManageBean.fittingPurchaseManageDto.serialNumber}" />
+				<h:outputLabel for="beginApplyDate" value="申请日期（开始）" />
+				<p:calendar navigator="true" id="beginApplyDate" size="10" maxlength="10" locale="tr"
+					value="#{fittingPurchaseManageBean.fittingPurchaseManageDto.beginApplyDate}"
+					pattern="yyyy-MM-dd"/>
+				~
+				<p:calendar navigator="true" id="endApplyDate" size="10" maxlength="10" locale="tr"
+					value="#{fittingPurchaseManageBean.fittingPurchaseManageDto.endApplyDate}"
+					pattern="yyyy-MM-dd"/>
+				<h:outputLabel for="beginPurchaseDate" value="采购日期（开始）" />
+				<p:calendar navigator="true" id="beginPurchaseDate" size="10" maxlength="10" locale="tr"
+					value="#{fittingPurchaseManageBean.fittingPurchaseManageDto.beginPurchaseDate}"
+					pattern="yyyy-MM-dd"/>
+				~
+				<p:calendar navigator="true" id="endPurchaseDate" size="10" maxlength="10" locale="tr"
+					value="#{fittingPurchaseManageBean.fittingPurchaseManageDto.endPurchaseDate}"
+					pattern="yyyy-MM-dd"/>
+				<p:commandButton id="searchBtn" value="搜索" action="#{fittingPurchaseManageBean.selectFittingPurchase}" process=":form:manageGrid" 
+					ajax="false" styleClass="searchBtn" accesskey="s" />
+			</h:panelGrid>
+		</div>
+		<rw:paging pageBean="#{fittingPurchaseManageBean}" />
+		<div class="tableCenter">
+			<p:dataTable emptyMessage="暂无数据" var="model" value="#{fittingPurchaseManageBean.fittingPurchaseList}" rowIndexVar="rowIndex"
+				widgetVar="viewTable" rowKey="#{model.id}" paginatorAlwaysVisible="true"
+				sortBy="createDate" sortOrder="descending" id="viewTable"
+				selection="#{fittingPurchaseManageBean.selectedModels}">
+				<f:facet name="header" >
+					配件采购信息列表
+				</f:facet>
+				<p:column selectionMode="multiple" exportable="false" style="width:32px" />
+				<p:column headerText="采购编号" sortBy="#{model.serialNumber}"  width="100px;">
+					<h:outputText value="#{model.serialNumber}" />
+				</p:column>
+				<p:column headerText="申请日期" sortBy="#{model.applyDate}" width="100px;">
+					<h:outputText value="#{model.applyDate}">
+						<f:convertDateTime pattern="yyyy-MM-dd" timeZone="Asia/Shanghai" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="金额状况" width="160px;">
+					<div style="text-align: left;">
+						<h:outputText value="申请金额：#{model.applyPrice}" />
+						<br />
+						<h:outputText value="审批金额：#{model.budgetPrice}" />
+						<br />
+						<h:outputText value="采购金额：#{model.purchasePrice}" />
+					</div>
+				</p:column>
+				<p:column headerText="采购内容" sortBy="#{model.title}">
+					<h:outputText value="#{model.title}" />
+				</p:column>
+				<p:column headerText="采购单状态" sortBy="#{model.state}" width="120px;">
+					<h:outputText value="#{rw:label(genericCodeBean.c0106,model.state)}" style="color:#{model.typeColor};"/>
+				</p:column>
+				<p:column headerText="基本操作" exportable="false" style="width: 180px;">
+					<p:commandButton value="查看审批情况" action="#{fittingPurchaseManageBean.reApply(model)}" partialSubmit="true" process="@this"
+						oncomplete="PF('dlgExamine').show();" disabled="#{!model.examineState}"
+						update=":form:dlgExamine" styleClass="singleDelBtn"/>
+					<p:commandButton value="#{!model.draft ? '查看详情':'修改'}" action="#{fittingPurchaseManageBean.updateFittingPurchase(model)}"
+						ajax="false" styleClass="modifyBtn"
+						rendered="#{userBean.isCheckPermission('fitting_fittingPurchase', '修改')}"/>
+					<p:commandButton value="删除" action="#{fittingPurchaseManageBean.deleteFittingPurchase(model)}"
+						partialSubmit="true" process="@this"  update="viewTable :form:messages"
+						onstart="return deleteConfirm();" styleClass="singleDelBtn"
+						disabled="#{fittingPurchaseManageBean.isDeleteInfo(model)}"
+						rendered="#{userBean.isCheckPermission('fitting_fittingPurchase', '删除')}"/>
+				</p:column>
+			</p:dataTable>
+			<p:dialog id="dlgExamine" header="审核信息" widgetVar="dlgExamine" resizable="false" modal="true" position="center" width="500">
+				<p:dataTable var="model" value="#{fittingPurchaseManageBean.fittingPurchaseExamineList}" 
+					id="fittingPurchaseExamine">
+					<f:facet name="header" >
+						审核信息列表
+					</f:facet>
+					<p:column headerText="审核人" style="width: 100px;">
+						<h:outputText value="#{model.auditor.userName}"/>
+					</p:column>
+					<p:column headerText="审核状态" style="width: 100px;">
+						<h:outputText value="#{rw:label(genericCodeBean.c0702,model.state)}" style="color: #{model.typeColor}" />
+					</p:column>
+					<p:column headerText="备注">
+						<h:outputText value="#{model.remark}"/>
+					</p:column>
+				</p:dataTable>
+			</p:dialog>
+		</div>
+	</ui:define>
+</ui:composition>

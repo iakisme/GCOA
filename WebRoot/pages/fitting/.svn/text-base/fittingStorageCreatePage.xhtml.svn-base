@@ -1,0 +1,142 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:rw="http://www.qylm.com"
+	template="/WEB-INF/facelets/templates/template.xhtml">
+	<ui:param name="title" value="配件入库登录" />
+	<ui:define name="tableCenter">
+		<t:saveState value="#{fittingStorageCreateBean.fittingStorageCreateDto}" />
+		<div class="buttonNorth">
+			<p:commandButton value="返回" action="#{fittingStorageCreateBean.back}" immediate="true" ajax="false" styleClass="backBtn" />
+			<p:commandButton value="添加" action="#{fittingStorageCreateBean.newFittingStorage}" immediate="true" update="@form" styleClass="createBtn" />
+			<p:commandButton value="保存" action="#{fittingStorageCreateBean.saveFittingStorage}" ajax="false" update="@form" styleClass="saveBtn" 
+				rendered="#{userBean.isCheckPermission('fitting_fittingStorage', '添加') or userBean.isCheckPermission('fitting_fittingStorage', '修改')}"
+				disabled="#{fittingStorageCreateBean.fittingStorageCreateDto.state}"/>
+			<p:commandButton value="确认" style="margin-left: 4px" update="@form"
+				rendered="#{userBean.isCheckPermission('fitting_fittingStorage', '确认')}"
+				disabled="#{fittingStorageCreateBean.fittingStorageCreateDto.state or fittingStorageCreateBean.fittingStorageCreateDto.transferFittingStorage == null}"
+				action="#{fittingStorageCreateBean.apply}" />
+		</div>
+		<div class="tableCenter">
+			<p:panelGrid id="manageGrid" styleClass="dataTable">
+				<p:row>
+					<p:column styleClass="column1">
+						<h:outputText value="采购编号" />
+					</p:column>
+					<p:column styleClass="column4" colspan="3">
+						<h:outputText value="#{fittingStorageCreateBean.fittingStorageCreateDto.number}" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column1">
+						<p:outputLabel for="storageDate" value="入库日期" />
+					</p:column>
+					<p:column styleClass="column4" colspan="3">
+						<p:calendar navigator="true" id="storageDate" size="10" maxlength="10" locale="tr"
+							value="#{fittingStorageCreateBean.fittingStorageCreateDto.storageDate}"
+							pattern="yyyy-MM-dd"/>
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column1">
+						<p:outputLabel for="remark" value="备注" />
+					</p:column>
+					<p:column styleClass="column4" colspan="3">
+						<p:inputTextarea id="remark" maxlength="500" cols="80" rows="3" 
+							value="#{fittingStorageCreateBean.fittingStorageCreateDto.remark}" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column4" colspan="4" style="text-align: center;">
+						<p:commandButton value="添加采购配件" action="#{fittingStorageCreateBean.addFittingStorageDateil}" 
+							disabled="#{fittingStorageCreateBean.fittingStorageCreateDto.transferFittingStorage ==null}" 
+							styleClass="backBtn" update=":form:fittingStorageDetail"/>
+					</p:column>
+				</p:row>
+			</p:panelGrid>
+			<p:dataTable var="model" value="#{fittingStorageCreateBean.fittingStorageCreateDto.fittingStorageDetailList}" id="fittingStorageDetail">
+				<f:facet name="header" >
+					入库配件列表信息
+				</f:facet>
+				<p:column headerText="选择" width="60px;">
+					<p:commandButton value="选择配件" action="#{fittingStorageCreateBean.selectFittingInfo(model)}"
+						partialSubmit="true" process="@this" update=":form:fittingVehicle :form:messages" styleClass="modifyBtn" 
+						oncomplete="PF('fittingVehicle').show();"/>
+				</p:column>
+				<p:column headerText="车辆名称">
+					<p:inputText size="20" maxlength="20" value="#{model.carName}" />
+				</p:column>
+				<p:column headerText="配件品牌" width="120px;">
+					<p:inputText size="15" maxlength="20" value="#{model.fittingBrand}" />
+				</p:column>
+				<p:column headerText="配件名称">
+					<p:inputText size="15" maxlength="20" value="#{model.fittingName}" />
+				</p:column>
+				<p:column headerText="型号" width="120px;">
+					<p:inputText size="15" maxlength="20" value="#{model.model}" />
+				</p:column>
+				<p:column headerText="最新单价" width="120px;">
+					<pe:inputNumber maxlength="10" size="12" value="#{model.price}" 
+						minValue="0.00" emptyValue="0" decimalPlaces="2" />
+				</p:column>
+				<p:column headerText="入库数量" width="80px;">
+					<p:spinner maxlength="5" size="5" value="#{model.quantity}" min="1" max="99999">
+						<p:ajax listener="#{fittingStorageCreateBean.updateApplyPrice}" 
+							update=":form:manageGrid" process="@this" partialSubmit="true"> 
+				        </p:ajax>
+					</p:spinner>
+				</p:column>
+				<p:column headerText="基本操作" width="80px;">
+				    <p:commandButton value="删除" action="#{fittingStorageCreateBean.deleteFittingStorageDetail(model)}" 
+			        	partialSubmit="true" process="@this"  update="fittingStorageDetail :form:messages"
+						onstart="return deleteConfirm();" styleClass="singleDelBtn"
+						disabled="#{fittingStorageCreateBean.fittingStorageCreateDto.state}"/>
+				</p:column>
+			</p:dataTable>
+			<p:dialog header="选择配件" id="fittingVehicle" widgetVar="fittingVehicle" modal="true" width="700">
+				<div class="searchRequirementNorth">
+					<h:panelGrid columns="3" id="fittingVehicleGrid">
+						<h:outputLabel for="fittingName" value="配件名称" />
+						<p:inputText styleClass="inputText" id="fittingName" size="20" maxlength="20"
+							value="#{fittingStorageCreateBean.fittingStorageCreateDto.fittingName}" />
+						<p:commandButton value="搜索" action="#{fittingStorageCreateBean.selectFittingInfo}" process=":form:fittingVehicleGrid" 
+							update=":form:viewTable messages" styleClass="searchBtn" accesskey="s" />
+					</h:panelGrid>
+				</div>
+				<div class="tableCenter">
+					<p:dataTable emptyMessage="暂无数据" var="model" value="#{fittingStorageCreateBean.fittingStorageCreateDto.fittingInfoList}" rowIndexVar="rowIndex"
+						widgetVar="viewTable" rowKey="#{model.id}" paginatorAlwaysVisible="true"
+						sortBy="createDate" sortOrder="descending" id="viewTable">
+						<f:facet name="header" >
+							车辆信息列表
+						</f:facet>
+						<p:column width="40px;" headerText="选择">
+							<p:commandButton value="选择" action="#{fittingStorageCreateBean.findFittingInfo(model)}"
+								partialSubmit="true" process="@this" update=":form:fittingStorageDetail :form:manageGrid :form:messages" styleClass="modifyBtn" 
+								oncomplete="PF('fittingVehicle').hide();"/>
+						</p:column>
+						<p:column headerText="车辆名称">
+							<h:outputText value="#{model.carName}" />
+						</p:column>
+						<p:column headerText="配件品牌" width="120px;">
+							<h:outputText value="#{model.fittingBrand}" />
+						</p:column>
+						<p:column headerText="配件名称" width="80px;">
+							<h:outputText value="#{model.fittingName}" />
+						</p:column>
+						<p:column headerText="型号" width="80px;">
+							<h:outputText value="#{model.model}" />
+						</p:column>
+						<p:column headerText="最新单价" width="80px;">
+							<h:outputText value="#{model.price}￥" />
+						</p:column>
+					</p:dataTable>
+				</div>
+			</p:dialog>
+		</div>
+	</ui:define>
+</ui:composition>

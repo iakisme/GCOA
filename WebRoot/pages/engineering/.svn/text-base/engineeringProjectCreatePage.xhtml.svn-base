@@ -1,0 +1,274 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:rw="http://www.qylm.com"
+	template="/WEB-INF/facelets/templates/template.xhtml">
+	<ui:param name="title" value="工程项目登录" />
+	<ui:define name="tableCenter">
+		<t:saveState value="#{engineeringProjectCreateBean.engineeringProjectCreateDto}" />
+		<div class="buttonNorth">
+			<p:commandButton value="返回" action="#{engineeringProjectCreateBean.back}" immediate="true" ajax="false" styleClass="backBtn" />
+			<ui:fragment rendered="#{engineeringProjectCreateBean.engineeringProjectCreateDto.operation}">
+				<p:commandButton value="添加" action="#{engineeringProjectCreateBean.newEngineeringProject}" immediate="true" update="@form" styleClass="createBtn" />
+				<p:commandButton value="保存" action="#{engineeringProjectCreateBean.saveEngineeringProject}" ajax="false" update="@form" styleClass="saveBtn" 
+					rendered="#{userBean.isCheckPermission('engineering_engineeringProject', '添加') or userBean.isCheckPermission('engineering_engineeringProject', '修改')}"/>
+				<p:commandButton value="确认" action="#{engineeringProjectCreateBean.queryEngineeringProject}" update="@form" styleClass="saveBtn" 
+					disabled="#{engineeringProjectCreateBean.engineeringProjectCreateDto.transferEngineeringProject == null}"
+					rendered="#{userBean.isCheckPermission('engineering_engineeringProject', '添加') or userBean.isCheckPermission('engineering_engineeringProject', '修改')}"/>
+			</ui:fragment>
+		</div>
+		<div class="tableCenter">
+			<p:focus for="customer" />
+			<p:panelGrid id="manageGrid" styleClass="dataTable"> 
+				<p:row>
+					<p:column styleClass="column1">
+						<p:outputLabel for="customer" value="客户" />
+					</p:column>
+					<p:column styleClass="column4" colspan="3">
+						<p:autoComplete id="customer" value="#{engineeringProjectCreateBean.engineeringProjectCreateDto.customer}" 
+							completeMethod="#{selectBean.selectCustomer}" size="20" maxlength="20"
+							var="customer" itemLabel="#{customer.name}" dropdown="true"
+							itemValue="#{customer}" converter="customerConverter" forceSelection="true">
+							<p:column>
+								<h:outputText value="#{customer.name}" />
+							</p:column>
+						</p:autoComplete>
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column1">
+						<p:outputLabel for="employeeName" value="工程项目负责人" />
+					</p:column>
+					<p:column styleClass="column4" colspan="3">
+						<p:autoComplete id="employeeName" value="#{engineeringProjectCreateBean.engineeringProjectCreateDto.employee}" 
+							completeMethod="#{selectBean.selectResponsibleEmployee}" label="工程项目负责人必须输入" required="true" size="20" maxlength="12"
+							var="employee" itemLabel="#{employee.name}" dropdown="true"
+							itemValue="#{employee}" converter="employeeConverter" forceSelection="true">
+							<p:column>
+								<h:outputText value="#{employee.name}" />
+							</p:column>
+							<p:column>
+								<h:outputText value="#{employee.identification}" />
+							</p:column>
+						</p:autoComplete>
+					</p:column>
+				</p:row>
+				<!--
+				<p:row>+
+					<p:column styleClass="column1">
+						<p:outputLabel for="constructionName" value="工地名称" />
+					</p:column>
+					<p:column styleClass="column4" colspan="3">
+						<p:inputText id="constructionName" size="40" maxlength="40" value="#{engineeringProjectCreateBean.engineeringProjectCreateDto.constructionName}" />
+					</p:column>
+				</p:row>
+				-->
+				<p:row>
+					<p:column styleClass="column1">
+						<p:outputLabel for="workAddress" value="工作地址" />
+					</p:column>
+					<p:column styleClass="column4" colspan="3">
+						<p:inputText id="workAddress" size="40" maxlength="40" value="#{engineeringProjectCreateBean.engineeringProjectCreateDto.workAddress}" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column1">
+						<p:outputLabel for="beginDate" value="工程开始日期" />
+					</p:column>
+					<p:column styleClass="column2">
+						<p:calendar navigator="true" id="beginDate" size="10" maxlength="10" locale="tr"
+							value="#{engineeringProjectCreateBean.engineeringProjectCreateDto.beginDate}"
+							pattern="yyyy-MM-dd"/>
+					</p:column>
+					<p:column styleClass="column1">
+						<p:outputLabel for="endDate" value="工程结束日期" />
+					</p:column>
+					<p:column styleClass="column4">
+						<p:calendar navigator="true" id="endDate" size="10" maxlength="10" locale="tr"
+							value="#{engineeringProjectCreateBean.engineeringProjectCreateDto.endDate}"
+							pattern="yyyy-MM-dd"/>
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column1">
+						<p:outputLabel for="actualVolume" value="预算方量" />
+					</p:column>
+					<p:column styleClass="column4" colspan="3">
+						<pe:inputNumber id="actualVolume" maxlength="10" size="12" value="#{engineeringProjectCreateBean.engineeringProjectCreateDto.actualVolume}" 
+							minValue="0.00" emptyValue="0" decimalPlaces="2">
+						</pe:inputNumber>
+						（立方）
+					</p:column>
+					<!--
+					<p:column styleClass="column1">
+						<p:outputLabel for="money" value="预算总金额" />
+					</p:column>
+					<p:column styleClass="column4">
+						<pe:inputNumber id="money" maxlength="10" size="12" value="#{engineeringProjectCreateBean.engineeringProjectCreateDto.money}" 
+							minValue="0.00" emptyValue="0" decimalPlaces="2" />
+					</p:column>
+					-->
+				</p:row>
+				<p:row>
+					<p:column styleClass="column1">
+						<p:outputLabel for="homeState" value="工作内容" />
+					</p:column>
+					<p:column styleClass="column4" colspan="3">
+						<p:editor id="homeState" maxlength="1000" value="#{engineeringProjectCreateBean.engineeringProjectCreateDto.remark}" width="800" height="200" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column1">
+						<h:outputText value="创建人" />
+					</p:column>
+					<p:column styleClass="column4" colspan="3">
+						<h:outputText value="#{engineeringProjectCreateBean.engineeringProjectCreateDto.creater.userName}" />
+					</p:column>
+				</p:row>
+				<p:row rendered="#{engineeringProjectCreateBean.engineeringProjectCreateDto.operation}">
+					<p:column styleClass="column4" colspan="4" style="text-align: center;">
+						<p:commandButton value="安排工作车辆" action="#{engineeringProjectCreateBean.addVehicleDateil}" 
+							styleClass="backBtn" update=":form:engineeringProjectDetail"
+							rendered="#{userBean.isCheckPermission('engineering_engineeringProject', '安排车辆')}"/>
+					</p:column>
+				</p:row>
+			</p:panelGrid>
+			<p:dataTable var="model" value="#{engineeringProjectCreateBean.engineeringProjectCreateDto.engineeringProjectDetailList}" id="engineeringProjectDetail">
+				<f:facet name="header" >
+					工作车辆安排列表
+				</f:facet>
+				<p:column headerText="选择" width="60px;" rendered="#{engineeringProjectCreateBean.engineeringProjectCreateDto.operation}">
+					<p:commandButton value="选择车辆" action="#{engineeringProjectCreateBean.selectVehicleInfo(model)}"
+						partialSubmit="true" process="@this" update=":form:arrangeVehicle :form:messages" styleClass="modifyBtn" 
+						oncomplete="PF('arrangeVehicle').show();"/>
+				</p:column>
+				<p:column headerText="车辆编号" width="120px;">
+					<h:outputText value="#{model.vehicleNumber}" />
+				</p:column>
+				<p:column headerText="泵送部位" width="120px;">
+					<p:inputText size="10" maxlength="20" value="#{model.pumpParts}" />
+				</p:column>
+				<p:column headerText="预计工作方量" width="120px;">
+					<pe:inputNumber maxlength="10" size="12" value="#{model.workVolume}" 
+						minValue="0.00" emptyValue="0" decimalPlaces="2" />
+				</p:column>
+				<p:column headerText="开始时间" width="120px;">
+					<p:calendar navigator="true" size="16" maxlength="16"
+						value="#{model.startPumpDate}" locale="tr"
+						pattern="yyyy-MM-dd HH:mm"/>
+				</p:column>
+				<p:column headerText="结束时间" width="120px;">
+					<p:calendar navigator="true" size="16" maxlength="16"
+						value="#{model.endPumpDate}" locale="tr"
+						pattern="yyyy-MM-dd HH:mm"/>
+				</p:column>
+				<p:column headerText="开机人">
+					<table>
+						<tr>
+							<ui:repeat var="projectEmployeeDetail" value="#{model.projectEmployeeDetailList}">
+								<td><h:outputText value="#{projectEmployeeDetail.name}" /></td>
+							</ui:repeat>
+						</tr>
+					</table>
+				</p:column>
+				<p:column headerText="基本操作" width="80px;" rendered="#{engineeringProjectCreateBean.engineeringProjectCreateDto.operation}">
+					<p:menuButton value="更多操作" >
+				        <p:menuitem value="删除" action="#{engineeringProjectCreateBean.deleteEngineeringProjectDetail(model)}" 
+				        	partialSubmit="true" process="@this"  update="engineeringProjectDetail :form:messages"
+							onstart="return deleteConfirm();" styleClass="singleDelBtn"/>
+						<p:menuitem value="增加开机人员" action="#{engineeringProjectCreateBean.selectEmployee(model)}"
+							partialSubmit="true" process="@this" update=":form:employee :form:messages" styleClass="modifyBtn" 
+							oncomplete="PF('employee').show();"/>
+						<p:menuitem value="删除开机人员" action="#{engineeringProjectCreateBean.deleteEmployee(model)}"
+							partialSubmit="true" process="@this" update="engineeringProjectDetail :form:messages" styleClass="modifyBtn" 
+							onstart="return deleteConfirm();"/>
+				    </p:menuButton>
+				</p:column>
+			</p:dataTable>
+			<p:dialog header="选择工作车辆" id="arrangeVehicle" widgetVar="arrangeVehicle" modal="true">
+				<div class="searchRequirementNorth">
+					<p:focus for="number" />
+					<h:panelGrid columns="5" id="arrangeVehicleGrid">
+						<h:outputLabel for="number" value="车辆编号" />
+						<p:inputText styleClass="inputText" id="number" size="20" maxlength="20"
+							value="#{engineeringProjectCreateBean.engineeringProjectCreateDto.number}" />
+						<h:outputLabel for="employeeNames" value="车辆负责人" />
+						<p:inputText styleClass="inputText" id="employeeNames" size="20" maxlength="20"
+							value="#{engineeringProjectCreateBean.engineeringProjectCreateDto.employeeName}" />
+						<p:commandButton value="搜索" action="#{engineeringProjectCreateBean.selectVehicleInfo}" process=":form:arrangeVehicleGrid" 
+							update=":form:viewTable messages" styleClass="searchBtn" accesskey="s" />
+					</h:panelGrid>
+				</div>
+				<div class="tableCenter">
+					<p:dataTable emptyMessage="暂无数据" var="model" value="#{engineeringProjectCreateBean.engineeringProjectCreateDto.vehicleInfoList}" rowIndexVar="rowIndex"
+						widgetVar="viewTable" rowKey="#{model.id}" paginatorAlwaysVisible="true"
+						sortBy="createDate" sortOrder="descending" id="viewTable">
+						<f:facet name="header" >
+							车辆信息列表
+						</f:facet>
+						<p:column width="40px;" headerText="选择">
+							<p:commandButton value="选择" action="#{engineeringProjectCreateBean.findVehicleInfo(model)}"
+								partialSubmit="true" process="@this" update=":form:engineeringProjectDetail :form:messages" styleClass="modifyBtn" 
+								oncomplete="PF('arrangeVehicle').hide();"/>
+						</p:column>
+						<p:column headerText="车辆编码" sortBy="#{model.number}" width="200px;">
+							<h:outputText value="#{model.number}" />
+						</p:column>
+						<p:column headerText="车辆负责人" sortBy="#{model.employee.name}" width="100px;">
+							<h:outputText value="#{model.employee.name}" />
+						</p:column>
+						<p:column headerText="车辆购置日期" sortBy="#{model.purchaseDate}" width="100px;">
+							<h:outputText value="#{model.purchaseDate}">
+								<f:convertDateTime pattern="yyyy-MM-dd" timeZone="Asia/Shanghai" />
+							</h:outputText>
+						</p:column>
+					</p:dataTable>
+				</div>
+			</p:dialog>
+			<p:dialog header="选择开机人员" id="employee" widgetVar="employee" modal="true">
+				<div class="buttonNorth">
+					<p:commandButton value="选举结束后关闭" onclick="PF('employee').hide();" update=":form:engineeringProjectDetail :form:messages" styleClass="createBtn" accesskey="c"/>
+				</div>
+				<div class="searchRequirementNorth">
+					<p:focus for="workNumber" />
+					<h:panelGrid columns="5" id="employeeGrid">
+						<h:outputLabel for="workNumber" value="员工工号" />
+						<p:inputText styleClass="inputText" id="workNumber" size="20" maxlength="20"
+							value="#{engineeringProjectCreateBean.engineeringProjectCreateDto.workNumber}" />
+						<h:outputLabel for="name" value="姓名" />
+						<p:inputText styleClass="inputText" id="name" size="40" maxlength="40"
+							value="#{engineeringProjectCreateBean.engineeringProjectCreateDto.name}" />
+						<p:commandButton value="搜索" action="#{engineeringProjectCreateBean.selectEmployee}" process=":form:employeeGrid" 
+							update=":form:employeeTable messages" styleClass="searchBtn" accesskey="s" />
+					</h:panelGrid>
+				</div>
+				<div class="tableCenter">
+					<p:dataTable emptyMessage="暂无数据" var="model" value="#{engineeringProjectCreateBean.engineeringProjectCreateDto.employeeList}" rowIndexVar="rowIndex"
+						widgetVar="employeeTable" rowKey="#{model.id}" paginatorAlwaysVisible="true"
+						sortBy="createDate" sortOrder="descending" id="employeeTable">
+						<f:facet name="header">
+							员工信息列表
+						</f:facet>
+						<p:column width="40px;" headerText="选择">
+							<p:commandButton value="选择" action="#{engineeringProjectCreateBean.findEmployee(model)}"
+								partialSubmit="true" process="@this" update=":form:employeeTable :form:messages" styleClass="modifyBtn" />
+						</p:column>
+						<p:column headerText="工号" sortBy="#{model.workNumber}" width="80px;">
+							<h:outputText value="#{model.workNumber}" />
+						</p:column>
+						<p:column headerText="姓名" sortBy="#{model.name}" width="80px;">
+							<h:outputText value="#{model.name}" />
+						</p:column>
+						<p:column headerText="工作情况" sortBy="#{model.workInfo}" width="300px;">
+							<h:outputText value="#{model.workInfo}" escape="false"/>
+						</p:column>
+					</p:dataTable>
+				</div>
+			</p:dialog>
+		</div>
+	</ui:define>
+</ui:composition>

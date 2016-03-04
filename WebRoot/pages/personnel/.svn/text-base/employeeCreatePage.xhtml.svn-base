@@ -1,0 +1,170 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:rw="http://www.qylm.com"
+	template="/WEB-INF/facelets/templates/template.xhtml">
+	<ui:param name="title" value="员工登录" />
+	<ui:define name="tableCenter">
+		<t:saveState value="#{employeeCreateBean.employeeCreateDto}" />
+		<div class="buttonNorth">
+			<p:commandButton value="返回" action="#{employeeCreateBean.back}" immediate="true" ajax="false" styleClass="backBtn" />
+			<p:commandButton value="添加" action="#{employeeCreateBean.newEmployee}" immediate="true" update="@form" styleClass="createBtn" />
+			<p:commandButton value="保存" action="#{employeeCreateBean.saveEmployee}" ajax="false" update="@form" styleClass="saveBtn" 
+				rendered="#{userBean.isCheckPermission('personnel_employee', '添加') or userBean.isCheckPermission('personnel_employee', '修改')}"/>
+		</div>
+		<div class="tableCenter">
+			<p:focus for="name" />
+			<p:panelGrid id="manageGrid" styleClass="dataTable"> 
+				<p:row>
+					<p:column styleClass="column4" colspan="4">员工档案</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column1">
+						<p:outputLabel for="name" value="姓名" />
+					</p:column>
+					<p:column styleClass="column2">
+						<p:inputText id="name" value="#{employeeCreateBean.employeeCreateDto.name}" maxlength="20" size="20"  label="姓名" required="true" />
+					</p:column>
+					<p:column styleClass="column1">
+						<p:outputLabel for="workNumber" value="工号" />
+					</p:column>
+					<p:column styleClass="column4">
+						<p:inputText id="workNumber" value="#{employeeCreateBean.employeeCreateDto.workNumber}" maxlength="20" size="20" label="工号"  required="true" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column1">
+						<p:outputLabel for="workState" value="在职状态" />
+					</p:column>
+					<p:column styleClass="column2">
+						<h:selectOneMenu id="workState" value="#{employeeCreateBean.employeeCreateDto.workState}">
+							<f:selectItems value="#{genericCodeBean.c0301}" />
+						</h:selectOneMenu>
+					</p:column>
+					<p:column styleClass="column1">
+						<p:outputLabel for="nation" value="民族" />
+					</p:column>
+					<p:column styleClass="column4">
+						<h:selectOneMenu id="nation" value="#{employeeCreateBean.employeeCreateDto.nation}">
+							<f:selectItems value="#{genericCodeBean.c0101}" />
+						</h:selectOneMenu>
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column1">
+						<p:outputLabel for="identification" value="身份证号码" />
+					</p:column>
+					<p:column styleClass="column2">
+						<p:inputText maxlength="18" size="20"
+							id="identification" onblur="analyticalIdentification();"
+							value="#{employeeCreateBean.employeeCreateDto.identification}" label="身份证号" required="true" validator="#{employeeCreateBean.validatorIdentification}" >
+							<f:validator validatorId="idCardValidator" />
+						</p:inputText>
+					</p:column>
+					<p:column styleClass="column1">
+						<h:outputText value="出生日期" />
+					</p:column>
+					<p:column styleClass="column4">
+						<h:outputText value="#{employeeCreateBean.employeeCreateDto.birthDate}">
+							<f:convertDateTime pattern="yyyy-MM-dd" timeZone="Asia/Shanghai"/>
+						</h:outputText>
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column1">
+						<h:outputText value="性别" />
+					</p:column>
+					<p:column styleClass="column2">
+						<h:outputText value="#{rw:label(genericCodeBean.c0102,employeeCreateBean.employeeCreateDto.sex)}" />
+					</p:column>
+					<p:column styleClass="column1">
+						<p:outputLabel for="politicalStatus" value="政治面貌" />
+					</p:column>
+					<p:column styleClass="column4">
+						<h:selectOneMenu id="politicalStatus" value="#{employeeCreateBean.employeeCreateDto.politicalStatus}">
+							<f:selectItems value="#{genericCodeBean.c0103}" />
+						</h:selectOneMenu>
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column1">
+						<p:outputLabel for="marriage" value="婚否" />
+					</p:column>
+					<p:column styleClass="column2">
+						<h:selectOneMenu id="marriage" value="#{employeeCreateBean.employeeCreateDto.marriage}">
+							<f:selectItems value="#{genericCodeBean.c0104}" />
+						</h:selectOneMenu>
+					</p:column>
+					<p:column styleClass="column1">
+						<p:outputLabel for="formalSchooling" value="学历" />
+					</p:column>
+					<p:column styleClass="column4">
+						<h:selectOneMenu id="formalSchooling" value="#{employeeCreateBean.employeeCreateDto.formalSchooling}">
+							<f:selectItems value="#{genericCodeBean.c0105}" />
+						</h:selectOneMenu>
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column1">
+						<p:outputLabel for="provinceId"  value="省份" />
+					</p:column>
+					<p:column styleClass="column4" colspan="3" >
+						<rw:address requiredCheck="true" requiredMessage="请选择地点"
+							addressEntity="#{employeeCreateBean.employeeCreateDto.addressEntity}" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column1">
+						<h:outputLabel for="address" value="地址" />
+					</p:column>
+					<p:column styleClass="column4" colspan="3" >
+						<p:inputText styleClass="inputText" id="address" size="50" maxlength="50"
+							value="#{employeeCreateBean.employeeCreateDto.address}" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column1">
+						<h:outputLabel for="phone" value="电话" />
+					</p:column>
+					<p:column styleClass="column2">
+						<p:inputText styleClass="inputText" id="phone" size="20" maxlength="18"
+							value="#{employeeCreateBean.employeeCreateDto.phone}" >
+							<f:validator validatorId="phoneValidator" />
+						</p:inputText>
+					</p:column>
+					<p:column styleClass="column1">
+						<p:outputLabel for="mobile" value="手机号" />
+					</p:column>
+					<p:column styleClass="column4">
+						<p:inputText styleClass="inputText" id="mobile" size="20" maxlength="11"
+							value="#{employeeCreateBean.employeeCreateDto.mobile}"  >
+							<f:validator validatorId="numberValidator" />
+						</p:inputText>
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column1">
+						<p:outputLabel for="type" value="员工类型" />
+					</p:column>
+					<p:column styleClass="column4" colspan="3">
+						<h:selectOneMenu id="type" value="#{employeeCreateBean.employeeCreateDto.type}">
+							<f:selectItems value="#{genericCodeBean.c0302}" />
+						</h:selectOneMenu>
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column1">
+						<p:outputLabel for="homeState" value="家庭情况" />
+					</p:column>
+					<p:column styleClass="column4" colspan="3">
+						<p:editor id="homeState" value="#{employeeCreateBean.employeeCreateDto.homeState}" width="800" height="300" />
+					</p:column>
+				</p:row>
+			</p:panelGrid>
+		</div>
+	</ui:define>
+</ui:composition>

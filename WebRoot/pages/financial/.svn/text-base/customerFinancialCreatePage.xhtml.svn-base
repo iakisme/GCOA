@@ -1,0 +1,207 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:rw="http://www.qylm.com"
+	template="/WEB-INF/facelets/templates/template.xhtml">
+	<ui:param name="title" value="客户收支明细登录" />
+	<ui:define name="tableCenter">
+		<t:saveState value="#{customerFinancialCreateBean.customerFinancialCreateDto}" />
+		<div class="buttonNorth">
+			<p:commandButton value="返回" action="#{customerFinancialCreateBean.back}" immediate="true" ajax="false" styleClass="backBtn" />
+			<p:commandButton value="添加" action="#{customerFinancialCreateBean.newCustomerFinancial}" immediate="true" update="@form" styleClass="createBtn" />
+			<p:commandButton value="保存" action="#{customerFinancialCreateBean.saveCustomerFinancial}" ajax="false" update="@form" styleClass="saveBtn" 
+				disabled="#{customerFinancialCreateBean.customerFinancialCreateDto.state eq '3'}"
+				rendered="#{userBean.isCheckPermission('financial_customerFinancial', '添加') or userBean.isCheckPermission('financial_customerFinancial', '修改')}"/>
+		</div>
+		<div class="tableCenter">
+			<p:focus for="number" />
+			<p:panelGrid id="manageGrid" styleClass="dataTable">
+				<p:row>
+					<p:column styleClass="column1">
+						<p:outputLabel for="number" value="编号" />
+					</p:column>
+					<p:column styleClass="column4" colspan="3">
+						<p:inputText id="number" size="20" maxlength="20" required="true" requiredMessage="编号必须输入"
+							value="#{customerFinancialCreateBean.customerFinancialCreateDto.number}" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column1">
+						<p:outputLabel for="customer" value="收款客户" />
+					</p:column>
+					<p:column styleClass="column4" colspan="3">
+						<p:autoComplete id="customer" value="#{customerFinancialCreateBean.customerFinancialCreateDto.customer}" 
+							completeMethod="#{selectBean.selectCustomer}" size="20" maxlength="20"
+							var="customer" itemLabel="#{customer.name}" dropdown="true"
+							disabled="#{customerFinancialCreateBean.customerFinancialCreateDto.state eq '2'}"
+							itemValue="#{customer}" converter="customerConverter" forceSelection="true">
+							<p:column>
+								<h:outputText value="#{customer.name}" />
+							</p:column>
+						</p:autoComplete>
+						<p:commandButton value="确认收款" action="#{customerFinancialCreateBean.queryCustomerFinancial}" 
+							onstart="return confirmationMess('是否确认收款项目');" update="@form" styleClass="saveBtn" 
+							disabled="#{customerFinancialCreateBean.customerFinancialCreateDto.state eq '2' or customerFinancialCreateBean.customerFinancialCreateDto.state eq '3'}"
+							style="margin-left:50px;"/>
+						&#160;
+						<h:outputText value="只有确认收款项目，方可对其进行收款或付款操作" style="color: #FF0000;"/>
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column1">
+						<h:outputText value="收款方式" />
+					</p:column>
+					<p:column styleClass="column2">
+						<h:outputText value="#{rw:label(genericCodeBean.c0202,customerFinancialCreateBean.customerFinancialCreateDto.type)}"/>
+					</p:column>
+					<p:column styleClass="column1">
+						<h:outputLabel for="pumpPrice" value="金额" />
+					</p:column>
+					<p:column styleClass="column4">
+						<pe:inputNumber id="pumpPrice" maxlength="10" size="12" value="#{customerFinancialCreateBean.customerFinancialCreateDto.pumpPrice}" 
+							minValue="0.00" emptyValue="0" decimalPlaces="2" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column1" >
+						<h:outputLabel for="financialDate" value="收款日期" />
+					</p:column>
+					<p:column styleClass="column2" >
+						<p:calendar navigator="true" id="financialDate" size="10" maxlength="10" locale="tr"
+							value="#{customerFinancialCreateBean.customerFinancialCreateDto.financialDate}"
+							pattern="yyyy-MM-dd"/>
+					</p:column>
+					<p:column styleClass="column1">
+						<p:outputLabel for="money" value="项目金额" />
+					</p:column>
+					<p:column styleClass="column4">
+						<pe:inputNumber id="money" maxlength="10" size="12" value="#{customerFinancialCreateBean.customerFinancialCreateDto.money}" 
+							minValue="0.00" emptyValue="0" decimalPlaces="2" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column4" colspan="4" style="text-align: center;">
+						<p:commandButton value="选择收款项目" action="#{customerFinancialCreateBean.selectEngineeringProject}" oncomplete="PF('arrangeVehicle').show();"
+							disabled="#{customerFinancialCreateBean.customerFinancialCreateDto.state != 2}"
+							styleClass="backBtn" update=":form:engineeringProject messages"/>
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column4" colspan="4">
+						<span style="font-size: 20px;">
+							<h:outputText value="总实际方量：#{customerFinancialCreateBean.customerFinancialCreateDto.sumSchedule} （立方）" />
+						</span>
+						<p:dataTable var="model" value="#{customerFinancialCreateBean.customerFinancialCreateDto.engineeringFinancialList}" 
+							id="engineeringFinancial">
+							<f:facet name="header" >
+								收款项目
+							</f:facet>
+							<p:column headerText="项目期限" width="140px;">
+								开始日期：
+								<h:outputText value="#{model.engineeringProject.beginDate}">
+									<f:convertDateTime pattern="yyyy-MM-dd" timeZone="Asia/Shanghai"/>
+								</h:outputText>
+								<br/>
+								结束日期：
+								<h:outputText value="#{model.engineeringProject.endDate}">
+									<f:convertDateTime pattern="yyyy-MM-dd" timeZone="Asia/Shanghai" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="工作地址" sortBy="#{model.engineeringProject.workAddress}">
+								<h:outputText value="#{model.engineeringProject.workAddress}" />
+							</p:column>
+							<!--  
+							<p:column headerText="项目金额" sortBy="#{model.engineeringProject.money}" width="160px;">
+								<div style="width: 100%; text-align: left;">
+									<h:outputText value="预算金额：#{model.engineeringProject.money} ￥" />
+									<br />
+									<h:outputText style="color: #00FF00;" value="已  收  款：#{model.engineeringProject.collectMoney} ￥" />
+									<br />
+									<h:outputText value="未  收  款：#{model.engineeringProject.notCollectMoney} ￥" />
+									<br />
+									<h:outputText style="color: #FF0000;" value="消费金额：#{model.engineeringProject.payMoney} ￥" />
+								</div>
+							</p:column>
+							-->
+							<p:column headerText="工作量情况" width="200px;">
+								<h:outputText value="实际方量：#{model.engineeringProject.schedule}（立方）"/>
+							</p:column>
+							<p:column headerText="项目状态" sortBy="#{model.engineeringProject.type}" width="80px;">
+								<h:outputText value="#{rw:label(genericCodeBean.c0501,model.engineeringProject.type)}" style="color:#{model.engineeringProject.typeColor};"/>
+							</p:column>
+							<p:column headerText="基本操作" exportable="false" style="width: 60px;">
+								<p:commandButton value="删除" action="#{customerFinancialCreateBean.deleteEngineeringFinancial(model)}"
+									partialSubmit="true" process="@this"  update=":form:engineeringFinancial :form:messages"
+									disabled="#{customerFinancialCreateBean.customerFinancialCreateDto.state != 2}"
+									onstart="return deleteConfirm();" styleClass="singleDelBtn"/>
+							</p:column>
+						</p:dataTable>
+					</p:column>
+				</p:row>
+			</p:panelGrid>
+			<p:dialog header="收款项目" id="arrangeVehicle" widgetVar="arrangeVehicle" modal="true" width="600">
+				<t:saveState value="#{customerFinancialCreateBean.engineeringProjectList}" />
+				<div class="buttonNorth">
+					<p:commandButton value="选取后关闭" action="#{customerFinancialCreateBean.closeProject}" 
+						update=":form:engineeringFinancial :form:messages :form:manageGrid" oncomplete="PF('arrangeVehicle').hide();"
+						styleClass="multipleDelBtn" accesskey="d"/>
+				</div>
+				<div class="searchRequirementNorth">
+					<p:focus for="workAddress" />
+					<h:panelGrid columns="10">
+						<h:outputLabel for="workAddress" value="工地地址" />
+						<p:inputText styleClass="inputText" id="workAddress" size="10" maxlength="10"
+							value="#{customerFinancialCreateBean.customerFinancialCreateDto.workAddress}" />
+						<h:outputLabel for="beginDate" value="项目开始日期（开始）" />
+						<p:calendar navigator="true" id="beginDate" size="10" maxlength="10" locale="tr"
+							value="#{customerFinancialCreateBean.customerFinancialCreateDto.beginDate}"
+							pattern="yyyy-MM-dd"/>
+						~
+						<p:calendar navigator="true" id="endDate" size="10" maxlength="10" locale="tr"
+							value="#{customerFinancialCreateBean.customerFinancialCreateDto.endDate}"
+							pattern="yyyy-MM-dd"/>
+						<p:commandButton id="searchBtn" value="搜索" action="#{customerFinancialCreateBean.selectEngineeringProject}" 
+							process=":form:engineeringProject" 
+							ajax="false" styleClass="searchBtn" accesskey="s" />
+					</h:panelGrid>
+				</div>
+				<p:dataTable var="model" value="#{customerFinancialCreateBean.engineeringProjectList}" 
+					id="engineeringProject">
+					<f:facet name="header">
+						项目收款明细
+					</f:facet>
+					<p:column headerText="选择" style="width:40px">
+						<p:commandButton value="选择" actionListener="#{customerFinancialCreateBean.findProject(model)}" 
+							update="engineeringProject :form:messages" styleClass="multipleDelBtn" accesskey="d"/>
+					</p:column>
+					<p:column headerText="项目期限" width="80px;">
+						<h:outputText value="#{model.beginDate}">
+							<f:convertDateTime pattern="yyyy-MM-dd" timeZone="Asia/Shanghai"/>
+						</h:outputText>
+						<br/>
+						~
+						<br />
+						<h:outputText value="#{model.endDate}">
+							<f:convertDateTime pattern="yyyy-MM-dd" timeZone="Asia/Shanghai" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="工作地址" sortBy="#{model.workAddress}">
+						<h:outputText value="#{model.workAddress}" />
+					</p:column>
+					<p:column headerText="工作量情况" width="200px;">
+						<h:outputText value="预计方量：#{model.actualVolume}（立方）" />
+						<br />
+						<h:outputText value="实际方量：#{model.schedule}（立方）" />
+					</p:column>
+					<p:column headerText="项目状态" sortBy="#{model.type}" width="80px;">
+						<h:outputText value="#{rw:label(genericCodeBean.c0501,model.type)}" style="color:#{model.typeColor};"/>
+					</p:column>
+				</p:dataTable>
+			</p:dialog>
+		</div>
+	</ui:define>
+</ui:composition>

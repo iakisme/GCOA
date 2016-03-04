@@ -1,0 +1,151 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:rw="http://www.qylm.com"
+	template="/WEB-INF/facelets/templates/template.xhtml">
+	<ui:param name="title" value="配件出库登录" />
+	<ui:define name="tableCenter">
+		<t:saveState value="#{fittingLibraryCreateBean.fittingLibraryCreateDto}" />
+		<div class="buttonNorth">
+			<p:commandButton value="返回" action="#{fittingLibraryCreateBean.back}" immediate="true" ajax="false" styleClass="backBtn" />
+			<p:commandButton value="添加" action="#{fittingLibraryCreateBean.newFittingLibrary}" immediate="true" update="@form" styleClass="createBtn" />
+			<p:commandButton value="保存" action="#{fittingLibraryCreateBean.saveFittingLibrary}" ajax="false" update="@form" styleClass="saveBtn" 
+				rendered="#{userBean.isCheckPermission('fitting_fittingLibrary', '添加') or userBean.isCheckPermission('fitting_fittingLibrary', '修改')}"
+				disabled="#{fittingLibraryCreateBean.fittingLibraryCreateDto.state}"/>
+			<p:commandButton value="确认" style="margin-left: 4px" update="@form"
+				rendered="#{userBean.isCheckPermission('fitting_fittingLibrary', '确认')}"
+				disabled="#{fittingLibraryCreateBean.fittingLibraryCreateDto.state or fittingLibraryCreateBean.fittingLibraryCreateDto.transferFittingLibrary == null}"
+				action="#{fittingLibraryCreateBean.apply}" />
+		</div>
+		<div class="tableCenter">
+			<p:panelGrid id="manageGrid" styleClass="dataTable">
+				<p:row>
+					<p:column styleClass="column1">
+						<h:outputText value="采购编号" />
+					</p:column>
+					<p:column styleClass="column4" colspan="3">
+						<h:outputText value="#{fittingLibraryCreateBean.fittingLibraryCreateDto.number}" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column1">
+						<p:outputLabel for="libraryType" value="出库类型" />
+					</p:column>
+					<p:column styleClass="column4" colspan="3">
+						<h:selectOneMenu id="libraryType" value="#{fittingLibraryCreateBean.fittingLibraryCreateDto.libraryType}">
+							<f:selectItems value="#{genericCodeBean.c0801}" />
+						</h:selectOneMenu>
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column1">
+						<p:outputLabel for="libraryDate" value="出库日期" />
+					</p:column>
+					<p:column styleClass="column4" colspan="3">
+						<p:calendar navigator="true" id="libraryDate" size="10" maxlength="10" locale="tr"
+							value="#{fittingLibraryCreateBean.fittingLibraryCreateDto.libraryDate}"
+							pattern="yyyy-MM-dd"/>
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column1">
+						<p:outputLabel for="remark" value="备注" />
+					</p:column>
+					<p:column styleClass="column4" colspan="3">
+						<p:inputTextarea id="remark" maxlength="500" cols="80" rows="3" 
+							value="#{fittingLibraryCreateBean.fittingLibraryCreateDto.remark}" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column4" colspan="4" style="text-align: center;">
+						<p:commandButton value="选择出库配件" action="#{fittingLibraryCreateBean.selectFittingRepertory}" 
+							styleClass="backBtn" update=":form:fittingVehicle :form:messages" 
+							oncomplete="PF('fittingVehicle').show();"/>
+					</p:column>
+				</p:row>
+			</p:panelGrid>
+			<p:dataTable var="model" value="#{fittingLibraryCreateBean.fittingLibraryCreateDto.fittingLibraryDetailList}" id="fittingLibraryDetail">
+				<f:facet name="header" >
+					出库配件列表信息
+				</f:facet>
+				<p:column headerText="领用车辆" width="150px;">
+					<p:autoComplete id="vehicleInfo" value="#{model.vehicleInfo}" 
+						completeMethod="#{selectBean.selectVehicleInfo}" label="车辆信息必须输入" required="true" size="10" maxlength="10"
+						var="vehicleInfo" itemLabel="#{vehicleInfo.number}" dropdown="true"
+						itemValue="#{vehicleInfo}" converter="vehicleInfoConverter" forceSelection="true">
+					</p:autoComplete>
+				</p:column>
+				<p:column headerText="车辆名称">
+					<h:outputText value="#{model.carName}" />
+				</p:column>
+				<p:column headerText="配件品牌" width="100px;">
+					<h:outputText value="#{model.fittingBrand}" />
+				</p:column>
+				<p:column headerText="配件名称" width="100px;">
+					<h:outputText value="#{model.fittingName}" />
+				</p:column>
+				<p:column headerText="型号" width="100px;">
+					<h:outputText value="#{model.model}" />
+				</p:column>
+				<p:column headerText="最新单价" width="100px;">
+					<h:outputText value="#{model.price}" />
+				</p:column>
+				<p:column headerText="出库数量" width="80px;">
+					<p:spinner maxlength="5" size="5" value="#{model.quantity}" min="1" max="#{model.repertorySum}" />
+				</p:column>
+				<p:column headerText="基本操作" width="80px;">
+				    <p:commandButton value="删除" action="#{fittingLibraryCreateBean.deleteFittingLibraryDetail(model)}" 
+			        	partialSubmit="true" process="@this"  update="fittingLibraryDetail :form:messages"
+						onstart="return deleteConfirm();" styleClass="singleDelBtn"
+						disabled="#{fittingLibraryCreateBean.fittingLibraryCreateDto.state}"/>
+				</p:column>
+			</p:dataTable>
+			<p:dialog header="选择配件" id="fittingVehicle" widgetVar="fittingVehicle" modal="true" width="700">
+				<div class="searchRequirementNorth">
+					<h:panelGrid columns="4" id="fittingVehicleGrid">
+						<h:outputLabel for="fittingName" value="配件名称" />
+						<p:inputText styleClass="inputText" id="fittingName" size="20" maxlength="20"
+							value="#{fittingLibraryCreateBean.fittingLibraryCreateDto.fittingName}" />
+						<p:commandButton value="搜索" action="#{fittingLibraryCreateBean.selectFittingRepertory}" process=":form:fittingVehicleGrid" 
+							update=":form:viewTable messages" styleClass="searchBtn" accesskey="s" />
+						<p:commandButton value="确认选择" action="#{fittingLibraryCreateBean.queryFindFittingRepertory}"
+							partialSubmit="true" process="@this" update=":form:fittingLibraryDetail :form:messages" styleClass="modifyBtn" 
+							oncomplete="PF('fittingVehicle').hide();"/>
+					</h:panelGrid>
+				</div>
+				<div class="tableCenter">
+					<p:dataTable emptyMessage="暂无数据" var="model" value="#{fittingLibraryCreateBean.fittingLibraryCreateDto.fittingRepertoryList}" rowIndexVar="rowIndex"
+						widgetVar="viewTable" rowKey="#{model.id}" paginatorAlwaysVisible="true"
+						sortBy="createDate" sortOrder="descending" id="viewTable">
+						<f:facet name="header" >
+							车辆信息列表
+						</f:facet>
+						<p:column width="40px;" headerText="选择">
+							<p:commandButton value="选择" action="#{fittingLibraryCreateBean.findFittingRepertory(model)}"
+								partialSubmit="true" process="@this" update=":form:viewTable" styleClass="modifyBtn" />
+						</p:column>
+						<p:column headerText="车辆名称">
+							<h:outputText value="#{model.fittingInfo.carName}" />
+						</p:column>
+						<p:column headerText="配件品牌" width="120px;">
+							<h:outputText value="#{model.fittingInfo.fittingBrand}" />
+						</p:column>
+						<p:column headerText="配件名称" width="80px;">
+							<h:outputText value="#{model.fittingInfo.fittingName}" />
+						</p:column>
+						<p:column headerText="型号" width="80px;">
+							<h:outputText value="#{model.fittingInfo.model}" />
+						</p:column>
+						<p:column headerText="库存数量" width="80px;">
+							<h:outputText value="#{model.repertorySum}" />
+						</p:column>
+					</p:dataTable>
+				</div>
+			</p:dialog>
+		</div>
+	</ui:define>
+</ui:composition>

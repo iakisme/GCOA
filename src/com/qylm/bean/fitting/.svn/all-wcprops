@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/GCOA/!svn/ver/9/src/com/qylm/bean/fitting
+END
+FittingInfoManageBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/GCOA/!svn/ver/1/src/com/qylm/bean/fitting/FittingInfoManageBean.java
+END
+FittingRepertoryManageBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/GCOA/!svn/ver/1/src/com/qylm/bean/fitting/FittingRepertoryManageBean.java
+END
+FittingLibraryCreateBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/GCOA/!svn/ver/9/src/com/qylm/bean/fitting/FittingLibraryCreateBean.java
+END
+FittingStorageCreateBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/GCOA/!svn/ver/9/src/com/qylm/bean/fitting/FittingStorageCreateBean.java
+END
+FittingLibraryManageBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/GCOA/!svn/ver/1/src/com/qylm/bean/fitting/FittingLibraryManageBean.java
+END
+FittingStorageManageBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/GCOA/!svn/ver/1/src/com/qylm/bean/fitting/FittingStorageManageBean.java
+END
+FittingPurchaseCreateBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/GCOA/!svn/ver/9/src/com/qylm/bean/fitting/FittingPurchaseCreateBean.java
+END
+FittingInfoCreateBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/GCOA/!svn/ver/9/src/com/qylm/bean/fitting/FittingInfoCreateBean.java
+END
+FittingRepertoryCreateBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/GCOA/!svn/ver/9/src/com/qylm/bean/fitting/FittingRepertoryCreateBean.java
+END
+FittingPurchaseManageBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/GCOA/!svn/ver/1/src/com/qylm/bean/fitting/FittingPurchaseManageBean.java
+END

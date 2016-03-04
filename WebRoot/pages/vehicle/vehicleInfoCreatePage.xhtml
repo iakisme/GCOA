@@ -1,0 +1,116 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:rw="http://www.qylm.com"
+	template="/WEB-INF/facelets/templates/template.xhtml">
+	<ui:param name="title" value="车辆登录" />
+	<ui:define name="tableCenter">
+		<t:saveState value="#{vehicleInfoCreateBean.vehicleInfoCreateDto}" />
+		<div class="buttonNorth">
+			<p:commandButton value="返回" action="#{vehicleInfoCreateBean.back}" immediate="true" ajax="false" styleClass="backBtn" />
+			<p:commandButton value="添加" action="#{vehicleInfoCreateBean.newVehicleInfo}" immediate="true" update="@form" styleClass="createBtn" />
+			<p:commandButton value="保存" action="#{vehicleInfoCreateBean.saveVehicleInfo}" ajax="false" update="@form" styleClass="saveBtn" 
+				rendered="#{userBean.isCheckPermission('vehicle_vehicleInfo', '添加') or userBean.isCheckPermission('vehicle_vehicleInfo', '修改')}"/>
+		</div>
+		<div class="tableCenter">
+			<p:focus for="number" />
+			<p:panelGrid id="manageGrid" styleClass="dataTable"> 
+				<p:row>
+					<p:column styleClass="column1">
+						<p:outputLabel for="number" value="车辆编号" />
+					</p:column>
+					<p:column styleClass="column4" colspan="3">
+						<p:inputText styleClass="inputText" id="number" size="20" maxlength="20"
+							value="#{vehicleInfoCreateBean.vehicleInfoCreateDto.number}" label="车辆编号" required="true" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column1">
+						<p:outputLabel for="employee" value="车辆负责人" />
+					</p:column>
+					<p:column styleClass="column4" colspan="3">
+						<p:autoComplete id="employee" value="#{vehicleInfoCreateBean.vehicleInfoCreateDto.employee}" 
+							completeMethod="#{selectBean.selectEmployee}" label="车辆负责人必须输入" required="true" size="12" maxlength="12"
+							var="employee" itemLabel="#{employee.name}" dropdown="true"
+							itemValue="#{employee}" converter="employeeConverter" forceSelection="true">
+							<p:column>
+								<h:outputText value="#{employee.name}" />
+							</p:column>
+							<p:column>
+								<h:outputText value="#{employee.identification}" />
+							</p:column>
+						</p:autoComplete>
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column1">
+						<p:outputLabel for="purchaseDate" value="车辆购置日期" />
+					</p:column>
+					<p:column styleClass="column4" colspan="3">
+						<p:calendar navigator="true" id="purchaseDate" size="10" maxlength="10"
+							value="#{vehicleInfoCreateBean.vehicleInfoCreateDto.purchaseDate}"
+							pattern="yyyy-MM-dd" locale="tr"/>
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column1">
+						<p:outputLabel for="homeState" value="备注" />
+					</p:column>
+					<p:column styleClass="column4" colspan="3">
+						<p:editor id="homeState" maxlength="1000" value="#{vehicleInfoCreateBean.vehicleInfoCreateDto.remark}" width="800" height="200" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column styleClass="column1">
+						<h:outputText value="创建人" />
+					</p:column>
+					<p:column styleClass="column4" colspan="3">
+						<h:outputText value="#{vehicleInfoCreateBean.vehicleInfoCreateDto.creater.userName}" />
+					</p:column>
+				</p:row>
+				<p:row rendered="#{userBean.isCheckPermission('vehicle_vehicleInfo', '添加') or userBean.isCheckPermission('vehicle_vehicleInfo', '修改')}">
+					<p:column styleClass="column4" colspan="3" style="text-align: center;">
+						<p:commandButton value="增加一行" action="#{vehicleInfoCreateBean.addVehicleDateil}" 
+							disabled="#{vehicleInfoCreateBean.vehicleInfoCreateDto.transferVehicleInfo == null}"
+							update=":form:viewTable" styleClass="createBtn" />
+					</p:column>
+				</p:row>
+			</p:panelGrid>
+			<p:dataTable emptyMessage="暂无数据" var="model" value="#{vehicleInfoCreateBean.vehicleInfoCreateDto.vehicleInfoDetailList}" rowIndexVar="rowIndex"
+				widgetVar="viewTable" rowKey="#{model.id}" paginatorAlwaysVisible="true" style="margin-top:6px;"
+				sortBy="createDate" sortOrder="descending" id="viewTable"
+				rendered="#{userBean.isCheckPermission('vehicle_vehicleInfo', '添加') or userBean.isCheckPermission('vehicle_vehicleInfo', '修改')}">
+				<p:column headerText="开机人" width="200px;">
+					<p:autoComplete id="employee" value="#{model.employee}" 
+						completeMethod="#{selectBean.selectEmployee}" size="12" maxlength="12"
+						var="employee" itemLabel="#{employee.name}" dropdown="true"
+						itemValue="#{employee}" converter="employeeConverter" forceSelection="true">
+						<p:column>
+							<h:outputText value="#{employee.name}" />
+						</p:column>
+						<p:column>
+							<h:outputText value="#{employee.identification}"/>
+						</p:column>
+					</p:autoComplete>
+				</p:column>
+				<p:column headerText="备注" >
+					<p:inputTextarea value="#{model.remark}" maxlength="200" rows="2" cols="80" />
+				</p:column>
+				<p:column headerText="开机人级别" width="100">
+					<h:selectOneMenu id="workState" value="#{model.level}">
+						<f:selectItems value="#{genericCodeBean.c0401}" />
+					</h:selectOneMenu>
+				</p:column>
+				<p:column headerText="基本操作" exportable="false" style="width: 60px;">
+					<p:commandButton value="删除" action="#{vehicleInfoCreateBean.deleteEmployee(model)}"
+						partialSubmit="true" process="@this"  update="viewTable :form:messages"
+						onstart="return deleteConfirm();" styleClass="singleDelBtn"/>
+				</p:column>
+			</p:dataTable>
+		</div>
+	</ui:define>
+</ui:composition>
